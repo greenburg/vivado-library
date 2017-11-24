@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="tb_MIPI_CSI2_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="tb_MIPI_CSI2" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="70000000fs"></ZoomStartTime>
+      <ZoomEndTime time="793000001fs"></ZoomEndTime>
+      <Cursor1Time time="370000000fs"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="184"></NameColumnWidth>
+      <ValueColumnWidth column_width="109"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="21" />
+   <wave_markers>
+      <marker time="165000000" label="" />
+   </wave_markers>
+   <wvobject fp_name="/tb_MIPI_CSI2/RxByteClkHS" type="logic">
+      <obj_property name="ElementShortName">RxByteClkHS</obj_property>
+      <obj_property name="ObjectShortName">RxByteClkHS</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_MIPI_CSI2/rbRxDataHS" type="array">
+      <obj_property name="ElementShortName">rbRxDataHS[15:0]</obj_property>
+      <obj_property name="ObjectShortName">rbRxDataHS[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_MIPI_CSI2/rbRxSyncHS" type="array">
+      <obj_property name="ElementShortName">rbRxSyncHS[1:0]</obj_property>
+      <obj_property name="ObjectShortName">rbRxSyncHS[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_MIPI_CSI2/rbRxValidHS" type="array">
+      <obj_property name="ElementShortName">rbRxValidHS[1:0]</obj_property>
+      <obj_property name="ObjectShortName">rbRxValidHS[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_MIPI_CSI2/rbRxActiveHS" type="array">
+      <obj_property name="ElementShortName">rbRxActiveHS[1:0]</obj_property>
+      <obj_property name="ObjectShortName">rbRxActiveHS[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_MIPI_CSI2/aDEnable" type="array">
+      <obj_property name="ElementShortName">aDEnable[1:0]</obj_property>
+      <obj_property name="ObjectShortName">aDEnable[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_MIPI_CSI2/aClkEnable" type="logic">
+      <obj_property name="ElementShortName">aClkEnable</obj_property>
+      <obj_property name="ObjectShortName">aClkEnable</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_MIPI_CSI2/mAxisTdata" type="array">
+      <obj_property name="ElementShortName">mAxisTdata[39:0]</obj_property>
+      <obj_property name="ObjectShortName">mAxisTdata[39:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_MIPI_CSI2/mAxisTvalid" type="logic">
+      <obj_property name="ElementShortName">mAxisTvalid</obj_property>
+      <obj_property name="ObjectShortName">mAxisTvalid</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_MIPI_CSI2/mAxisTready" type="logic">
+      <obj_property name="ElementShortName">mAxisTready</obj_property>
+      <obj_property name="ObjectShortName">mAxisTready</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_MIPI_CSI2/mAxisTlast" type="logic">
+      <obj_property name="ElementShortName">mAxisTlast</obj_property>
+      <obj_property name="ObjectShortName">mAxisTlast</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_MIPI_CSI2/mAxisTuser" type="array">
+      <obj_property name="ElementShortName">mAxisTuser[0:0]</obj_property>
+      <obj_property name="ObjectShortName">mAxisTuser[0:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_MIPI_CSI2/MAxisClk" type="logic">
+      <obj_property name="ElementShortName">MAxisClk</obj_property>
+      <obj_property name="ObjectShortName">MAxisClk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_MIPI_CSI2/mRst_n" type="logic">
+      <obj_property name="ElementShortName">mRst_n</obj_property>
+      <obj_property name="ObjectShortName">mRst_n</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_MIPI_CSI2/DUT/LLP_inst/SAxisClk" type="logic">
+      <obj_property name="ElementShortName">SAxisClk</obj_property>
+      <obj_property name="ObjectShortName">SAxisClk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_MIPI_CSI2/DUT/LLP_inst/sAxisTdata" type="array">
+      <obj_property name="ElementShortName">sAxisTdata[31:0]</obj_property>
+      <obj_property name="ObjectShortName">sAxisTdata[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_MIPI_CSI2/DUT/LLP_inst/sAxisTkeep" type="array">
+      <obj_property name="ElementShortName">sAxisTkeep[3:0]</obj_property>
+      <obj_property name="ObjectShortName">sAxisTkeep[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_MIPI_CSI2/DUT/LLP_inst/sAxisTvalid" type="logic">
+      <obj_property name="ElementShortName">sAxisTvalid</obj_property>
+      <obj_property name="ObjectShortName">sAxisTvalid</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_MIPI_CSI2/DUT/LLP_inst/sAxisTready" type="logic">
+      <obj_property name="ElementShortName">sAxisTready</obj_property>
+      <obj_property name="ObjectShortName">sAxisTready</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_MIPI_CSI2/DUT/LLP_inst/sAxisTlast" type="logic">
+      <obj_property name="ElementShortName">sAxisTlast</obj_property>
+      <obj_property name="ObjectShortName">sAxisTlast</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_MIPI_CSI2/DUT/LLP_inst/aRst" type="logic">
+      <obj_property name="ElementShortName">aRst</obj_property>
+      <obj_property name="ObjectShortName">aRst</obj_property>
+   </wvobject>
+</wave_config>
