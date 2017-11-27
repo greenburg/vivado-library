@@ -163,6 +163,7 @@ end generate InputDataGen;
 MIPI_CSI2_Rx_inst: entity work.MIPI_CSI2_Rx
    Generic map(
       kTargetDT => kTargetDT,
+      kDebug => kDebug,
       --PPI
       kLaneCount => kLaneCount, --[1,2,4]
       --Video Format

@@ -23,9 +23,12 @@ use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_ARITH.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
+use work.DebugLib.all;
+
 entity MIPI_CSI2_Rx is
    Generic (
       kTargetDT : string := "RAW10";
+      kDebug : boolean := true; 
       --PPI
       kLaneCount : natural range 1 to 4 := 2; --[1,2,4]
       --Video Format
@@ -84,7 +87,10 @@ architecture Behavioral of MIPI_CSI2_Rx is
          rbErrOvf : out std_logic;
          
          rbEn  : in std_logic;
-         rbRst : in std_logic
+         rbRst : in std_logic;
+               
+         dbgLMLane : out DebugLMLanes_t;
+         dbgLM : out DebugLM_t
       );
    end component LM;
    component LLP is
@@ -112,10 +118,33 @@ architecture Behavioral of MIPI_CSI2_Rx is
          mAxisTuser : out std_logic_vector(0 downto 0);
                
          sOverflow : out std_logic;
-         aRst : in std_logic -- global asynchronous reset; synchronized internally to both clock domains
+         aRst : in std_logic; -- global asynchronous reset; synchronized internally to both clock domains
+         
+         dbgLLP : out DebugLLP_t
       );
    end component;
+   
+      -- VHDL-2008 back-port
+   function orv(vec : std_logic_vector) return std_logic is
+      variable result : std_logic := '0';
+   begin
+      for i in vec'range loop
+         result := result or vec(i);
+      end loop;
+      return result;
+   end orv;
+   -- VHDL-2008 back-port
+   function andv(vec : std_logic_vector) return std_logic is
+      variable result : std_logic := '1';
+   begin
+      for i in vec'range loop
+         result := result and vec(i);
+      end loop;
+      return result;
+   end andv;
+   
    constant kMaxLaneCount : natural := 4;
+   
    
    signal rbLMAxisTdata : std_logic_vector(8 * kMaxLaneCount - 1 downto 0);
    signal rbLMAxisTkeep : std_logic_vector(kMaxLaneCount - 1 downto 0);
@@ -124,6 +153,11 @@ architecture Behavioral of MIPI_CSI2_Rx is
    signal rbLLPAxisTready : std_logic;
    signal rbRst_n, rbEn : std_logic;
    signal vTready, vRst : std_logic;
+   signal dbgLMLane : DebugLMLanes_t;
+   signal dbgLM : DebugLM_t;
+   signal dbgLLP : DebugLLP_t;
+   signal rbRxClkTrigOut, vRxClkTrigOut, vTrigIn, vTrigInAck, rbTrigInAck : std_logic;
+   signal rbRxClkLaneTrigOut, vRxClkLaneTrigOut : std_logic_vector(kMaxLaneCount - 1 downto 0);
 begin
 
 -- Synchronize video_aresetn into the RxByteClkHS domain
@@ -212,7 +246,10 @@ LM_inst: LM
       rbErrOvf       => rbLMErrOvf,
       
       rbEn           => rbEn,
-      rbRst          => not rbRst_n
+      rbRst          => not rbRst_n,
+
+      dbgLMLane      => dbgLMLane,
+      dbgLM          => dbgLM
    );
 
 -- Link-level protocol decodes short and long packets into frames, lines
@@ -245,8 +282,120 @@ LLP_inst: LLP
       mAxisTlast => m_axis_video_tlast,
       mAxisTuser => m_axis_video_tuser,
       
-      aRst => vRst,
-            
-      sOverflow => open
+      aRst => vRst,            
+      sOverflow => open,
+      
+      dbgLLP => dbgLLP
    );
+
+----------------------------------------------------------------------------------
+-- Debug modules
+----------------------------------------------------------------------------------
+GenerateDebug: if kDebug generate
+
+ILARxClk : ila_rxclk
+PORT MAP (
+	clk => RxByteClkHS,
+
+	trig_out => rbRxClkTrigOut,
+	trig_out_ack => rbTrigInAck,
+
+	probe0 => dbgLM.state, 
+	probe1 => dbgLM.rbByteCnt, 
+	probe2 => rbLMAxisTdata, 
+	probe3 => rbLMAxisTkeep, 
+	probe4(0) => rbLMAxisTvalid, 
+	probe5(0) => rbLLPAxisTready, 
+	probe6(0) => rbLMAxisTlast, 
+	probe7(0) => rbLMErrSkew, 
+	probe8(0) => rbLMErrOvf,
+	probe9(0) => dbgLLP.rbRst,
+	probe10(0) => dbgLLP.rbOvf,
+	probe11(0) => dbgLLP.rbFIFO_Rstn
+);
+
+ILAVidClk : ila_vidclk
+PORT MAP (
+	clk => video_aclk,
+	trig_in => vTrigIn,
+   trig_in_ack => vTrigInAck,
+   
+	probe0(0) => dbgLLP.mRst, 
+	probe1(0) => dbgLLP.mFIFO_Tvalid, 
+	probe2(0) => dbgLLP.mFIFO_Tready, 
+	probe3(0) => dbgLLP.mFIFO_Tlast, 
+	probe4 => dbgLLP.mFIFO_Tdata, 
+	probe5 => dbgLLP.mFIFO_Tkeep, 
+	probe6(0) => dbgLLP.mIsHeader, 
+	probe7(0) => dbgLLP.mECC_En, 
+	probe8(0) => dbgLLP.mECC_Ready, 
+	probe9(0) => dbgLLP.mECC_Valid, 
+	probe10(0) => dbgLLP.mECC_Error, 
+	probe11 => dbgLLP.mWC, 
+	probe12 => dbgLLP.mDT, 
+	probe13(0) => dbgLLP.mFlush, 
+	probe14(0) => dbgLLP.mKeep, 
+	probe15 => dbgLLP.mWordCount, 
+	probe16(0) => dbgLLP.mReg_Tvalid, 
+	probe17(0) => dbgLLP.mReg_Tready, 
+	probe18(0) => dbgLLP.mReg_Tlast, 
+	probe19 => dbgLLP.mReg_Tdata, 
+	probe20 => dbgLLP.mReg_Tkeep, 
+	probe21 => dbgLLP.mCRC_Sent, 
+	probe22(0) => dbgLLP.mCRC_En, 
+	probe23(0) => dbgLLP.mCRC_Rst, 
+	probe24 => dbgLLP.mCRC_Out, 
+	probe25(0) => dbgLLP.mFmt_Tvalid, 
+	probe26(0) => dbgLLP.mFmt_Tready, 
+	probe27(0) => dbgLLP.mFmt_Tlast, 
+	probe28 => dbgLLP.mFmt_Tdata, 
+	probe29 => dbgLLP.mFmt_cnt,
+	probe30 => dbgLLP.mBufWrCnt
+);
+
+SyncAsyncTrigOut: entity work.SyncAsync
+   port map (
+      aReset => '0',
+      aIn => rbRxClkTrigOut,
+      OutClk => video_aclk,
+      oOut => vRxClkTrigOut);
+      
+SyncAsyncTrigAck: entity work.SyncAsync
+   port map (
+      aReset => '0',
+      aIn => vTrigInAck,
+      OutClk => RxByteClkHS,
+      oOut => rbTrigInAck);
+      
+ILA_LaneGen: for i in kLaneCount-1 downto 0 generate      
+
+   ILARxClk_Lane : ila_rxclk_lane
+   PORT MAP (
+      clk => RxByteClkHS,
+   
+      trig_out => rbRxClkLaneTrigOut(i),
+      trig_out_ack => rbTrigInAck,
+   
+      probe0(0) => dbgLMLane(i).rbSkwRdEn, 
+      probe1(0) => dbgLMLane(i).rbSkwWrEn, 
+      probe2(0) => dbgLMLane(i).rbSkwFull, 
+      probe3(0) => dbgLMLane(i).rbActiveHS, 
+      probe4(0) => dbgLMLane(i).rbSyncHS, 
+      probe5(0) => dbgLMLane(i).rbValidHS,
+      probe6 => dbgLMLane(i).rbDataHS
+   );
+     
+   SyncAsyncTrigOut: entity work.SyncAsync
+      port map (
+         aReset => '0',
+         aIn => rbRxClkLaneTrigOut(i),
+         OutClk => video_aclk,
+         oOut => vRxClkLaneTrigOut(i));
+         
+end generate ILA_LaneGen;      
+
+vTrigIn <= orv(vRxClkLaneTrigOut) or vRxClkTrigOut;
+
+end generate;
+
 end Behavioral;

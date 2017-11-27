@@ -25,9 +25,10 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 library work;
 use work.SimpleFIFO;
+use work.DebugLib;
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
+use IEEE.NUMERIC_STD.ALL;
 
 -- Uncomment the following library declaration if instantiating
 -- any Xilinx leaf cells in this code.
@@ -58,7 +59,10 @@ entity LM is
       rbErrOvf : out std_logic;
       
       rbEn : in std_logic;
-      rbRst : in std_logic
+      rbRst : in std_logic;
+      
+      dbgLMLane : out DebugLib.DebugLMLanes_t;
+      dbgLM : out DebugLib.DebugLM_t
    );
 end LM;
 
@@ -103,9 +107,27 @@ architecture Behavioral of LM is
       end loop;
       return result;
    end andv;
+   
 begin
 
+dbgLM.state <= std_logic_vector(to_unsigned(state_t'pos(rbState), 3));
+dbgLM.rbByteCnt <= std_logic_vector(to_unsigned(rbByteCnt, 2));
+
+
+-- Shallow, synchronous FIFOs for each data lane are used to delay data
+-- on those that transmit earlier than the rest. Thus, data lanes
+-- are de-skewed and their RxActiveHS edges aligned. This approach relies
+-- on the timing of RxValidHS relative to the corresponding RxActiveHS to be
+-- the same for all lanes.  
 DeskewFIFOs: for i in 0 to kLaneCount - 1 generate
+
+   dbgLMLane(i).rbSkwRdEn <= rbRdEn(i);
+   dbgLMLane(i).rbSkwWrEn <= rbEn;
+   dbgLMLane(i).rbSkwFull <= rbFull(i);
+   dbgLMLane(i).rbActiveHS <= rbActiveHS(i);
+   dbgLMLane(i).rbSyncHS <= rbSyncHS(i);
+   dbgLMLane(i).rbValidHS <= rbValidHS(i);
+   dbgLMLane(i).rbDataHS <= rbDataHS((i+1)*8-1 downto i*8);
 
 DeskewFIFOx: entity work.SimpleFIFO
    Generic map (kDataWidth => 11)

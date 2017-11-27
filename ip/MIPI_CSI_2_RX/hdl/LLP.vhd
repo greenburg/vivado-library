@@ -24,6 +24,8 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
+use work.DebugLib;
+
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
 use IEEE.NUMERIC_STD.ALL;
@@ -58,7 +60,9 @@ entity LLP is
       mAxisTuser : out std_logic_vector(0 downto 0);
             
       sOverflow : out std_logic;
-      aRst : in std_logic -- global asynchronous reset; synchronized internally to both clock domains
+      aRst : in std_logic; -- global asynchronous reset; synchronized internally to both clock domains
+      
+      dbgLLP : out DebugLib.DebugLLP_t
    );
 end LLP;
 
@@ -144,36 +148,6 @@ architecture Behavioral of LLP is
    signal mDT : std_logic_vector(5 downto 0);
    signal mWC : std_logic_vector(15 downto 0);
    signal mECC : std_logic_vector(7 downto 0);
-
-attribute MARK_DEBUG : string;
-attribute MARK_DEBUG of mFIFO_Tvalid: signal is "TRUE";
-attribute MARK_DEBUG of mFIFO_Tready: signal is "TRUE";
-attribute MARK_DEBUG of mFIFO_Tdata: signal is "TRUE";
-attribute MARK_DEBUG of mFIFO_Tkeep: signal is "TRUE";
-attribute MARK_DEBUG of mFIFO_Tlast: signal is "TRUE";
-
-attribute MARK_DEBUG of mIsHeader: signal is "TRUE";
-attribute MARK_DEBUG of mECC_HeaderOut: signal is "TRUE";
-attribute MARK_DEBUG of mECC_Valid: signal is "TRUE";
-attribute MARK_DEBUG of mECC_Error: signal is "TRUE";
-
-attribute MARK_DEBUG of mFlush: signal is "TRUE";
-attribute MARK_DEBUG of mKeep: signal is "TRUE";
-
-attribute MARK_DEBUG of mReg_Tvalid: signal is "TRUE";
-attribute MARK_DEBUG of mReg_Tready: signal is "TRUE";
-attribute MARK_DEBUG of mReg_Tdata: signal is "TRUE";
-attribute MARK_DEBUG of mReg_Tkeep: signal is "TRUE";
-attribute MARK_DEBUG of mReg_Tlast: signal is "TRUE";
-
-attribute MARK_DEBUG of mCRC_Out: signal is "TRUE";
-attribute MARK_DEBUG of mCRC_En: signal is "TRUE";
-
-attribute MARK_DEBUG of mFmt_Tvalid: signal is "TRUE";
-attribute MARK_DEBUG of mFmt_Tready: signal is "TRUE";
-attribute MARK_DEBUG of mFmt_Tdata: signal is "TRUE";
-attribute MARK_DEBUG of mFmt_Tlast: signal is "TRUE";
-
 
 begin
 
@@ -465,10 +439,11 @@ constant kPixelWidth : natural := 10;
 constant kNoPixels : natural := 4;
 constant kNoBytes : natural := 5;
 type pixels_t is array (natural range <>) of std_logic_vector(kPixelWidth downto 0);
-variable pix_mux, pix_reg : pixels_t(0 to kNoPixels-1);
+variable pix_mux : pixels_t(0 to kNoPixels-1);
 variable cnt : natural range 0 to kNoBytes-1 := 0;
 begin
    if Rising_Edge(MAxisClk) then
+      dbgLLP.mFmt_cnt <= std_logic_vector(to_unsigned(cnt, 3));
       if (mRst = '1') then
          cnt := 0;
          mFmt_Tvalid <= '0';
@@ -587,8 +562,42 @@ LineBufferFIFO: line_buffer
       m_axis_tlast => mAxisTlast,
       m_axis_tuser => mAxisTuser,
       axis_data_count => open,
-      axis_wr_data_count => open,
+      axis_wr_data_count(10 downto 0) => dbgLLP.mBufWrCnt,
+      axis_wr_data_count(31 downto 11) => open,
       axis_rd_data_count => open
    );
+
+-- Debug signals
+dbgLLP.rbRst <= sRst;
+dbgLLP.rbFIFO_Rstn <= sFIFO_Rstn;
+dbgLLP.mRst <= mRst;
+dbgLLP.mFIFO_Tvalid <= mFIFO_Tvalid;
+dbgLLP.mFIFO_Tready <= mFIFO_Tready;
+dbgLLP.mFIFO_Tlast <= mFIFO_Tlast;
+dbgLLP.mFIFO_Tdata <= mFIFO_Tdata;
+dbgLLP.mFIFO_Tkeep <= mFIFO_Tkeep;
+dbgLLP.mIsHeader <= mIsHeader;
+dbgLLP.mECC_En <= mECC_En;
+dbgLLP.mECC_Ready <= mECC_Ready;
+dbgLLP.mECC_Valid <= mECC_Valid;
+dbgLLP.mECC_Error <= mECC_Error;
+dbgLLP.mWC <= mWC;
+dbgLLP.mDT <= mDT;
+dbgLLP.mFlush <= mFlush;
+dbgLLP.mKeep <= mKeep;
+dbgLLP.mWordCount <= std_logic_vector(mWordCount);
+dbgLLP.mReg_Tvalid <= mReg_Tvalid;
+dbgLLP.mReg_Tready <= mReg_Tready;
+dbgLLP.mReg_Tlast <= mReg_Tlast;
+dbgLLP.mReg_Tdata <= mReg_Tdata;
+dbgLLP.mReg_Tkeep <= mReg_Tkeep;
+dbgLLP.mCRC_Sent <= mCRC_Sent;
+dbgLLP.mCRC_En <= mCRC_En;
+dbgLLP.mCRC_Rst <= mCRC_Rst;
+dbgLLP.mCRC_Out <= mCRC_Out;
+dbgLLP.mFmt_Tvalid <= mFmt_Tvalid;
+dbgLLP.mFmt_Tready <= mFmt_Tready;
+dbgLLP.mFmt_Tlast <= mFmt_Tlast;
+dbgLLP.mFmt_Tdata <= mFmt_Tdata;
    
 end Behavioral;
