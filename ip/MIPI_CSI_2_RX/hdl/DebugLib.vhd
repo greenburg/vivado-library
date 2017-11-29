@@ -51,7 +51,9 @@ package DebugLib is
       probe8 : IN STD_LOGIC_VECTOR(0 DOWNTO 0); 
       probe9 : IN STD_LOGIC_VECTOR(0 DOWNTO 0); 
       probe10 : IN STD_LOGIC_VECTOR(0 DOWNTO 0);
-      probe11 : IN STD_LOGIC_VECTOR(0 DOWNTO 0)
+      probe11 : IN STD_LOGIC_VECTOR(0 DOWNTO 0); 
+      probe12 : IN STD_LOGIC_VECTOR(0 DOWNTO 0);
+      probe13 : IN STD_LOGIC_VECTOR(0 DOWNTO 0)
    );
    END COMPONENT  ;
    COMPONENT ila_vidclk
@@ -59,8 +61,9 @@ package DebugLib is
    PORT (
       clk : IN STD_LOGIC;
    
-	   trig_in : IN STD_LOGIC;
-      trig_in_ack : OUT STD_LOGIC;   
+   
+      trig_in : IN STD_LOGIC;
+      trig_in_ack : OUT STD_LOGIC;
       probe0 : IN STD_LOGIC_VECTOR(0 DOWNTO 0); 
       probe1 : IN STD_LOGIC_VECTOR(0 DOWNTO 0); 
       probe2 : IN STD_LOGIC_VECTOR(0 DOWNTO 0); 
@@ -89,9 +92,12 @@ package DebugLib is
       probe25 : IN STD_LOGIC_VECTOR(0 DOWNTO 0); 
       probe26 : IN STD_LOGIC_VECTOR(0 DOWNTO 0); 
       probe27 : IN STD_LOGIC_VECTOR(0 DOWNTO 0); 
-      probe28 : IN STD_LOGIC_VECTOR(31 DOWNTO 0); 
-      probe29 : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
-      probe30 : IN STD_LOGIC_VECTOR(1 DOWNTO 0)
+      probe28 : IN STD_LOGIC_VECTOR(39 DOWNTO 0); 
+      probe29 : IN STD_LOGIC_VECTOR(2 DOWNTO 0); 
+      probe30 : IN STD_LOGIC_VECTOR(10 DOWNTO 0); 
+      probe31 : IN STD_LOGIC_VECTOR(0 DOWNTO 0); 
+      probe32 : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
+      probe33 : IN STD_LOGIC_VECTOR(0 DOWNTO 0)
    );
    END COMPONENT  ;
    COMPONENT ila_rxclk_lane
@@ -120,6 +126,7 @@ package DebugLib is
       rbValidHS : std_logic;
       rbDataHS : std_logic_vector(7 downto 0);
    end record;
+   constant C_M_AXIS_TDATA_WIDTH : natural := 40;
    constant kMaxLaneCount : natural := 4;
    type DebugLMLanes_t is array(0 to kMaxLaneCount - 1) of DebugLMLane_t;
    type DebugLM_t is record      
@@ -168,9 +175,9 @@ package DebugLib is
       mFmt_Tvalid : std_logic;
       mFmt_Tready : std_logic;
       mFmt_Tlast : std_logic;
-      mFmt_Tdata : std_logic_vector(kMaxLaneCount*8-1 downto 0);
+      mFmt_Tdata : std_logic_vector(C_M_AXIS_TDATA_WIDTH-1 downto 0);
       mFmt_cnt : std_logic_vector(2 downto 0);
       
-      mBufWrCnt : std_logic_vector(1 downto 0);
+      mBufDataCnt : std_logic_vector(10 downto 0);
    end record;
 end package;

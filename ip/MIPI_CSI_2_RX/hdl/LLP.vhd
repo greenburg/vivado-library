@@ -67,7 +67,7 @@ entity LLP is
 end LLP;
 
 architecture Behavioral of LLP is
-   COMPONENT CDC_fifo
+   COMPONENT cdc_fifo
      PORT (
        m_aclk : IN STD_LOGIC;
        s_aclk : IN STD_LOGIC;
@@ -148,7 +148,8 @@ architecture Behavioral of LLP is
    signal mDT : std_logic_vector(5 downto 0);
    signal mWC : std_logic_vector(15 downto 0);
    signal mECC : std_logic_vector(7 downto 0);
-
+   
+   signal mBufDataCnt : std_logic_vector(31 downto 0);
 begin
 
 assert (kMaxLaneCount = 4) report "LLP module only supports a maximum of four lanes" severity failure;
@@ -344,7 +345,7 @@ end process;
 mPkt_Tvalid <= mFIFO_Tvalid and mKeep;
 mPkt_Tready <= mReg_Tready;
 mPkt_Tdata <= mFIFO_Tdata;
-process(mWordCount)
+process(mWordCount, mFIFO_Tkeep)
 begin
    if mWordCount = 1 then
       mPkt_Tlast <= '1';
@@ -561,9 +562,8 @@ LineBufferFIFO: line_buffer
       m_axis_tdata => mAxisTdata,
       m_axis_tlast => mAxisTlast,
       m_axis_tuser => mAxisTuser,
-      axis_data_count => open,
-      axis_wr_data_count(10 downto 0) => dbgLLP.mBufWrCnt,
-      axis_wr_data_count(31 downto 11) => open,
+      axis_data_count => mBufDataCnt,
+      axis_wr_data_count => open,
       axis_rd_data_count => open
    );
 
@@ -599,5 +599,5 @@ dbgLLP.mFmt_Tvalid <= mFmt_Tvalid;
 dbgLLP.mFmt_Tready <= mFmt_Tready;
 dbgLLP.mFmt_Tlast <= mFmt_Tlast;
 dbgLLP.mFmt_Tdata <= mFmt_Tdata;
-   
+dbgLLP.mBufDataCnt <= mBufDataCnt(10 downto 0);
 end Behavioral;

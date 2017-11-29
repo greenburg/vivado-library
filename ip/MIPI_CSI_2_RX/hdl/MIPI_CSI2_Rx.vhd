@@ -158,6 +158,8 @@ architecture Behavioral of MIPI_CSI2_Rx is
    signal dbgLLP : DebugLLP_t;
    signal rbRxClkTrigOut, vRxClkTrigOut, vTrigIn, vTrigInAck, rbTrigInAck : std_logic;
    signal rbRxClkLaneTrigOut, vRxClkLaneTrigOut : std_logic_vector(kMaxLaneCount - 1 downto 0);
+   signal aClkEnableInt : std_logic;
+   signal aDEnableInt : std_logic_vector(kMaxLaneCount - 1 downto 0);
 begin
 
 -- Synchronize video_aresetn into the RxByteClkHS domain
@@ -191,24 +193,28 @@ end process;
 PPI_Clock_Enable: process(video_aclk)
 begin
    if Rising_Edge(video_aclk) then
-      aClkEnable <= vEnable and video_aresetn;
+      aClkEnableInt <= vEnable and video_aresetn;
    end if;
 end process;
+
+aClkEnable <= aClkEnableInt;
 
 PPI_Data_Enable: process(video_aclk)
 begin
    if Rising_Edge(video_aclk) then
       if (video_aresetn = '0') then
-         aDEnable    <= (others => '0');
+         aDEnableInt    <= (others => '0');
       else
          if (vEnable = '0') then
-            aDEnable    <= (others => '0');
+            aDEnableInt    <= (others => '0');
          elsif (vTready = '1') then --LLP buffer should be ready to receive data before enabling the PHY
-            aDEnable    <= (others => '1');
+            aDEnableInt    <= (others => '1');
          end if;
       end if;
    end if;
 end process;
+
+aDEnable <= aDEnableInt(kLaneCount-1 downto 0);
             
 SyncAsyncTready: entity work.SyncAsync
    generic map (
@@ -311,7 +317,9 @@ PORT MAP (
 	probe8(0) => rbLMErrOvf,
 	probe9(0) => dbgLLP.rbRst,
 	probe10(0) => dbgLLP.rbOvf,
-	probe11(0) => dbgLLP.rbFIFO_Rstn
+	probe11(0) => dbgLLP.rbFIFO_Rstn,
+	probe12(0) => rbRst_n,
+	probe13(0) => rbEn
 );
 
 ILAVidClk : ila_vidclk
@@ -350,7 +358,10 @@ PORT MAP (
 	probe27(0) => dbgLLP.mFmt_Tlast, 
 	probe28 => dbgLLP.mFmt_Tdata, 
 	probe29 => dbgLLP.mFmt_cnt,
-	probe30 => dbgLLP.mBufWrCnt
+	probe30 => dbgLLP.mBufDataCnt,
+	probe31(0) => aClkEnableInt,
+	probe32 => aDEnableInt,
+	probe33(0) => vTready
 );
 
 SyncAsyncTrigOut: entity work.SyncAsync

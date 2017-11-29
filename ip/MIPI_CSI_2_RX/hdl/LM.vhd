@@ -266,7 +266,7 @@ end process;
 
 rbMAxisTvalid <= rbMAxisTvalidInt;
 
-NEXT_STATE_DECODE: process (rbState, rbActiveHS, rbValidHS)
+NEXT_STATE_DECODE: process (rbState, rbActiveHS, rbValidHS, rbFull)
 begin
    rbNstate <= rbState;  --default is to stay in current rbState
    case (rbState) is
