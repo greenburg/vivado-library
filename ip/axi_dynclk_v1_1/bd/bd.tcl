@@ -87,9 +87,7 @@ proc propagate {cellpath otherInfo } {
 # Do FREQ_HZ propagation here
 proc post_propagate {cellpath otherInfo } {
    set ip [get_bd_cells $cellpath]
-   
-   report_property $ip
-   
+      
    set ref_clk [get_property CONFIG.FREQ_HZ [get_bd_pins $ip/REF_CLK_I]]
    set ref_clk_domain [get_property CONFIG.CLK_DOMAIN [get_bd_pins $ip/REF_CLK_I]]
    set ref_clk_phase [get_property CONFIG.PHASE [get_bd_pins $ip/REF_CLK_I]]
