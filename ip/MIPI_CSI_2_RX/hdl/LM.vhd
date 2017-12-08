@@ -82,7 +82,8 @@ architecture Behavioral of LM is
    alias rbActiveHSInt is RxActiveHS;
    
    signal rbRdEn, rbWrEn, rbFull : STD_LOGIC_VECTOR (kLaneCount - 1 downto 0);
-
+   signal rbEnInt : std_logic;
+   
    -- De-skewed PPI data lanes
    signal rbDataHS : STD_LOGIC_VECTOR (8 * kLaneCount - 1 downto 0);
    signal rbSyncHS : STD_LOGIC_VECTOR (kLaneCount - 1 downto 0);
@@ -135,7 +136,7 @@ DeskewFIFOx: entity work.SimpleFIFO
       InClk => RxByteClkHS,
       iRst => rbRst,
       iDataIn => rbActiveHSInt(i) & rbSyncHSInt(i) & rbValidHSInt(i) & rbDataHSInt((i+1)*8-1 downto i*8),
-      iWrEn => rbEn,
+      iWrEn => rbEnInt,
       iRdEn => rbRdEn(i),
       iFull => rbFull(i),
       iEmpty => open,
@@ -157,6 +158,17 @@ end process;
    
 end generate DeskewFIFOs;
 
+InternalEnable: process (RxByteClkHS)
+begin
+   if Rising_Edge(RxByteClkHS) then
+      if (rbRst = '1') then
+         rbEnInt <= '0';
+      elsif (orv(rbFull) = '0') then --when deskew FIFOs exit reset
+         rbEnInt <= rbEn;
+      end if;
+   end if;
+end process;
+
 -- The deskew error flag is set when one of the lanes was halted for so long awaiting valid data on the
 -- other lanes that the FIFOs filled up. Possible causes:
 -- not all lanes in the specified kLaneCount are receiving data, or
@@ -166,7 +178,7 @@ begin
    if Rising_Edge(RxByteClkHS) then
       if (rbRst = '1') then
          rbErrSkew <= '0';
-      elsif (orv(rbFull) = '1') then
+      elsif (rbEnInt = '1' and orv(rbFull) = '1') then
          rbErrSkew <= '1';
       end if;
    end if;
