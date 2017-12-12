@@ -92,12 +92,13 @@ package DebugLib is
       probe25 : IN STD_LOGIC_VECTOR(0 DOWNTO 0); 
       probe26 : IN STD_LOGIC_VECTOR(0 DOWNTO 0); 
       probe27 : IN STD_LOGIC_VECTOR(0 DOWNTO 0); 
-      probe28 : IN STD_LOGIC_VECTOR(39 DOWNTO 0); 
-      probe29 : IN STD_LOGIC_VECTOR(2 DOWNTO 0); 
-      probe30 : IN STD_LOGIC_VECTOR(10 DOWNTO 0); 
-      probe31 : IN STD_LOGIC_VECTOR(0 DOWNTO 0); 
-      probe32 : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
-      probe33 : IN STD_LOGIC_VECTOR(0 DOWNTO 0)
+      probe28 : IN STD_LOGIC_VECTOR(0 DOWNTO 0); 
+      probe29 : IN STD_LOGIC_VECTOR(39 DOWNTO 0); 
+      probe30 : IN STD_LOGIC_VECTOR(2 DOWNTO 0); 
+      probe31 : IN STD_LOGIC_VECTOR(10 DOWNTO 0); 
+      probe32 : IN STD_LOGIC_VECTOR(0 DOWNTO 0); 
+      probe33 : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
+      probe34 : IN STD_LOGIC_VECTOR(0 DOWNTO 0)
    );
    END COMPONENT  ;
    COMPONENT ila_rxclk_lane
@@ -175,6 +176,7 @@ package DebugLib is
       mFmt_Tvalid : std_logic;
       mFmt_Tready : std_logic;
       mFmt_Tlast : std_logic;
+      mFmt_Tuser : std_logic;
       mFmt_Tdata : std_logic_vector(C_M_AXIS_TDATA_WIDTH-1 downto 0);
       mFmt_cnt : std_logic_vector(2 downto 0);
       

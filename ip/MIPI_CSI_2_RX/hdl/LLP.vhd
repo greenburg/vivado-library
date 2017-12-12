@@ -598,6 +598,7 @@ dbgLLP.mCRC_Out <= mCRC_Out;
 dbgLLP.mFmt_Tvalid <= mFmt_Tvalid;
 dbgLLP.mFmt_Tready <= mFmt_Tready;
 dbgLLP.mFmt_Tlast <= mFmt_Tlast;
+dbgLLP.mFmt_Tuser <= mFmt_Tuser(0);
 dbgLLP.mFmt_Tdata <= mFmt_Tdata;
 dbgLLP.mBufDataCnt <= mBufDataCnt(10 downto 0);
 end Behavioral;

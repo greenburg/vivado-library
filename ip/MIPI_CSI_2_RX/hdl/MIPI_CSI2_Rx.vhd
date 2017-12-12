@@ -355,13 +355,14 @@ PORT MAP (
 	probe24 => dbgLLP.mCRC_Out, 
 	probe25(0) => dbgLLP.mFmt_Tvalid, 
 	probe26(0) => dbgLLP.mFmt_Tready, 
-	probe27(0) => dbgLLP.mFmt_Tlast, 
-	probe28 => dbgLLP.mFmt_Tdata, 
-	probe29 => dbgLLP.mFmt_cnt,
-	probe30 => dbgLLP.mBufDataCnt,
-	probe31(0) => aClkEnableInt,
-	probe32 => aDEnableInt,
-	probe33(0) => vTready
+	probe27(0) => dbgLLP.mFmt_Tlast,
+	probe28(0) => dbgLLP.mFmt_Tuser, 
+	probe29 => dbgLLP.mFmt_Tdata, 
+	probe30 => dbgLLP.mFmt_cnt,
+	probe31 => dbgLLP.mBufDataCnt,
+	probe32(0) => aClkEnableInt,
+	probe33 => aDEnableInt,
+	probe34(0) => vTready
 );
 
 SyncAsyncTrigOut: entity work.SyncAsync
