@@ -83,22 +83,23 @@ package DebugLib is
       probe16 : IN STD_LOGIC_VECTOR(0 DOWNTO 0); 
       probe17 : IN STD_LOGIC_VECTOR(0 DOWNTO 0); 
       probe18 : IN STD_LOGIC_VECTOR(0 DOWNTO 0); 
-      probe19 : IN STD_LOGIC_VECTOR(31 DOWNTO 0); 
-      probe20 : IN STD_LOGIC_VECTOR(3 DOWNTO 0); 
-      probe21 : IN STD_LOGIC_VECTOR(15 DOWNTO 0); 
-      probe22 : IN STD_LOGIC_VECTOR(0 DOWNTO 0); 
+      probe19 : IN STD_LOGIC_VECTOR(0 DOWNTO 0); 
+      probe20 : IN STD_LOGIC_VECTOR(31 DOWNTO 0); 
+      probe21 : IN STD_LOGIC_VECTOR(3 DOWNTO 0); 
+      probe22 : IN STD_LOGIC_VECTOR(15 DOWNTO 0); 
       probe23 : IN STD_LOGIC_VECTOR(0 DOWNTO 0); 
-      probe24 : IN STD_LOGIC_VECTOR(15 DOWNTO 0); 
-      probe25 : IN STD_LOGIC_VECTOR(0 DOWNTO 0); 
+      probe24 : IN STD_LOGIC_VECTOR(0 DOWNTO 0); 
+      probe25 : IN STD_LOGIC_VECTOR(15 DOWNTO 0); 
       probe26 : IN STD_LOGIC_VECTOR(0 DOWNTO 0); 
       probe27 : IN STD_LOGIC_VECTOR(0 DOWNTO 0); 
       probe28 : IN STD_LOGIC_VECTOR(0 DOWNTO 0); 
-      probe29 : IN STD_LOGIC_VECTOR(39 DOWNTO 0); 
-      probe30 : IN STD_LOGIC_VECTOR(2 DOWNTO 0); 
-      probe31 : IN STD_LOGIC_VECTOR(10 DOWNTO 0); 
-      probe32 : IN STD_LOGIC_VECTOR(0 DOWNTO 0); 
-      probe33 : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
-      probe34 : IN STD_LOGIC_VECTOR(0 DOWNTO 0)
+      probe29 : IN STD_LOGIC_VECTOR(0 DOWNTO 0); 
+      probe30 : IN STD_LOGIC_VECTOR(39 DOWNTO 0); 
+      probe31 : IN STD_LOGIC_VECTOR(2 DOWNTO 0); 
+      probe32 : IN STD_LOGIC_VECTOR(10 DOWNTO 0); 
+      probe33 : IN STD_LOGIC_VECTOR(0 DOWNTO 0); 
+      probe34 : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
+      probe35 : IN STD_LOGIC_VECTOR(0 DOWNTO 0)
    );
    END COMPONENT  ;
    COMPONENT ila_rxclk_lane
@@ -164,6 +165,7 @@ package DebugLib is
       mReg_Tvalid : std_logic;
       mReg_Tready : std_logic;
       mReg_Tlast : std_logic;
+      mReg_Tuser : std_logic;
       mReg_Tdata : std_logic_vector(kMaxLaneCount*8-1 downto 0);
       mReg_Tkeep : std_logic_vector(kMaxLaneCount-1 downto 0);
       

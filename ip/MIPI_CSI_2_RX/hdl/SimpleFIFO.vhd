@@ -49,24 +49,24 @@ end SimpleFIFO;
 
 architecture Behavioral of SimpleFIFO is
 
-   constant kFIFO_Depth : natural := 2**3; --implementation assumes power of 2
+   constant kFIFO_Depth : natural := 2**5; --implementation assumes power of 2
    subtype FIFO_data_t is std_logic_vector(kDataWidth-1 downto 0);
    type FIFO_t is array (0 to kFIFO_Depth-1) of FIFO_data_t;
    signal FIFO : FIFO_t;
    signal iRdA, iWrA : natural range 0 to kFIFO_Depth-1; --read and write addresses
-   signal iFullInt, iEmptyInt : std_logic;
+   signal iFullInt, iEmptyInt : std_logic := '1';
 begin
 
--- The process below should result in a dual-port distributed RAM with registered output
+-- The process below should result in a dual-port distributed RAM
 FIFOProc: process (InClk)
 begin
    if Rising_Edge(InClk) then
       if (iWrEn = '1') then
          FIFO(iWrA) <= iDataIn;
-         iDataOut <= FIFO(iRdA);
       end if;
    end if;
 end process FIFOProc;
+iDataOut <= FIFO(iRdA);
 
 -- FIFO address counters
 FIFO_WrA: process (InClk)

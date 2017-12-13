@@ -67,7 +67,7 @@ entity LM is
 end LM;
 
 architecture Behavioral of LM is
-   type state_t is (stIdle, stWaitForValid, stReceive, stEndReceive, stError);
+   type state_t is (stReset, stIdle, stWaitForReady, stWaitForValid, stReceive, stEndReceive, stError);
    signal rbState, rbNstate : state_t;
    
    signal rbByteCnt : natural range 0 to kMaxLaneCount - 1 := 0;
@@ -136,7 +136,7 @@ DeskewFIFOx: entity work.SimpleFIFO
       InClk => RxByteClkHS,
       iRst => rbRst,
       iDataIn => rbActiveHSInt(i) & rbSyncHSInt(i) & rbValidHSInt(i) & rbDataHSInt((i+1)*8-1 downto i*8),
-      iWrEn => rbEnInt,
+      iWrEn => rbWrEn(i),
       iRdEn => rbRdEn(i),
       iFull => rbFull(i),
       iEmpty => open,
@@ -146,13 +146,18 @@ DeskewFIFOx: entity work.SimpleFIFO
       iDataOut(7 downto 0) => rbDataHS((i+1)*8-1 downto i*8)
    );
 
-rbRdEn(i) <=   '0'  when rbActiveHS(i) = '1' and andv(rbActiveHS) = '0' and andv(rbActiveHS_q) = '0' else
+rbWrEn(i) <= rbEnInt;
+rbRdEn(i) <=   '0' when (rbState = stReset) else 
+               '0' when (rbActiveHS(i) = '1' and andv(rbActiveHS) = '0' and andv(rbActiveHS_q) = '0') else -- lane is active while others not, pause it
+               '0' when (andv(rbActiveHS) = '1' and rbState = stWaitForReady) else -- all lanes active, but we are held up by rbMAxisTready
                '1';
             
 process (RxByteClkHS)
 begin
    if Rising_Edge(RxByteClkHS) then
-      rbActiveHS_q(i) <= rbActiveHS(i);
+      if (rbRdEn(i) = '1') then
+         rbActiveHS_q(i) <= rbActiveHS(i);
+      end if;
    end if;
 end process;
    
@@ -161,9 +166,9 @@ end generate DeskewFIFOs;
 InternalEnable: process (RxByteClkHS)
 begin
    if Rising_Edge(RxByteClkHS) then
-      if (rbRst = '1') then
+      if (rbState = stReset) then
          rbEnInt <= '0';
-      elsif (orv(rbFull) = '0') then --when deskew FIFOs exit reset
+      else
          rbEnInt <= rbEn;
       end if;
    end if;
@@ -201,7 +206,7 @@ SYNC_PROC: process (RxByteClkHS)
 begin 
    if Rising_Edge(RxByteClkHS) then
       if (rbRst = '1') then
-         rbState <= stIdle;
+         rbState <= stReset;
       else
          rbState <= rbNstate;
       end if;
@@ -278,10 +283,20 @@ end process;
 
 rbMAxisTvalid <= rbMAxisTvalidInt;
 
-NEXT_STATE_DECODE: process (rbState, rbActiveHS, rbValidHS, rbFull)
+NEXT_STATE_DECODE: process (rbState, rbActiveHS, rbValidHS, rbFull, rbMAxisTready)
 begin
    rbNstate <= rbState;  --default is to stay in current rbState
    case (rbState) is
+      when stReset => 
+         if (orv(rbFull) = '0') then
+            rbNstate <= stWaitForReady;
+         end if;
+      when stWaitForReady =>
+         if (orv(rbFull) = '1') then
+            rbNstate <= stError;
+         elsif (rbMAxisTready = '1') then
+            rbNstate <= stIdle;
+         end if;         
       when stIdle =>
          if (orv(rbFull) = '1') then --deskew overflow
             rbNstate <= stError;

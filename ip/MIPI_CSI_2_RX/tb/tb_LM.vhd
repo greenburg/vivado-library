@@ -62,7 +62,8 @@ architecture Behavioral of tb_LM is
          rbErrSkew : out std_logic;
          rbErrOvf : out std_logic;
          
-         aRst : in std_logic
+         rbEn : in std_logic;
+         rbRst : in std_logic
       );
    end component LM;
   
@@ -79,7 +80,7 @@ architecture Behavioral of tb_LM is
    signal m_axis_tready : std_logic;
    signal m_axis_tlast : std_logic;
    signal m_axis_tid : std_logic;
-   
+   signal rbRst, rbEn : std_logic;
    constant kClkPeriod : time := 10 ns;
 
    procedure Idle(dur : in time; signal RxValidHS : out std_logic; signal RxSyncHS : out std_logic;
@@ -142,7 +143,6 @@ Lanes: for iLane in 0 to kLaneCount-1 generate
             RxDataHS((iLane+1)*8-1 downto iLane*8) <= data_stim(kLaneCount*i+iLane);
             RxValidHS(iLane) <= '1';
          end if;
-         
          wait until Rising_Edge(RxByteClkHS);
       end loop SendData;
       
@@ -151,6 +151,21 @@ Lanes: for iLane in 0 to kLaneCount-1 generate
       wait;
    end process;
 end generate Lanes;
+
+process
+begin
+   rbRst <= '1';
+   rbEn <= '0';
+   m_axis_tready <= '0';
+   wait until Rising_Edge(RxByteClkHS);
+   wait until Rising_Edge(RxByteClkHS);
+   wait until Rising_Edge(RxByteClkHS);
+   rbRst <= '0';
+   rbEn <= '1';
+   SetFor(17, m_axis_tready, '0', RxByteClkHS);
+   m_axis_tready <= '1';
+   wait;
+end process;
 
 Verification: process (RxByteClkHS)
 variable cnt_byte : natural := 0;
@@ -207,10 +222,12 @@ DUT: LM
       rbMAxisTvalid => m_axis_tvalid,
       rbMAxisTready => m_axis_tready,
       rbMAxisTlast => m_axis_tlast,
+
       rbErrSkew => open,
       rbErrOvf => open,
-      aRst => '0'
+      
+      rbEn           => rbEn,
+      rbRst          => rbRst
    );
 
-m_axis_tready <= '1';
 end Behavioral;

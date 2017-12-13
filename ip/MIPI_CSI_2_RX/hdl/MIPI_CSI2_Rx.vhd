@@ -194,25 +194,37 @@ PPI_Clock_Enable: process(video_aclk)
 begin
    if Rising_Edge(video_aclk) then
       aClkEnableInt <= vEnable and video_aresetn;
+      aDEnableInt <= (others => vEnable and video_aresetn);
    end if;
 end process;
 
 aClkEnable <= aClkEnableInt;
 
-PPI_Data_Enable: process(video_aclk)
-begin
-   if Rising_Edge(video_aclk) then
-      if (video_aresetn = '0') then
-         aDEnableInt    <= (others => '0');
-      else
-         if (vEnable = '0') then
-            aDEnableInt    <= (others => '0');
-         elsif (vTready = '1') then --LLP buffer should be ready to receive data before enabling the PHY
-            aDEnableInt    <= (others => '1');
-         end if;
-      end if;
-   end if;
-end process;
+-- Initially data lanes were only enabled when the LLP module below doing
+-- data buffering was ready to receive data. However, this was problematic for
+-- two reasons:
+-- 1. not all lanes (clock and data) were enabled simultaneously and
+-- 2. since LLP requires a few RxByteClkHS clock cycles to assert ready on its
+-- slave port, the data lanes were only enabled after the clock lane was already
+-- transmitting clock. The data lanes still needed Stop state of T_INIT long
+-- at least to complete initialization after enablement, resulting in loss of
+-- the first data packets.
+-- Instead, we rely on LM to do a limited buffering upon exit from reset and
+-- on T_CLK_PRE 
+--PPI_Data_Enable: process(video_aclk)
+--begin
+--   if Rising_Edge(video_aclk) then
+--      if (video_aresetn = '0') then
+--         aDEnableInt    <= (others => '0');
+--      else
+--         if (vEnable = '0') then
+--            aDEnableInt    <= (others => '0');
+--         elsif (vTready = '1') then --LLP buffer should be ready to receive data before enabling the PHY
+--            aDEnableInt    <= (others => '1');
+--         end if;
+--      end if;
+--   end if;
+--end process;
 
 aDEnable <= aDEnableInt(kLaneCount-1 downto 0);
             
@@ -346,23 +358,24 @@ PORT MAP (
 	probe15 => dbgLLP.mWordCount, 
 	probe16(0) => dbgLLP.mReg_Tvalid, 
 	probe17(0) => dbgLLP.mReg_Tready, 
-	probe18(0) => dbgLLP.mReg_Tlast, 
-	probe19 => dbgLLP.mReg_Tdata, 
-	probe20 => dbgLLP.mReg_Tkeep, 
-	probe21 => dbgLLP.mCRC_Sent, 
-	probe22(0) => dbgLLP.mCRC_En, 
-	probe23(0) => dbgLLP.mCRC_Rst, 
-	probe24 => dbgLLP.mCRC_Out, 
-	probe25(0) => dbgLLP.mFmt_Tvalid, 
-	probe26(0) => dbgLLP.mFmt_Tready, 
-	probe27(0) => dbgLLP.mFmt_Tlast,
-	probe28(0) => dbgLLP.mFmt_Tuser, 
-	probe29 => dbgLLP.mFmt_Tdata, 
-	probe30 => dbgLLP.mFmt_cnt,
-	probe31 => dbgLLP.mBufDataCnt,
-	probe32(0) => aClkEnableInt,
-	probe33 => aDEnableInt,
-	probe34(0) => vTready
+	probe18(0) => dbgLLP.mReg_Tlast,
+	probe19(0) => dbgLLP.mReg_Tuser, 
+	probe20 => dbgLLP.mReg_Tdata, 
+	probe21 => dbgLLP.mReg_Tkeep, 
+	probe22 => dbgLLP.mCRC_Sent, 
+	probe23(0) => dbgLLP.mCRC_En, 
+	probe24(0) => dbgLLP.mCRC_Rst, 
+	probe25 => dbgLLP.mCRC_Out, 
+	probe26(0) => dbgLLP.mFmt_Tvalid, 
+	probe27(0) => dbgLLP.mFmt_Tready, 
+	probe28(0) => dbgLLP.mFmt_Tlast,
+	probe29(0) => dbgLLP.mFmt_Tuser, 
+	probe30 => dbgLLP.mFmt_Tdata, 
+	probe31 => dbgLLP.mFmt_cnt,
+	probe32 => dbgLLP.mBufDataCnt,
+	probe33(0) => aClkEnableInt,
+	probe34 => aDEnableInt,
+	probe35(0) => vTready
 );
 
 SyncAsyncTrigOut: entity work.SyncAsync

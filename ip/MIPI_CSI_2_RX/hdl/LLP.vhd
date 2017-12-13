@@ -589,6 +589,7 @@ dbgLLP.mWordCount <= std_logic_vector(mWordCount);
 dbgLLP.mReg_Tvalid <= mReg_Tvalid;
 dbgLLP.mReg_Tready <= mReg_Tready;
 dbgLLP.mReg_Tlast <= mReg_Tlast;
+dbgLLP.mReg_Tuser <= mReg_Tuser(0);
 dbgLLP.mReg_Tdata <= mReg_Tdata;
 dbgLLP.mReg_Tkeep <= mReg_Tkeep;
 dbgLLP.mCRC_Sent <= mCRC_Sent;
