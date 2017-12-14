@@ -94,4 +94,41 @@ proc post_propagate {cellpath otherInfo } {
    set ver_minor [lindex $ver 1]
    set_property CONFIG.kVersionMajor [expr int($ver_major)] $ip
    set_property CONFIG.kVersionMinor [expr int($ver_minor)] $ip
+   
+   set byte_clk [get_property CONFIG.FREQ_HZ [get_bd_pins $ip/RxByteClkHS]]
+   set byte_clk_domain [get_property CONFIG.CLK_DOMAIN [get_bd_pins $ip/RxByteClkHS]]
+   set byte_clk_phase [get_property CONFIG.PHASE [get_bd_pins $ip/RxByteClkHS]]
+   
+   set video_aclk [get_property CONFIG.FREQ_HZ [get_bd_pins $ip/video_aclk]]
+   set video_aclk_domain [get_property CONFIG.CLK_DOMAIN [get_bd_pins $ip/video_aclk]]
+   set video_aclk_phase [get_property CONFIG.PHASE [get_bd_pins $ip/video_aclk]]
+   
+   if { $byte_clk == "" } {
+      set_property MSG.ERROR "Please connect a valid clock signal to RxByteClkHS" $ip
+      return
+   }
+   if { $video_aclk == "" } {
+      set_property MSG.ERROR "Please connect a valid clock signal to video_aclk" $ip
+      return
+   }
+   
+   set kLaneCount [get_property CONFIG.kLaneCount $ip]
+   set kMaxSamplesPerClock [get_property CONFIG.C_M_MAX_SAMPLES_PER_CLOCK $ip]
+   set kTargetDT [get_property CONFIG.kTargetDT $ip]
+   set bytes_per_px [eval {switch -nocase $kTargetDT {
+      RAW10 {expr {1.25}}
+      default {expr {0}}
+   }}]
+   if { $bytes_per_px == 0 } then {
+      set_property MSG.ERROR "Unknown data type: $kTargetDT" $ip
+      return
+   }
+   set input_rate [expr int($byte_clk)*int($kLaneCount)/$bytes_per_px]
+   set output_rate [expr int($video_aclk)*int($kMaxSamplesPerClock)]
+   if { $input_rate > $output_rate } then {
+      set_property MSG.ERROR [concat "video_aclk frequency is too small to handle RxByteClkHS frequency. Minimum frequency " [expr $input_rate/int($kMaxSamplesPerClock)] "Hz."] $ip
+   } else {
+      bd::send_msg -of $cellpath -type INFO -msg_id 17 -text "Verified that video_aclk frequency can handle RxByteClkHS frequency. AXI-Stream bandwidth $output_rate Pix/s >= PPI bandwidth $input_rate Pix/s"
+   }   
+   
 }

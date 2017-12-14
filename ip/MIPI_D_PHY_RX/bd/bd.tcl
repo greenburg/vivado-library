@@ -4,7 +4,7 @@ proc init { cellpath otherInfo } {
 	set cell_handle [get_bd_cells $cellpath]                                                                 
 	set all_busif [get_bd_intf_pins $cellpath/*]		                                                     
 	set axi_standard_param_list [list ID_WIDTH AWUSER_WIDTH ARUSER_WIDTH WUSER_WIDTH RUSER_WIDTH BUSER_WIDTH]
-	set full_sbusif_list [list  ]
+	set full_sbusif_list [list ]
 			                                                                                                 
 	foreach busif $all_busif {                                                                               
 		if { [string equal -nocase [get_property MODE $busif] "slave"] == 1 } {                            
@@ -15,10 +15,11 @@ proc init { cellpath otherInfo } {
 			}                                                                                                
 			foreach tparam $axi_standard_param_list {                                                        
 				lappend busif_param_list "C_${busif_name}_${tparam}"                                       
-			}                                                                                                
+			}                                                                        
 			bd::mark_propagate_only $cell_handle $busif_param_list			                                 
 		}		                                                                                             
-	}                                                                                                        
+	}
+	bd::mark_propagate_only $cell_handle C_dphy_hs_clk_FREQ_HZ                                                                                                       
 }
 
 
@@ -49,7 +50,7 @@ proc pre_propagate {cellpath otherInfo } {
 				}                                                                                            
 			}			                                                                                     
 		}		                                                                                             
-	}                                                                                                        
+	}                                                                                            
 }
 
 
@@ -81,7 +82,13 @@ proc propagate {cellpath otherInfo } {
 				}                                                                                            
 			}                                                                                                
 		}		                                                                                             
-	}                                                                                                        
+	}
+ 	# Propagate from one interface to the other
+	set dphy_clk [get_property CONFIG.FREQ_HZ [get_bd_intf_pins $cellpath/dphy_hs_clock]]
+	if { $dphy_clk != "" } {
+      set byte_clk [expr int($dphy_clk) / 4]
+      set_property CONFIG.FREQ_HZ $byte_clk [get_bd_pins $cellpath/RxByteClkHS]
+   }                                                                                                         
 }
 
 # Do FREQ_HZ propagation here
@@ -97,6 +104,8 @@ proc post_propagate {cellpath otherInfo } {
    set ref_clk [get_property CONFIG.FREQ_HZ [get_bd_pins $ip/RefClk]]
    set ref_clk_domain [get_property CONFIG.CLK_DOMAIN [get_bd_pins $ip/RefClk]]
    set ref_clk_phase [get_property CONFIG.PHASE [get_bd_pins $ip/RefClk]]
+   
+   set byte_clk [get_property CONFIG.FREQ_HZ [get_bd_pins $ip/RxByteClkHS]]
       
    if { $clk_lite == "" } {
       set_property MSG.ERROR "Please connect a valid clock signal to s_axi_lite_aclk" $ip
@@ -113,7 +122,11 @@ proc post_propagate {cellpath otherInfo } {
       set_property CONFIG.kRefClkFreqHz [expr int($ref_clk)] $ip
       bd::send_msg -of $cellpath -type INFO -msg_id 17 -text "FREQ_HZ of $ref_clk propagated into CONFIG.kRefClkFreqHz"
    }
-   
+
+   if { $byte_clk != "" } {
+      bd::send_msg -of $cellpath -type INFO -msg_id 17 -text "FREQ_HZ of $byte_clk propagated onto RxByteClkHS"
+   }
+      
    set vlnv [get_property VLNV $ip]
    set ver [split [lindex [split $vlnv :] 3] .]
    set ver_major [lindex $ver 0]
