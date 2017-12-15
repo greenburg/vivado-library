@@ -136,8 +136,9 @@ architecture arch_imp of axi_dynclk is
 	signal clk_state                 : CLK_STATE_TYPE := RESET;
 	signal srdy                      : std_logic;
 	signal pxl_clk                   : std_logic;
-	signal locked                    : std_logic;
-	signal locked_n                  : std_logic;
+	signal aLocked, xLocked, xBUFR_Rst : std_logic;
+   signal xLckdFallingFlag, xLckdRisingFlag : std_logic;
+   signal xLocked_q : std_logic_vector(1 downto 0);	
 	signal sen_reg                   : std_logic := '0';
  
 	signal mmcm_fbclk_in             : std_logic;
@@ -214,11 +215,11 @@ end generate DontGenerateBUFMR;
 	port map (
 		O => pxl_clk,     -- 1-bit output: Clock output port
 		CE => '1',   -- 1-bit input: Active high, clock enable (Divided modes only)
-		CLR => locked_n, -- 1-bit input: Active high, asynchronous clear (Divided modes only)		
+		CLR => xBUFR_Rst, -- 1-bit input: Active high, asynchronous clear (Divided modes only)		
 		I => bufio_in      -- 1-bit input: Clock buffer input driven by an IBUF, MMCM or local interconnect
 	);
    
-	locked_n <= not(locked);
+xBUFR_Rst <= xLckdRisingFlag; --pulse CLR on BUFR once the clock returns
   
   Inst_mmcme2_drp: mmcme2_drp 
   GENERIC MAP(
@@ -238,16 +239,36 @@ end generate DontGenerateBUFMR;
 		PXL_CLK => mmcm_clk,
 		CLKFBOUT_O => mmcm_fbclk_out,
 		CLKFBOUT_I => mmcm_fbclk_in,
-		LOCKED_O => locked
+		LOCKED_O => aLocked
 	);
 	
 	mmcm_fbclk_in <= mmcm_fbclk_out; --Don't bother compensating for any delay, because we don't need a phase relationship between
-									--REF_CLK and PXL_CLK
-	
+                           --REF_CLK and PXL_CLK
+                           
+SyncAsyncLocked: entity work.SyncAsync
+   generic map (
+      kResetTo => '0',
+      kStages => 2, --use double FF synchronizer
+      kResetPolarity => '0') 
+   port map (
+      aReset => s_axi_lite_aresetn,
+      aIn => aLocked,
+      OutClk => s_axi_lite_aclk,
+      oOut => xLocked);
+
+LockedDetect: process(s_axi_lite_aclk)
+begin
+   if Rising_Edge(s_axi_lite_aclk) then
+      xLocked_q <= xLocked & xLocked_q(1);
+      xLckdFallingFlag <= xLocked_q(1) and not xLocked;
+      xLckdRisingFlag <= not xLocked_q(1) and xLocked;
+   end if;
+end process LockedDetect;
+      	
 	PXL_CLK_O <= pxl_clk;
-	LOCKED_O <= locked;
+	LOCKED_O <= aLocked; --dcm_locked of processor system reset expects direct connection to MMCM_Locked
    
-   	process (s_axi_lite_aclk)
+   process (s_axi_lite_aclk)
 	begin
     	if (rising_edge(s_axi_lite_aclk)) then
     		if (s_axi_lite_aresetn = '0') then
@@ -259,7 +280,7 @@ end generate DontGenerateBUFMR;
     			when WAIT_LOCKED =>  
 					-- This state ensures that the initial SRDY pulse 
 					-- doesnt interfere with the WAIT_SRDY state
-    				if (locked = '1') then
+    				if (xLocked = '1') then
     					clk_state <= WAIT_EN;
     				end if;
     			when WAIT_EN =>
