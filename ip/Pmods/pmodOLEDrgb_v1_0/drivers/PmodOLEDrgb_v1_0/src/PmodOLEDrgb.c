@@ -21,6 +21,7 @@
 /*    06/16/2016(AndrewH):   fixed OLEDrgb_DrawRectangle()                    */
 /*    08/25/2017(artvvb):    added OLEDrgb_sleep                              */
 /*    11/11/2017(atangzwj):  Validated for Vivado 2016.4                      */
+/*    02/17/2018(atangzwj):  Validated for Vivado 2017.4                      */
 /*                                                                            */
 /******************************************************************************/
 
@@ -66,7 +67,7 @@ XSpi_Config XSpi_OLEDrgb =
 **   Description:
 **      Initialize the OLED display controller and turn the display on.
 */
-void OLEDrgb_begin(PmodOLEDrgb* InstancePtr, u32 GPIO_Address,
+void OLEDrgb_begin(PmodOLEDrgb *InstancePtr, u32 GPIO_Address,
       u32 SPI_Address) {
    int ib;
    InstancePtr->GPIO_addr = GPIO_Address;
@@ -108,7 +109,7 @@ void OLEDrgb_begin(PmodOLEDrgb* InstancePtr, u32 GPIO_Address,
 **   Description:
 **      Powers down the device, leaves pins floating, stops SPI controller
 */
-void OLEDrgb_end(PmodOLEDrgb* InstancePtr) {
+void OLEDrgb_end(PmodOLEDrgb *InstancePtr) {
    OLEDrgb_HostTerm(InstancePtr);
    OLEDrgb_DevTerm(InstancePtr);
 }
@@ -132,7 +133,7 @@ void OLEDrgb_end(PmodOLEDrgb* InstancePtr) {
 **      Draws a pixel in the specified position using the specified color (565
 **      rgb value)
 */
-void OLEDrgb_DrawPixel(PmodOLEDrgb* InstancePtr, u8 c, u8 r, u16 pixelColor) {
+void OLEDrgb_DrawPixel(PmodOLEDrgb *InstancePtr, u8 c, u8 r, u16 pixelColor) {
    u8 cmds[6];
    u8 data[2];
    // Set column start and end
@@ -172,7 +173,7 @@ void OLEDrgb_DrawPixel(PmodOLEDrgb* InstancePtr, u8 c, u8 r, u16 pixelColor) {
 **      Draws a line from the specified start position to the specified
 **      end position using the specified color (565 rgb value).
 */
-void OLEDrgb_DrawLine(PmodOLEDrgb* InstancePtr, u8 c1, u8 r1, u8 c2, u8 r2,
+void OLEDrgb_DrawLine(PmodOLEDrgb *InstancePtr, u8 c1, u8 r1, u8 c2, u8 r2,
       u16 lineColor) {
    u8 cmds[8];
    cmds[0] = CMD_DRAWLINE; // Draw line
@@ -213,7 +214,7 @@ void OLEDrgb_DrawLine(PmodOLEDrgb* InstancePtr, u8 c1, u8 r1, u8 c2, u8 r2,
 **      to the bFill parameter, the rectangle is filled using fillColor (565 rgb
 **      value).
 */
-void OLEDrgb_DrawRectangle(PmodOLEDrgb* InstancePtr, u8 c1, u8 r1, u8 c2, u8 r2,
+void OLEDrgb_DrawRectangle(PmodOLEDrgb *InstancePtr, u8 c1, u8 r1, u8 c2, u8 r2,
       u16 lineColor, u8 bFill, u16 fillColor) {
    u8 cmds[13];
    cmds[0] = CMD_FILLWINDOW;                       // Fill window
@@ -251,7 +252,7 @@ void OLEDrgb_DrawRectangle(PmodOLEDrgb* InstancePtr, u8 c1, u8 r1, u8 c2, u8 r2,
 **      Clear the display. This clears the memory buffer and then updates the
 **      display.
 */
-void OLEDrgb_Clear(PmodOLEDrgb* InstancePtr) {
+void OLEDrgb_Clear(PmodOLEDrgb *InstancePtr) {
    u8 cmds[5];
    cmds[0] = CMD_CLEARWINDOW;     // Enter the "clear mode"
    cmds[1] = 0x00;                // Set the starting column coordinates
@@ -285,7 +286,7 @@ void OLEDrgb_Clear(PmodOLEDrgb* InstancePtr) {
 **      colors (565 rgb values). The number of pixels in the array should match
 **      the surrounding rectangle.
 */
-void OLEDrgb_DrawBitmap(PmodOLEDrgb* InstancePtr, u8 c1, u8 r1, u8 c2, u8 r2,
+void OLEDrgb_DrawBitmap(PmodOLEDrgb *InstancePtr, u8 c1, u8 r1, u8 c2, u8 r2,
       u8 *pBmp) {
    u8 cmds[6];
    //set column start and end
@@ -322,7 +323,7 @@ void OLEDrgb_DrawBitmap(PmodOLEDrgb* InstancePtr, u8 c1, u8 r1, u8 c2, u8 r2,
 **      If either the specified X or Y location is off the display, it is
 **      clamped to be on the display.
 */
-void OLEDrgb_SetCursor(PmodOLEDrgb* InstancePtr, int xch, int ych) {
+void OLEDrgb_SetCursor(PmodOLEDrgb *InstancePtr, int xch, int ych) {
    // Clamp the specified location to the display surface
    if (xch >= InstancePtr->xchOledrgbMax) {
       xch = InstancePtr->xchOledrgbMax - 1;
@@ -354,7 +355,7 @@ void OLEDrgb_SetCursor(PmodOLEDrgb* InstancePtr, int xch, int ych) {
 **   Description:
 **      Fetch the current cursor position
 */
-void OLEDrgb_GetCursor(PmodOLEDrgb* InstancePtr, int *pxch, int* pych) {
+void OLEDrgb_GetCursor(PmodOLEDrgb *InstancePtr, int *pxch, int *pych) {
    *pxch = InstancePtr->xchOledCur;
    *pych = InstancePtr->ychOledCur;
 }
@@ -382,8 +383,8 @@ void OLEDrgb_GetCursor(PmodOLEDrgb* InstancePtr, int *pxch, int* pych) {
 **      corresponding to the left side and most significant bit for each byte
 **      corresponding to the lower side.
 */
-int OLEDrgb_DefUserChar(PmodOLEDrgb* InstancePtr, char ch, u8 * pbDef) {
-   u8 * pb;
+int OLEDrgb_DefUserChar(PmodOLEDrgb *InstancePtr, char ch, u8 *pbDef) {
+   u8 *pb;
    int ib;
 
    if (ch < OLEDRGB_USERCHAR_MAX) {
@@ -416,8 +417,8 @@ int OLEDrgb_DefUserChar(PmodOLEDrgb* InstancePtr, char ch, u8 * pbDef) {
 **      cursor location or the current drawing position in the display buffer.
 **      It uses the font color at the background colors.
 */
-void OLEDrgb_DrawGlyph(PmodOLEDrgb* InstancePtr, char ch) {
-   u8 * pbFont;
+void OLEDrgb_DrawGlyph(PmodOLEDrgb *InstancePtr, char ch) {
+   u8 *pbFont;
    int ibx, iby, iw, x, y;
    u16 rgwCharBmp[OLEDRGB_CHARBYTES << 4];
 
@@ -469,7 +470,7 @@ void OLEDrgb_DrawGlyph(PmodOLEDrgb* InstancePtr, char ch) {
 **      Write the specified character to the display at the current cursor
 **      position and advance the cursor.
 */
-void OLEDrgb_PutChar(PmodOLEDrgb* InstancePtr, char ch) {
+void OLEDrgb_PutChar(PmodOLEDrgb *InstancePtr, char ch) {
    OLEDrgb_DrawGlyph(InstancePtr, ch);
    OLEDrgb_AdvanceCursor(InstancePtr);
 }
@@ -491,7 +492,7 @@ void OLEDrgb_PutChar(PmodOLEDrgb* InstancePtr, char ch) {
 **      Write the specified null terminated character string to the display and
 **      advance the cursor.
 */
-void OLEDrgb_PutString(PmodOLEDrgb* InstancePtr, char * sz) {
+void OLEDrgb_PutString(PmodOLEDrgb *InstancePtr, char *sz) {
    while (*sz != '\0') {
       OLEDrgb_DrawGlyph(InstancePtr, *sz);
       OLEDrgb_AdvanceCursor(InstancePtr);
@@ -517,7 +518,7 @@ void OLEDrgb_PutString(PmodOLEDrgb* InstancePtr, char * sz) {
 **      Set the color to be used as font color when printing characters (565
 **      rgb value)
 */
-void OLEDrgb_SetFontColor(PmodOLEDrgb* InstancePtr, u16 fontColor) {
+void OLEDrgb_SetFontColor(PmodOLEDrgb *InstancePtr, u16 fontColor) {
    InstancePtr->m_FontColor = fontColor;
 }
 
@@ -539,7 +540,7 @@ void OLEDrgb_SetFontColor(PmodOLEDrgb* InstancePtr, u16 fontColor) {
 **      Set the color to be used as font background color when printing
 **      characters (565 rgb value)
 */
-void OLEDrgb_SetFontBkColor(PmodOLEDrgb* InstancePtr, u16 fontBkColor) {
+void OLEDrgb_SetFontBkColor(PmodOLEDrgb *InstancePtr, u16 fontBkColor) {
    InstancePtr->m_FontBkColor = fontBkColor;
 }
 
@@ -564,7 +565,7 @@ void OLEDrgb_SetFontBkColor(PmodOLEDrgb* InstancePtr, u16 fontBkColor) {
 **      corresponding to the left side and most significant bit for each byte
 **      corresponding to the lower side.
 */
-void OLEDrgb_SetCurrentFontTable(PmodOLEDrgb* InstancePtr, u8 *pbFont) {
+void OLEDrgb_SetCurrentFontTable(PmodOLEDrgb *InstancePtr, u8 *pbFont) {
    InstancePtr->pbOledrgbFontCur = pbFont;
 }
 
@@ -590,7 +591,7 @@ void OLEDrgb_SetCurrentFontTable(PmodOLEDrgb* InstancePtr, u8 *pbFont) {
 **      having the first byte corresponding to the left side and most
 **      significant bit for each byte corresponding to the lower side.
 */
-void OLEDrgb_SetCurrentUserFontTable(PmodOLEDrgb* InstancePtr, u8 *pbUserFont) {
+void OLEDrgb_SetCurrentUserFontTable(PmodOLEDrgb *InstancePtr, u8 *pbUserFont) {
    InstancePtr->pbOledrgbFontUser = pbUserFont;
 }
 
@@ -610,7 +611,7 @@ void OLEDrgb_SetCurrentUserFontTable(PmodOLEDrgb* InstancePtr, u8 *pbUserFont) {
 **      Advance the character cursor by one character location, wrapping at the
 **      end of line and back to the top at the end of the display.
 */
-void OLEDrgb_AdvanceCursor(PmodOLEDrgb* InstancePtr) {
+void OLEDrgb_AdvanceCursor(PmodOLEDrgb *InstancePtr) {
    InstancePtr->xchOledCur += 1;
    if (InstancePtr->xchOledCur >= InstancePtr->xchOledrgbMax) {
       InstancePtr->xchOledCur = 0;
@@ -649,7 +650,7 @@ void OLEDrgb_AdvanceCursor(PmodOLEDrgb* InstancePtr) {
 **      the specified parameters for horizontal and/or vertical scrolling.
 **      In the end enables scrolling.
 */
-void OLEDrgb_SetScrolling(PmodOLEDrgb* InstancePtr, u8 scrollH, u8 scrollV,
+void OLEDrgb_SetScrolling(PmodOLEDrgb *InstancePtr, u8 scrollH, u8 scrollV,
       u8 rowAddr, u8 rowNum, u8 timeInterval) {
    u8 cmds[7];
    cmds[0] = CMD_CONTINUOUSSCROLLINGSETUP;
@@ -683,7 +684,7 @@ void OLEDrgb_SetScrolling(PmodOLEDrgb* InstancePtr, u8 scrollH, u8 scrollV,
 **      Enables / Disables scrolling. Scrolling configuration can be set using
 **      the SetScrolling function.
 */
-void OLEDrgb_EnableScrolling(PmodOLEDrgb* InstancePtr, u8 fEnable) {
+void OLEDrgb_EnableScrolling(PmodOLEDrgb *InstancePtr, u8 fEnable) {
    OLEDrgb_WriteSPICommand(InstancePtr,
          fEnable ? CMD_ACTIVESCROLLING : CMD_DEACTIVESCROLLING);
 }
@@ -712,7 +713,7 @@ void OLEDrgb_EnableScrolling(PmodOLEDrgb* InstancePtr, u8 fEnable) {
 **      declared as output and all the initialization sequence is run again
 **      so that all the settings previously made to the device are lost.
 */
-void OLEDrgb_EnablePmod(PmodOLEDrgb* InstancePtr, u8 fEnable) {
+void OLEDrgb_EnablePmod(PmodOLEDrgb *InstancePtr, u8 fEnable) {
    if (fEnable) {
       OLEDrgb_HostInit(InstancePtr);
       OLEDrgb_DevInit(InstancePtr);
@@ -742,7 +743,7 @@ void OLEDrgb_EnablePmod(PmodOLEDrgb* InstancePtr, u8 fEnable) {
 **      and executing Display on / off command. All the settings and visual
 **      content are preserved when backlight is enabled after it was disabled.
 */
-void OLEDrgb_EnableBackLight(PmodOLEDrgb* InstancePtr, u8 fEnable) {
+void OLEDrgb_EnableBackLight(PmodOLEDrgb *InstancePtr, u8 fEnable) {
    if (fEnable) {
       Xil_Out32(InstancePtr->GPIO_addr + 4,
             Xil_In32(InstancePtr->GPIO_addr + 4) & 0xB); // 0b1011
@@ -780,7 +781,7 @@ void OLEDrgb_EnableBackLight(PmodOLEDrgb* InstancePtr, u8 fEnable) {
 **   Description:
 **      Copy the specified rectangle to the new location.
 */
-void OLEDrgb_Copy(PmodOLEDrgb* InstancePtr, u8 c1, u8 r1, u8 c2, u8 r2, u8 c3,
+void OLEDrgb_Copy(PmodOLEDrgb *InstancePtr, u8 c1, u8 r1, u8 c2, u8 r2, u8 c3,
       u8 r3) {
    u8 cmds[7];
    cmds[0] = CMD_COPYWINDOW;
@@ -814,7 +815,7 @@ void OLEDrgb_Copy(PmodOLEDrgb* InstancePtr, u8 c1, u8 r1, u8 c2, u8 r2, u8 c3,
 **   Description:
 **      Dim the content inside the specified rectangle.
 */
-void OLEDrgb_Dim(PmodOLEDrgb* InstancePtr, u8 c1, u8 r1, u8 c2, u8 r2) {
+void OLEDrgb_Dim(PmodOLEDrgb *InstancePtr, u8 c1, u8 r1, u8 c2, u8 r2) {
    u8 cmds[5];
    cmds[0] = CMD_DIMWINDOW;
    cmds[1] = c1; // Set the starting column coordinates
@@ -842,7 +843,7 @@ void OLEDrgb_Dim(PmodOLEDrgb* InstancePtr, u8 c1, u8 r1, u8 c2, u8 r2) {
 **      Perform FPGA device initialization to prepare for use of the OLEDrgb
 **      display.
 */
-void OLEDrgb_HostInit(PmodOLEDrgb* InstancePtr) {
+void OLEDrgb_HostInit(PmodOLEDrgb *InstancePtr) {
    Xil_Out32(InstancePtr->GPIO_addr + 4, 0x0000);
    Xil_Out32(InstancePtr->GPIO_addr, 0xA);
    // Start the SPI driver so that the device is enabled.
@@ -866,7 +867,7 @@ void OLEDrgb_HostInit(PmodOLEDrgb* InstancePtr) {
 **   Description:
 **      Releases processor resources used by the library
 */
-void OLEDrgb_HostTerm(PmodOLEDrgb* InstancePtr) {
+void OLEDrgb_HostTerm(PmodOLEDrgb *InstancePtr) {
    XSpi_Stop(&InstancePtr->OLEDSpi);
    // Make signal pins and power control pins be inputs.
    Xil_Out32(InstancePtr->GPIO_addr, 0x3); // 0b0011
@@ -888,7 +889,7 @@ void OLEDrgb_HostTerm(PmodOLEDrgb* InstancePtr) {
 **   Description:
 **      Initializes the OLEDrgb display controller and turn the display on.
 */
-void OLEDrgb_DevInit(PmodOLEDrgb* InstancePtr) {
+void OLEDrgb_DevInit(PmodOLEDrgb *InstancePtr) {
    u8 cmds[39];
 
    // Bring PmodEn HIGH
@@ -993,9 +994,9 @@ void OLEDrgb_DevInit(PmodOLEDrgb* InstancePtr) {
 **   Description:
 **      Shuts down the OLEDrgb display hardware
 */
-void OLEDrgb_DevTerm(PmodOLEDrgb* InstancePtr) {
+void OLEDrgb_DevTerm(PmodOLEDrgb *InstancePtr) {
    OLEDrgb_WriteSPICommand(InstancePtr, CMD_DISPLAYOFF);
-   Xil_Out32(InstancePtr->GPIO_addr, Xil_In32(InstancePtr->GPIO_addr) & 0xB); // 0b1011
+   Xil_Out32(InstancePtr->GPIO_addr, Xil_In32(InstancePtr->GPIO_addr) & 0xB);
    usleep(1000 * 400);
 }
 /* ------------------------------------------------------------ */
@@ -1059,7 +1060,7 @@ int OLEDrgb_SPIInit(XSpi *SpiInstancePtr) {
 **
 **
 */
-void OLEDrgb_WriteSPICommand(PmodOLEDrgb* InstancePtr, u8 cmd) {
+void OLEDrgb_WriteSPICommand(PmodOLEDrgb *InstancePtr, u8 cmd) {
    XSpi_Transfer(&InstancePtr->OLEDSpi, &cmd, NULL, 1);
 }
 
@@ -1082,7 +1083,7 @@ void OLEDrgb_WriteSPICommand(PmodOLEDrgb* InstancePtr, u8 cmd) {
 **   Description:
 **      Writes a series of commands followed by data over SPI
 */
-void OLEDrgb_WriteSPI(PmodOLEDrgb* InstancePtr, u8 *pCmd, int nCmd, u8 *pData,
+void OLEDrgb_WriteSPI(PmodOLEDrgb *InstancePtr, u8 *pCmd, int nCmd, u8 *pData,
       int nData) {
    XSpi_Transfer(&InstancePtr->OLEDSpi, pCmd, 0, nCmd);
    if (nData != 0) {

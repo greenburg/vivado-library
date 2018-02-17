@@ -17,6 +17,7 @@
 /*    02/08/2016(TommyK):   Created                                           */
 /*    08/25/2017(artvvb):   Added proper cache management functions           */
 /*    11/11/2017(atangzwj): Validated for Vivado 2016.4                       */
+/*    02/17/2018(atangzwj): Validated for Vivado 2017.4                       */
 /*                                                                            */
 /******************************************************************************/
 
