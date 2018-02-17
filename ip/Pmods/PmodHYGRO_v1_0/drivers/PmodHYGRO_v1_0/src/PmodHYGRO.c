@@ -83,26 +83,6 @@ void HYGRO_begin(PmodHYGRO* InstancePtr, u32 IIC_Address, u8 Chip_Address,
    HYGRO_DelayMillis(InstancePtr, 15);
 }
 
-
-/* ------------------------------------------------------------ */
-/*** HYGRO_end(void)
-**
-**   Parameters:
-**      InstancePtr - PmodHYGRO object to stop
-**
-**   Return Value:
-**      none
-**
-**   Errors:
-**      none
-**
-**   Description:
-**      Stops the device
-*/
-void HYGRO_end(PmodHYGRO* InstancePtr){
-   //XIic_Stop(&InstancePtr->HYGROIic);
-}
-
 /* ------------------------------------------------------------ */
 /*** void HYGRO_TimerInit(XTmrCtr* TimerInstancePtr,
 **         XTmrCtr_Config* TimerConfigPtr)

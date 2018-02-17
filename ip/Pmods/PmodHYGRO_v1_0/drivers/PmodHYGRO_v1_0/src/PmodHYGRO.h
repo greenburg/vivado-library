@@ -65,7 +65,6 @@ typedef struct PmodHYGRO {
 
 void HYGRO_begin(PmodHYGRO* InstancePtr, u32 IIC_Address, u8 Chip_Address,
       u32 TMR_Address, UINTPTR TMR_DeviceId, u32 TMR_SysClockFreqHz);
-void HYGRO_end(PmodHYGRO* InstancePtr);
 void HYGRO_TimerInit(XTmrCtr* TMRInstancePtr, XTmrCtr_Config* TMRConfigPtr);
 int HYGRO_IICInit(XIic *IicInstancePtr);
 void HYGRO_ReadIIC(PmodHYGRO* InstancePtr, u8 reg, u8 *Data, int nData,
