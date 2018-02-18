@@ -83,7 +83,7 @@ void DemoRun() {
       temp_degf = HYGRO_tempC2F(temp_degc);
       hum_perrh = HYGRO_getHumidity(&myDevice);
       xil_printf(
-         "Temperature: %d.%d deg F  Humidity: %d.%d RH\n\r",
+         "Temperature: %d.%02d deg F  Humidity: %d.%02d RH\n\r",
          (int) temp_degf,
          ((int) (temp_degf * 100)) % 100,
          (int) hum_perrh,
