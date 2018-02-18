@@ -27,6 +27,7 @@
 /*    01/30/2017(ArtVVB):   Created                                           */
 /*    02/21/2017(ArtVVB):   Validated                                         */
 /*    11/08/2017(atangzwj): Validated for Vivado 2016.4                       */
+/*    02/17/2018(atangzwj): Validated for Vivado 2017.4                       */
 /*                                                                            */
 /******************************************************************************/
 
