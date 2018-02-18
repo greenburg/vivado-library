@@ -15,6 +15,7 @@
 /*                                                                            */
 /*    06/15/2016(MikelS):   Created                                           */
 /*    10/02/2017(atangzwj): Validated for Vivado 2015.4                       */
+/*    02/17/2018(atangzwj): Validated for Vivado 2017.4                       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -40,20 +41,20 @@ XSpi_Config GYROConfig =
 };
 
 /* ------------------------------------------------------------ */
-/***    GYRO_Int1Status
+/*** GYRO_Int1Status
  **
- **     Parameters:
- **             InstancePtr - PmodGYRO object to send to
+ **  Parameters:
+ **     InstancePtr - PmodGYRO object to send to
  **
- **     Return Value:
- **             bool - If function executed successfully
+ **  Return Value:
+ **     bool - If function executed successfully
  **
- **     Errors:
- **             none
+ **  Errors:
+ **     None
  **
- **     Description:
- **             Reads the interrupt bit (bit 0) found at the base address of the
- **             GYRO and checks if the interrupt was triggered.
+ **  Description:
+ **     Reads the interrupt bit (bit 0) found at the base address of the GYRO
+ **     and checks if the interrupt was triggered.
  */
 GYRO_bool GYRO_Int1Status(PmodGYRO *InstancePtr) {
    //int 1 is bit 0
@@ -62,20 +63,20 @@ GYRO_bool GYRO_Int1Status(PmodGYRO *InstancePtr) {
 }
 
 /* ------------------------------------------------------------ */
-/***    GYRO_Int2Status
+/*** GYRO_Int2Status
  **
- **     Parameters:
- **             InstancePtr - PmodGYRO object to send to
+ **  Parameters:
+ **     InstancePtr - PmodGYRO object to send to
  **
- **     Return Value:
- **             bool - If function executed successfully
+ **  Return Value:
+ **     bool - If function executed successfully
  **
- **     Errors:
- **             none
+ **  Errors:
+ **     None
  **
- **     Description:
- **             Reads the interrupt bit (bit 1) found at the base address of the
- **             GYRO and checks if the interrupt was triggered.
+ **  Description:
+ **     Reads the interrupt bit (bit 1) found at the base address of the GYRO
+ **     and checks if the interrupt was triggered.
  */
 GYRO_bool GYRO_Int2Status(PmodGYRO *InstancePtr) {
    //int 2 is bit 1
@@ -84,24 +85,24 @@ GYRO_bool GYRO_Int2Status(PmodGYRO *InstancePtr) {
 }
 
 /* ------------------------------------------------------------ */
-/***    GYRO_getX
+/*** GYRO_getX
  **
- **     Parameters:
- **             InstancePtr - PmodGYRO object to send to
+ **  Parameters:
+ **     InstancePtr - PmodGYRO object to send to
  **
- **     Return Value:
- **             xAxis - grabs the values from both L and H registers and returns
- **                     the value.
+ **  Return Value:
+ **     xAxis - grabs the values from both L and H registers and returns the
+ **     value.
  **
- **     Errors:
- **             none
+ **  Errors:
+ **     None
  **
- **     Description:
- **             Reads from the L and H registers to get the current angular
- **             velocity in the X-Axis.
+ **  Description:
+ **     Reads from the L and H registers to get the current angular velocity in
+ **     the X-Axis.
  */
 int16_t GYRO_getX(PmodGYRO *InstancePtr) {
-   uint8_t temp[2] = { 0, 0 };
+   uint8_t temp[2] = {0, 0};
    int16_t xAxis = 0;
 
    GYRO_ReadReg(InstancePtr, GYRO_OUT_X_L, temp, 2);
@@ -113,21 +114,21 @@ int16_t GYRO_getX(PmodGYRO *InstancePtr) {
 }
 
 /* ------------------------------------------------------------ */
-/***    GYRO_getY
+/*** GYRO_getY
  **
- **     Parameters:
- **             InstancePtr - PmodGYRO object to send to
+ **  Parameters:
+ **     InstancePtr - PmodGYRO object to send to
  **
- **     Return Value:
- **             yAxis - grabs the values from both L and H registers and
- **                     returns the value.
+ **  Return Value:
+ **     yAxis - grabs the values from both L and H registers and returns the
+ **     value.
  **
- **     Errors:
- **             none
+ **  Errors:
+ **     None
  **
- **     Description:
- **             Reads from the L and H registers to get the current angular
- **             velocity in the Y-Axis.
+ **  Description:
+ **     Reads from the L and H registers to get the current angular velocity in
+ **     the Y-Axis.
  */
 int16_t GYRO_getY(PmodGYRO *InstancePtr) {
    uint8_t temp[2] = { 0, 0 };
@@ -142,21 +143,21 @@ int16_t GYRO_getY(PmodGYRO *InstancePtr) {
 }
 
 /* ------------------------------------------------------------ */
-/***    GYRO_getZ
+/*** GYRO_getZ
  **
- **     Parameters:
- **             InstancePtr - PmodGYRO object to send to
+ **  Parameters:
+ **     InstancePtr - PmodGYRO object to send to
  **
- **     Return Value:
- **             zAxis - grabs the values from both L and H registers and returns
- **                     the value.
+ **  Return Value:
+ **     zAxis - grabs the values from both L and H registers and returns
+ **             the value.
  **
- **     Errors:
- **             none
+ **  Errors:
+ **     None
  **
- **     Description:
- **             Reads from the L and H registers to get the current
- **             angular velocity in the Z-Axis.
+ **  Description:
+ **     Reads from the L and H registers to get the current angular velocity in
+ **     the Z-Axis.
  */
 int16_t GYRO_getZ(PmodGYRO *InstancePtr) {
    uint8_t temp[2] = { 0, 0 };
@@ -171,20 +172,20 @@ int16_t GYRO_getZ(PmodGYRO *InstancePtr) {
 }
 
 /* ------------------------------------------------------------ */
-/***    GYRO_getTemp
+/*** GYRO_getTemp
  **
- **      Parameters:
- **              InstancePtr - PmodGYRO object to send to
+ **  Parameters:
+ **     InstancePtr - PmodGYRO object to send to
  **
- **      Return Value:
- **              temp - the current temperature reading
+ **  Return Value:
+ **     temp - the current temperature reading
  **
- **      Errors:
- **              none
+ **  Errors:
+ **     None
  **
- **      Description:
- **              Grabs the current temperature reading in Celsius and converts
- **              to Fahrenheit
+ **  Description:
+ **     Grabs the current temperature reading in Celsius and converts to
+ **     Fahrenheit
  */
 int8_t GYRO_getTemp(PmodGYRO *InstancePtr) {
    int8_t temp = 0;
@@ -192,24 +193,24 @@ int8_t GYRO_getTemp(PmodGYRO *InstancePtr) {
    GYRO_ReadReg(InstancePtr, GYRO_OUT_TEMP, (uint8_t *) &temp, 1);
 
    temp = 44 - temp; // Celsius
-   temp = 32 + (1.8 * temp); // converts to Farenheit
+   temp = 32 + (1.8 * temp); // Converts to Farenheit
    return temp;
 }
 
 /* ------------------------------------------------------------ */
-/***    GYRO_getInt1Src
+/*** GYRO_getInt1Src
  **
- **     Parameters:
- **             InstancePtr - PmodGYRO object to send to
+ **  Parameters:
+ **     InstancePtr - PmodGYRO object to send to
  **
- **     Return Value:
- **             temp - used to store the value of interrupt register 1
+ **  Return Value:
+ **     temp - used to store the value of interrupt register 1
  **
- **     Errors:
- **             none
+ **  Errors:
+ **     None
  **
- **     Description:
- **             Returns the contents of Int 1 register
+ **  Description:
+ **     Returns the contents of Int 1 register
  */
 uint8_t GYRO_getInt1Src(PmodGYRO *InstancePtr) {
    uint8_t temp = 0;
@@ -220,19 +221,19 @@ uint8_t GYRO_getInt1Src(PmodGYRO *InstancePtr) {
 }
 
 /* ------------------------------------------------------------ */
-/***    GYRO_enableInt1
+/*** GYRO_enableInt1
  **
- **     Parameters:
- **             InstancePtr - PmodGYRO object to send to
+ **  Parameters:
+ **     InstancePtr - PmodGYRO object to send to
  **
- **     Return Value:
- **             bool - If successful
+ **  Return Value:
+ **     bool - If successful
  **
- **     Errors:
- **             none
+ **  Errors:
+ **     None
  **
- **     Description:
- **             Enables interrupt 1
+ **  Description:
+ **     Enables interrupt 1
  */
 GYRO_bool GYRO_enableInt1(PmodGYRO *InstancePtr, uint8_t mode) {
    uint8_t temp = 0;
@@ -250,19 +251,19 @@ GYRO_bool GYRO_enableInt1(PmodGYRO *InstancePtr, uint8_t mode) {
 }
 
 /* ------------------------------------------------------------ */
-/***    GYRO_disableInt1
+/*** GYRO_disableInt1
  **
- **     Parameters:
- **             InstancePtr - PmodGYRO object to send to
+ **  Parameters:
+ **     InstancePtr - PmodGYRO object to send to
  **
- **     Return Value:
- **             bool - If successful
+ **  Return Value:
+ **     bool - If successful
  **
- **     Errors:
- **             none
+ **  Errors:
+ **     None
  **
- **     Description:
- **             Disables interrupt 1
+ **  Description:
+ **     Disables interrupt 1
  */
 GYRO_bool GYRO_disableInt1(PmodGYRO *InstancePtr) {
    uint8_t temp = 0;
@@ -278,20 +279,20 @@ GYRO_bool GYRO_disableInt1(PmodGYRO *InstancePtr) {
 }
 
 /* ------------------------------------------------------------ */
-/***    GYRO_enableInt2
+/*** GYRO_enableInt2
  **
- **     Parameters:
- **             InstancePtr - PmodGYRO object to send to
- **             mode        - Interrupt mode
+ **  Parameters:
+ **     InstancePtr - PmodGYRO object to send to
+ **     mode        - Interrupt mode
  **
- **     Return Value:
- **             bool - If successful
+ **  Return Value:
+ **     bool - If successful
  **
- **     Errors:
- **             none
+ **  Errors:
+ **     None
  **
- **     Description:
- **             Enables interrupt 2
+ **  Description:
+ **     Enables interrupt 2
  */
 GYRO_bool GYRO_enableInt2(PmodGYRO *InstancePtr, uint8_t mode) {
    uint8_t temp = 0;
@@ -307,19 +308,19 @@ GYRO_bool GYRO_enableInt2(PmodGYRO *InstancePtr, uint8_t mode) {
 }
 
 /* ------------------------------------------------------------ */
-/***    GYRO_disableInt2
+/*** GYRO_disableInt2
  **
- **     Parameters:
- **             InstancePtr - PmodGYRO object to send to
+ **  Parameters:
+ **     InstancePtr - PmodGYRO object to send to
  **
- **     Return Value:
- **             bool - If successful
+ **  Return Value:
+ **     bool - If successful
  **
- **     Errors:
- **             none
+ **  Errors:
+ **     None
  **
- **     Description:
- **             Disables interrupt 2
+ **  Description:
+ **     Disables interrupt 2
  */
 GYRO_bool GYRO_disableInt2(PmodGYRO *InstancePtr) {
    uint8_t temp = 0;
@@ -335,143 +336,142 @@ GYRO_bool GYRO_disableInt2(PmodGYRO *InstancePtr) {
 }
 
 /* ------------------------------------------------------------ */
-/***    GYRO_setThsXL
+/*** GYRO_setThsXL
  **
- **     Parameters:
- **             InstancePtr - PmodGYRO object to send to
- **             ths         - Threshold to set
+ **  Parameters:
+ **     InstancePtr - PmodGYRO object to send to
+ **     ths         - Threshold to set
  **
- **     Return Value:
- **             bool - If successful
+ **  Return Value:
+ **     bool - If successful
  **
- **     Errors:
- **             none
+ **  Errors:
+ **     None
  **
- **     Description:
- **             Sets the X-Axis Low threshold value
+ **  Description:
+ **     Sets the X-Axis Low threshold value
  */
 GYRO_bool GYRO_setThsXL(PmodGYRO *InstancePtr, uint8_t ths) {
    return GYRO_WriteReg(InstancePtr, GYRO_INT1_TSH_XL, &ths, 1);
 }
 
 /* ------------------------------------------------------------ */
-/***    GYRO_setThsXH
+/*** GYRO_setThsXH
  **
- **     Parameters:
- **             InstancePtr - PmodGYRO object to send to
- **             ths         - Threshold to set
+ **  Parameters:
+ **     InstancePtr - PmodGYRO object to send to
+ **     ths         - Threshold to set
  **
- **     Return Value:
- **             bool - If successful
+ **  Return Value:
+ **     bool - If successful
  **
- **     Errors:
- **             none
+ **  Errors:
+ **     None
  **
- **     Description:
- **             Sets the X-Axis High threshold value
+ **  Description:
+ **     Sets the X-Axis High threshold value
  */
 GYRO_bool GYRO_setThsXH(PmodGYRO *InstancePtr, uint8_t ths) {
    return GYRO_WriteReg(InstancePtr, GYRO_INT1_TSH_XH, &ths, 1);
 }
 
 /* ------------------------------------------------------------ */
-/***    GYRO_setThsYH
+/*** GYRO_setThsYH
  **
- **     Parameters:
- **             InstancePtr - PmodGYRO object to send to
- **             ths         - Threshold to set
+ **  Parameters:
+ **     InstancePtr - PmodGYRO object to send to
+ **     ths         - Threshold to set
  **
- **     Return Value:
- **             bool - If successful
+ **  Return Value:
+ **     bool - If successful
  **
- **     Errors:
- **             none
+ **  Errors:
+ **     None
  **
- **     Description:
- **             Sets the Y-Axis High threshold value
- **
+ **  Description:
+ **     Sets the Y-Axis High threshold value
  */
 GYRO_bool GYRO_setThsYH(PmodGYRO *InstancePtr, uint8_t ths) {
    return GYRO_WriteReg(InstancePtr, GYRO_INT1_TSH_YH, &ths, 1);
 }
 
 /* ------------------------------------------------------------ */
-/***    GYRO_setThsYL
+/*** GYRO_setThsYL
  **
- **     Parameters:
- **             InstancePtr - PmodGYRO object to send to
- **             ths         - Threshold to set
+ **  Parameters:
+ **     InstancePtr - PmodGYRO object to send to
+ **     ths         - Threshold to set
  **
- **     Return Value:
- **             bool - If successful
+ **  Return Value:
+ **     bool - If successful
  **
- **     Errors:
- **             none
+ **  Errors:
+ **     None
  **
- **     Description:
- **             Sets the Y-Axis Low threshold value
+ **  Description:
+ **     Sets the Y-Axis Low threshold value
  */
 GYRO_bool GYRO_setThsYL(PmodGYRO *InstancePtr, uint8_t ths) {
    return GYRO_WriteReg(InstancePtr, GYRO_INT1_TSH_YL, &ths, 1);
 }
 
 /* ------------------------------------------------------------ */
-/***    GYRO_setThsZH
+/*** GYRO_setThsZH
  **
- **     Parameters:
- **             InstancePtr - PmodGYRO object to send to
- **             ths         - Threshold to set
+ **  Parameters:
+ **     InstancePtr - PmodGYRO object to send to
+ **     ths         - Threshold to set
  **
- **     Return Value:
- **             bool - If successful
+ **  Return Value:
+ **     bool - If successful
  **
- **     Errors:
- **             none
+ **  Errors:
+ **     None
  **
- **     Description:
- **             Sets the Z-Axis High threshold value
+ **  Description:
+ **     Sets the Z-Axis High threshold value
  */
 GYRO_bool GYRO_setThsZH(PmodGYRO *InstancePtr, uint8_t ths) {
    return GYRO_WriteReg(InstancePtr, GYRO_INT1_TSH_ZH, &ths, 1);
 }
 
 /* ------------------------------------------------------------ */
-/***    GYRO_setThsZL
+/*** GYRO_setThsZL
  **
- **     Parameters:
- **             InstancePtr - PmodGYRO object to send to
- **             ths         - Threshold to set
+ **  Parameters:
+ **     InstancePtr - PmodGYRO object to send to
+ **     ths         - Threshold to set
  **
- **     Return Value:
- **             bool - If successful
+ **  Return Value:
+ **     bool - If successful
  **
- **     Errors:
- **             none
+ **  Errors:
+ **     None
  **
- **     Description:
- **             Sets the Z-Axis Low threshold value
+ **  Description:
+ **     Sets the Z-Axis Low threshold value
  */
 GYRO_bool GYRO_setThsZL(PmodGYRO *InstancePtr, uint8_t ths) {
    return GYRO_WriteReg(InstancePtr, GYRO_INT1_TSH_ZL, &ths, 1);
 }
 
 /* ------------------------------------------------------------ */
-/***    GYRO_begin
+/*** GYRO_begin
  **
- **     Parameters:
- **             InstancePtr: A PmodGYRO object to start
- **             SPI_Address: The Base address of the PmodGYRO SPI
+ **  Parameters:
+ **     InstancePtr: A PmodGYRO object to start
+ **     SPI_Address: The Base address of the PmodGYRO SPI
  **
- **     Return Value:
- **             none
+ **  Return Value:
+ **     None
  **
- **     Errors:
- **             none
+ **  Errors:
+ **     None
  **
- **     Description:
- **             Initialize the PmodGYRO.
+ **  Description:
+ **     Initialize the PmodGYRO.
  */
-GYRO_bool GYRO_begin(PmodGYRO* InstancePtr, u32 SPI_Address, u32 GPIO_Address) {
+GYRO_bool GYRO_begin(PmodGYRO *InstancePtr, u32 SPI_Address, u32 GPIO_Address) {
    uint8_t temp = 0;
 
    GYROConfig.BaseAddress = SPI_Address;
@@ -495,38 +495,38 @@ GYRO_bool GYRO_begin(PmodGYRO* InstancePtr, u32 SPI_Address, u32 GPIO_Address) {
 }
 
 /* ------------------------------------------------------------ */
-/***    GYRO_end(void)
+/*** GYRO_end(void)
  **
- **     Parameters:
- **             InstancePtr - PmodGYRO object to stop
+ **  Parameters:
+ **     InstancePtr - PmodGYRO object to stop
  **
- **     Return Value:
- **             none
+ **  Return Value:
+ **     None
  **
- **     Errors:
- **             none
+ **  Errors:
+ **     None
  **
- **     Description:
- **             Stops the device
+ **  Description:
+ **     Stops the device
  */
-void GYRO_end(PmodGYRO* InstancePtr) {
+void GYRO_end(PmodGYRO *InstancePtr) {
    XSpi_Stop(&InstancePtr->GYROSpi);
 }
 
 /* ------------------------------------------------------------ */
-/***    GYRO_SPIInit
+/*** GYRO_SPIInit
  **
- **     Parameters:
- **             XSpi *SpiInstancePtr - XSpi object to start
+ **  Parameters:
+ **     XSpi *SpiInstancePtr - XSpi object to start
  **
- **     Return Value:
- **             none
+ **  Return Value:
+ **     None
  **
- **     Errors:
- **             none
+ **  Errors:
+ **     None
  **
- **     Description:
- **             Initializes the PmodGYRO SPI.
+ **  Description:
+ **     Initializes the PmodGYRO SPI.
  */
 int GYRO_SPIInit(XSpi *SpiInstancePtr) {
    int Status;
@@ -563,73 +563,73 @@ int GYRO_SPIInit(XSpi *SpiInstancePtr) {
 }
 
 /* ------------------------------------------------------------ */
-/***    GYRO_Readbyte
+/*** GYRO_Readbyte
  **
- **     Synopsis:
- **             byte = GYRO_Readbyte(&GYRO)
+ **  Synopsis:
+ **     byte = GYRO_Readbyte(&GYRO)
  **
- **     Parameters:
- **             PmodGYRO *InstancePtr - the PmodGYRO object to communicate with
+ **  Parameters:
+ **     PmodGYRO *InstancePtr - the PmodGYRO object to communicate with
  **
- **     Return Value:
- **             u8 byte - Byte read from XSpi
+ **  Return Value:
+ **     u8 byte - Byte read from XSpi
  **
- **     Errors:
- **             none
+ **  Errors:
+ **     None
  **
- **     Description:
- **             Reads SPI
+ **  Description:
+ **     Reads SPI
  */
-u8 GYRO_ReadByte(PmodGYRO* InstancePtr) {
+u8 GYRO_ReadByte(PmodGYRO *InstancePtr) {
    u8 byte;
    XSpi_Transfer(&InstancePtr->GYROSpi, &byte, &byte, 1);
    return byte;
 }
 
 /* ------------------------------------------------------------ */
-/***    GYRO_WriteByte
+/*** GYRO_WriteByte
  **
- **     Parameters:
- **             InstancePtr - PmodGYRO object
- **             cmd         - Command to send
+ **  Parameters:
+ **     InstancePtr - PmodGYRO object
+ **     cmd         - Command to send
  **
- **     Return Value:
- **             none
+ **  Return Value:
+ **     None
  **
- **     Errors:
- **             none
+ **  Errors:
+ **     None
  **
- **     Description:
- **             Writes a single byte over SPI
+ **  Description:
+ **     Writes a single byte over SPI
  */
-void GYRO_WriteByte(PmodGYRO* InstancePtr, u8 cmd) {
+void GYRO_WriteByte(PmodGYRO *InstancePtr, u8 cmd) {
    XSpi_Transfer(&InstancePtr->GYROSpi, &cmd, NULL, 1);
 }
 
 /* ------------------------------------------------------------ */
-/***    GYRO_WriteReg
+/*** GYRO_WriteReg
  **
- **     Synopsis:
- **             GYRO_GYRO_WriteReg(&GYROobj, 0x3A, &bytearray, 5);
+ **  Synopsis:
+ **     GYRO_GYRO_WriteReg(&GYROobj, 0x3A, &bytearray, 5);
  **
- **     Parameters:
- **             PmodGYRO *InstancePtr - the PmodGYRO object to communicate with
- **             u8 reg                - the starting register to write to
- **             u8* wData             - the data to write
- **             int nData             - the number of data bytes to write
+ **  Parameters:
+ **     InstancePtr - the PmodGYRO object to communicate with
+ **     reg         - the starting register to write to
+ **     wData       - the data to write
+ **     nData       - the number of data bytes to write
  **
- **     Return Value:
- **             none
+ **  Return Value:
+ **     None
  **
- **     Errors:
- **             none
+ **  Errors:
+ **     None
  **
- **     Description:
- **             Writes the byte array to the chip via SPI. It will write the
- **             first byte into the specified register, then the next into the
- **             following register until all of the data has been sent.
+ **  Description:
+ **     Writes the byte array to the chip via SPI. It will write the first byte
+ **     into the specified register, then the next into the following register
+ **     until all of the data has been sent.
  */
-int GYRO_WriteReg(PmodGYRO* InstancePtr, u8 reg, u8 *wData, int nData) {
+int GYRO_WriteReg(PmodGYRO *InstancePtr, u8 reg, u8 *wData, int nData) {
    // nData = 1
    // As requested by documentation, first byte contains:
    //    bit 7 = 0 because is a write operation
@@ -644,29 +644,29 @@ int GYRO_WriteReg(PmodGYRO* InstancePtr, u8 reg, u8 *wData, int nData) {
 }
 
 /* ------------------------------------------------------------ */
-/***    GYRO_ReadReg
+/*** GYRO_ReadReg
  **
- **     Synopsis:
- **             GYRO_ReadReg(&GYROobj, 0x3A, &bytearray, 5);
+ **  Synopsis:
+ **     GYRO_ReadReg(&GYROobj, 0x3A, &bytearray, 5);
  **
- **     Parameters:
- **             PmodGYRO *InstancePtr - the PmodGYRO object to communicate with
- **             u8 reg                - the starting register to read from
- **             u8* rData             - the byte array to read into
- **             int nData             - the number of data bytes to read
+ **  Parameters:
+ **     InstancePtr - the PmodGYRO object to communicate with
+ **     reg        - the starting register to read from
+ **     rData     - the byte array to read into
+ **     nData     - the number of data bytes to read
  **
- **     Return Value:
- **             none
+ **  Return Value:
+ **     None
  **
- **     Errors:
- **             none
+ **  Errors:
+ **     None
  **
- **     Description:
- **             Reads data in through SPI. It will read the first byte from the
- **             starting register, then the next from the following register.
- **             Data is stored into rData.
+ **  Description:
+ **     Reads data in through SPI. It will read the first byte from the starting
+ **     register, then the next from the following register. Data is stored into
+ **     rData.
  */
-void GYRO_ReadReg(PmodGYRO* InstancePtr, u8 reg, u8 *rData, int nData) {
+void GYRO_ReadReg(PmodGYRO *InstancePtr, u8 reg, u8 *rData, int nData) {
    // As requested by documentation, first byte contains:
    //    bit 7 = 1 because is a read operation
    //    bit 6 = 1 if more than one byte is written, 0 if one byte is written
@@ -679,35 +679,32 @@ void GYRO_ReadReg(PmodGYRO* InstancePtr, u8 reg, u8 *rData, int nData) {
 }
 
 /* ------------------------------------------------------------ */
-/***    GYRO_SetRegisterBits
+/*** GYRO_SetRegisterBits
  **
- **     Synopsis:
- **             SetRegisterBits(&GYROobj, GYRO_ADR_POWER_CTL, bPowerControlMask,
- **                   fValue);
+ **  Synopsis:
+ **     SetRegisterBits(&GYROobj, GYRO_ADR_POWER_CTL, bPowerControlMask,
+ **           fValue);
  **
- **     Parameters:
- **             PmodGYRO *InstancePtr - the PmodGYRO object to communicate with
- **             u8 bRegisterAddress   - the address of the register whose bits
- **                                     are set
- **             u8 bMask              - the mask indicating which bits are
- **                                     affected
- **             u8 fValue             - 1 if the bits are set or 0 if their bits
- **                                     are reset
+ **  Parameters:
+ **     PmodGYRO *InstancePtr - the PmodGYRO object to communicate with
+ **     u8 bRegisterAddress   - the address of the register whose bits are set
+ **     u8 bMask              - the mask indicating which bits are affected
+ **     u8 fValue             - 1 if the bits are set or 0 if their bits are
+ **                             reset
  **
+ **  Return Value:
+ **     void
  **
- **     Return Values:
- **             void
+ **  Errors:
+ **     None
  **
- **     Errors:
- **             none
- **
- **     Description:
- **             This function sets the value of some bits (corresponding to
- **             the bMask) of a register (indicated by bRegisterAddress) to
- **             1 or 0 (indicated by fValue).
+ **  Description:
+ **     This function sets the value of some bits (corresponding to the bMask)
+ **     of a register (indicated by bRegisterAddress) to 1 or 0 (indicated by
+ **     fValue).
  */
-void GYRO_SetRegisterBits(PmodGYRO* InstancePtr, u8 reg, u8 mask,
-      GYRO_bool fValue) {
+void GYRO_SetRegisterBits(PmodGYRO *InstancePtr, u8 reg, u8 mask,
+   GYRO_bool fValue) {
    u8 regval;
    GYRO_ReadReg(InstancePtr, reg, &regval, 1);
    if (fValue)
@@ -718,30 +715,28 @@ void GYRO_SetRegisterBits(PmodGYRO* InstancePtr, u8 reg, u8 mask,
 }
 
 /* ------------------------------------------------------------ */
-/***    GYRO_GetRegisterBits
+/*** GYRO_GetRegisterBits
  **
- **     Synopsis:
- **             return GetRegisterBits(&GYROobj, GYRO_ADR_BW_RATE,
- **                   MSK_BW_RATE_RATE);
+ **  Synopsis:
+ **     return GetRegisterBits(&GYROobj, GYRO_ADR_BW_RATE, MSK_BW_RATE_RATE);
  **
- **     Parameters:
- **             PmodGYRO *InstancePtr - the PmodGYRO object to communicate with
- **             u8 bRegisterAddress   - the address of the register whose bits
- **                                     are read
- **             u8 bMask              - the mask indicating which bits are read
+ **  Parameters:
+ **     InstancePtr      - the PmodGYRO object to communicate with
+ **     bRegisterAddress - the address of the register whose bits are read
+ **     bMask            - the mask indicating which bits are read
  **
  **
- **     Return Values:
- **             u8 - a byte containing only the bits corresponding to the mask.
+ **  Return Value:
+ **     u8 - a byte containing only the bits corresponding to the mask.
  **
- **     Errors:
+ **  Errors:
  **
  **
- **     Description:
- **             Returns a byte containing only the bits from a register
- **             (indicated by bRegisterAddress), corresponding to the bMask mask
+ **  Description:
+ **     Returns a byte containing only the bits from a register (indicated by
+ **     bRegisterAddress), corresponding to the bMask mask
  */
-u8 GYRO_GetRegisterBits(PmodGYRO* InstancePtr, u8 bRegisterAddress, u8 bMask) {
+u8 GYRO_GetRegisterBits(PmodGYRO *InstancePtr, u8 bRegisterAddress, u8 bMask) {
    u8 bRegValue;
    GYRO_ReadReg(InstancePtr, bRegisterAddress, &bRegValue, 1);
    return bRegValue & bMask;
