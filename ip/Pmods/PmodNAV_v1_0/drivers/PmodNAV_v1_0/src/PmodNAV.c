@@ -38,7 +38,6 @@
 
 /***************************** Include Files *******************************/
 #include "PmodNAV.h"
-#include "microblaze_usleep.h"
 #include "sleep.h"
 
 XSpi_Config NAVConfig = {
