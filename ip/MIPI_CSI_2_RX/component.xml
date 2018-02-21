@@ -2000,7 +2000,8 @@
   <spirit:vendorExtensions>
     <xilinx:coreExtensions>
       <xilinx:supportedFamilies>
-        <xilinx:family xilinx:lifeCycle="Beta">zynq</xilinx:family>
+        <xilinx:family xilinx:lifeCycle="Pre-Production">zynq</xilinx:family>
+        <xilinx:family xilinx:lifeCycle="Beta">artix7</xilinx:family>
       </xilinx:supportedFamilies>
       <xilinx:taxonomies>
         <xilinx:taxonomy>/Video_&amp;_Image_Processing</xilinx:taxonomy>
@@ -2008,8 +2009,8 @@
       <xilinx:displayName>MIPI CSI-2 Receiver</xilinx:displayName>
       <xilinx:vendorDisplayName>Digilent, Inc.</xilinx:vendorDisplayName>
       <xilinx:vendorURL>http://www.digilentinc.com</xilinx:vendorURL>
-      <xilinx:coreRevision>32</xilinx:coreRevision>
-      <xilinx:coreCreationDateTime>2018-02-21T10:39:13Z</xilinx:coreCreationDateTime>
+      <xilinx:coreRevision>33</xilinx:coreRevision>
+      <xilinx:coreCreationDateTime>2018-02-21T12:05:46Z</xilinx:coreCreationDateTime>
       <xilinx:tags>
         <xilinx:tag xilinx:name="digilentinc.com:ip:MIPI_CSI_2_RX:1.0_ARCHIVE_LOCATION">c:/git/Zybo-Z7-20-pcam-5c/repo/vivado-library/ip/MIPI_CSI_2_RX</xilinx:tag>
       </xilinx:tags>
