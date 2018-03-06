@@ -53,7 +53,7 @@ use work.DebugLib.all;
 entity MIPI_DPHY_Receiver is
 	generic (
 		-- Users to add parameters here
-		kVersionMajor : natural := 0; -- TCL-propagated from VLNV
+	  kVersionMajor : natural := 0; -- TCL-propagated from VLNV
       kVersionMinor : natural := 0; -- TCL-propagated from VLNV
       kNoOfDataLanes : natural range 1 to 2:= 2;
       kGenerateMMCM : boolean := false;
@@ -63,7 +63,7 @@ entity MIPI_DPHY_Receiver is
       kAddDelayData1_ps : integer := 0;
       kRefClkFreqHz : integer := 200_000_000; -- TCL-propagated
       kDebug : boolean := true;
-
+      kLPFromLane0 : boolean := true;
 		-- Parameters of Axi Slave Bus Interface S_AXI_LITE
 		C_S_AXI_LITE_DATA_WIDTH	: integer	:= 32;
 		C_S_AXI_LITE_ADDR_WIDTH	: integer	:= 4;
@@ -201,6 +201,9 @@ constant kAddAdjDelayData1_ps : integer := kAddDelayData1_ps - kDelayAdjust;
 type dataLaneHSType is array(kNoOfDataLanes-1 downto 0) of std_logic;
 type dataLaneLPType is array(kNoOfDataLanes-1 downto 0) of std_logic_vector(1 downto 0);
 type dataLaneWordType is array(kNoOfDataLanes-1 downto 0) of std_logic_vector(7 downto 0);
+
+type dLP_int_t is array (kNoOfDataLanes-1 downto 0) of std_logic_vector(7 downto 0);
+signal dLP0_in, dLP1_in, dLP0_out, dLP1_out : dLP_int_t;
 
 signal HS_Clock   : std_logic;
 signal HS_Data    : dataLaneHSType;
@@ -457,8 +460,10 @@ ClockLane: entity work.DPHY_LaneSCNN
 -- Date lane modules: enable, input buffer, D-PHY SFEN module
 -------------------------------------------------------------------------------   
 DataLaneGen: for i in kNoOfDataLanes-1 downto 0 generate
-
    InputBufferDataX: entity work.InputBuffer
+      Generic map (
+         kNoLP => kLPFromLane0 and i /= 0
+      )
       Port map (
          HS_p => dphy_data_hs_p(i),
          HS_n => dphy_data_hs_n(i),
@@ -473,9 +478,16 @@ DataLaneGen: for i in kNoOfDataLanes-1 downto 0 generate
    DPHY_LaneSFEN_X: entity work.DPHY_LaneSFEN
       Generic map (
          kRefClkFreqHz => kRefClkFreqHz,
-         kAddDelay_ps => kAddAdjDelayData0_ps
+         kAddDelay_ps => kAddAdjDelayData0_ps,
+         kNoLP => kLPFromLane0 and i /= 0
       )
       Port map (
+         dLP0_in => dLP0_in(i),
+         dLP1_in => dLP1_in(i),
+          
+         dLP0_out => dLP0_out(i),
+         dLP1_out => dLP1_out(i),
+         
          aLP => LP_Data(i),
          aHS => HS_Data(i),
          RefClk => RefClk,
@@ -501,6 +513,11 @@ DataLaneGen: for i in kNoOfDataLanes-1 downto 0 generate
          
          debug => debugSFEN(i)
       );
+ShareLPFromOtherLane: if kLPFromLane0 and i /= 0 generate
+    dLP0_in(i) <= dLP0_out(0);
+    dLP1_in(i) <= dLP0_out(0);
+end generate ShareLPFromOtherLane;
+
       --D0RxClkEsc <=
       --aD0RxDataEsc <=
       --aD0RxValidEsc <=

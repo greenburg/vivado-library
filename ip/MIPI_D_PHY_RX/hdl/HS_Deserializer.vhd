@@ -54,9 +54,15 @@ entity HS_Deserializer is
    Generic (
       kIs8b9b : boolean := false;
       kIDLY_TapWidth : natural := 5;
-      kAddDelay_ps : integer := 0
+      kAddDelay_ps : integer := 0;
+      kNoLP : boolean := false
    );
    Port (
+      dLP0_in : in std_logic_vector(7 downto 0);
+      dLP1_in : in std_logic_vector(7 downto 0);
+      dLP0_out : out std_logic_vector(7 downto 0);
+      dLP1_out : out std_logic_vector(7 downto 0);
+      
       SerClk : in STD_LOGIC; -- DDR serial clock
       DivClk : in STD_LOGIC; -- SDR parallel clock; 1:8 factor => par clock = ser clock/4
       aHSIn : in std_logic;
@@ -265,6 +271,7 @@ SyncAsyncSettled: entity work.SyncAsync
 -- LP de-serializer, 1:8 DDR, non-cascaded,
 -- Although LP signals are low-speed and not synchronous with the HS clock, we need to detect LP
 -- state changes as soon as possible due to tight timing between LP states and HS start.
+UseOwnLP: if not kNoLP generate
 LPxx: for i in 0 to 1 generate
 LP_DeserializerX: ISERDESE2
    generic map (
@@ -316,6 +323,16 @@ LP_DeserializerX: ISERDESE2
       OCLKB             => '0',
       O                 => aLPOut(i)); -- unregistered output of ISERDESE1
 end generate LPxx;
+dLP0_out <= dLP(0);
+dLP1_out <= dLP(1);
+end generate UseOwnLP;
+
+ShareLPFromOtherLane: if kNoLP generate
+    dLP(0) <= dLP0_in;
+    dLP(1) <= dLP1_in;
+    aLPOut(0) <= '0';
+    aLPOut(1) <= '0';
+end generate ShareLPFromOtherLane;
 
 -- We are in Bridge (or HS) state when we sampled 0 at least 2 times on both LP1 on and LP0
 -- TODO: glitch filtering? problematic, because serial clock frequency changes dynamically

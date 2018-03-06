@@ -50,6 +50,9 @@ library UNISIM;
 use UNISIM.VComponents.all;
 
 entity InputBuffer is
+   Generic (
+      kNoLP : boolean := false
+   );
    Port (
       HS_p : in std_logic;
       HS_n : in std_logic;
@@ -76,6 +79,7 @@ port map (
    IB => HS_n -- Diff_n buffer input (connect directly to top-level port)
 );
 
+LaneWithLP: if not kNoLP generate
 LaneLowPower0: IBUF
 generic map (
    IBUF_LOW_PWR => TRUE, -- Low power (TRUE) vs. performance (FALSE) setting for referenced I/O standards
@@ -93,5 +97,9 @@ port map (
    O => aLP(1),     -- Buffer output
    I => LP_p      -- Buffer input (connect directly to top-level port)
 );
+end generate LaneWithLP;
+LaneWithoutLP: if kNoLP generate
+    aLP <= "11";
+end generate LaneWithoutLP;
 
 end Behavioral;

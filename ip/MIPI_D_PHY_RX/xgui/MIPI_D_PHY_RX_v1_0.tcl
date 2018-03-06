@@ -4,6 +4,7 @@ proc init_gui { IPINST } {
   #Adding Page
   set Control [ipgui::add_page $IPINST -name "Control"]
   ipgui::add_param $IPINST -name "kGenerateAXIL" -parent ${Control}
+  ipgui::add_param $IPINST -name "kLPFromLane0" -parent ${Control}
   set kDebug [ipgui::add_param $IPINST -name "kDebug" -parent ${Control}]
   set_property tooltip {Instantiate ILAs to probe pre-defined signals} ${kDebug}
   #Adding Group
@@ -84,6 +85,15 @@ proc update_PARAM_VALUE.kGenerateMMCM { PARAM_VALUE.kGenerateMMCM } {
 
 proc validate_PARAM_VALUE.kGenerateMMCM { PARAM_VALUE.kGenerateMMCM } {
 	# Procedure called to validate kGenerateMMCM
+	return true
+}
+
+proc update_PARAM_VALUE.kLPFromLane0 { PARAM_VALUE.kLPFromLane0 } {
+	# Procedure called to update kLPFromLane0 when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.kLPFromLane0 { PARAM_VALUE.kLPFromLane0 } {
+	# Procedure called to validate kLPFromLane0
 	return true
 }
 
@@ -223,5 +233,10 @@ proc update_MODELPARAM_VALUE.kDebug { MODELPARAM_VALUE.kDebug PARAM_VALUE.kDebug
 proc update_MODELPARAM_VALUE.C_S_AXI_LITE_FREQ_HZ { MODELPARAM_VALUE.C_S_AXI_LITE_FREQ_HZ PARAM_VALUE.C_S_AXI_LITE_FREQ_HZ } {
 	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
 	set_property value [get_property value ${PARAM_VALUE.C_S_AXI_LITE_FREQ_HZ}] ${MODELPARAM_VALUE.C_S_AXI_LITE_FREQ_HZ}
+}
+
+proc update_MODELPARAM_VALUE.kLPFromLane0 { MODELPARAM_VALUE.kLPFromLane0 PARAM_VALUE.kLPFromLane0 } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.kLPFromLane0}] ${MODELPARAM_VALUE.kLPFromLane0}
 }
 

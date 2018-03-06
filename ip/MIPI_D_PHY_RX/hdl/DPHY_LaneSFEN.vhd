@@ -61,9 +61,15 @@ use IEEE.NUMERIC_STD.ALL;
 entity DPHY_LaneSFEN is
    Generic (
       kRefClkFreqHz : natural := 200_000_000;
-      kAddDelay_ps : integer := 0
+      kAddDelay_ps : integer := 0;
+      kNoLP : boolean := false
    );
    Port (
+      dLP0_in : in std_logic_vector(7 downto 0);
+      dLP1_in : in std_logic_vector(7 downto 0);
+      dLP0_out : out std_logic_vector(7 downto 0);
+      dLP1_out : out std_logic_vector(7 downto 0);
+   
       aLP : in STD_LOGIC_VECTOR (1 downto 0);
       aHS : in STD_LOGIC;
       RefClk : in STD_LOGIC;
@@ -334,9 +340,16 @@ end process;
 HSDeserializerX: entity work.HS_Deserializer
    Generic map (
       kIs8b9b => false,
-      kAddDelay_ps => kAddDelay_ps
+      kAddDelay_ps => kAddDelay_ps,
+      kNoLP => kNoLP
    )
    Port map (
+      dLP0_in => dLP0_in,
+      dLP1_in => dLP1_in,
+      
+      dLP0_out => dLP0_out,
+      dLP1_out => dLP1_out,
+      
       SerClk => SerClkHS,
       DivClk => DivClk,
       aHSIn => aHS,
