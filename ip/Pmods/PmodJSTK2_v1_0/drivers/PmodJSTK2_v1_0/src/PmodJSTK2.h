@@ -16,6 +16,7 @@
 /*   06/01/2016(SamL):     Created                                            */
 /*   08/10/2017(ArtVVB):   Validated for Vivado 2015.4                        */
 /*   11/02/2017(atangzwj): Validated for Vivado 2016.4                        */
+/*   01/24/2018(atangzwj): Validated for Vivado 2017.4                        */
 /*                                                                            */
 /******************************************************************************/
 
@@ -115,7 +116,6 @@
 typedef struct PmodJSTK2 {
    XSpi SpiDevice;
    u32 GpioAddr;
-   u32 ItersPerUSec;
 } PmodJSTK2;
 
 // Data Type
@@ -134,10 +134,9 @@ typedef struct JSTK2_Position {
 
 /************ Function Prototypes ************/
 
-void JSTK2_begin(PmodJSTK2* InstancePtr, u32 SPI_Address, u32 GPIO_Address,
-      u32 cpuClockFreqHz);
+void JSTK2_begin(PmodJSTK2* InstancePtr, u32 SPI_Address, u32 GPIO_Address);
 void JSTK2_end(PmodJSTK2* InstancePtr);
-int JSTK2_SPIInit(XSpi *SpiInstancePtr);
+int JSTK2_SPIInit(XSpi* SpiInstancePtr);
 
 void JSTK2_setLedRGB(PmodJSTK2* InstancePtr, u8 red, u8 blue, u8 green);
 
@@ -184,6 +183,6 @@ void JSTK2_setCalYCenMinMax(PmodJSTK2* InstancePtr, u16 YCenMinCal,
 
 // Utility functions
 void JSTK2_getData(PmodJSTK2* InstancePtr, u8* recv, u8 nData);
-void JSTK2_delay(PmodJSTK2 *InstancePtr, int micros);
+void JSTK2_delay(PmodJSTK2* InstancePtr, int micros);
 
 #endif // PMODJSTK2_H

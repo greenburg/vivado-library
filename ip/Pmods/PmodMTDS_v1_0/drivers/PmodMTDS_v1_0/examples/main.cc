@@ -14,12 +14,13 @@
 /* Revision History:                                                          */
 /*                                                                            */
 /*    09/20/2016(tom21091): Created                                           */
-/*    12/09/2017(atangzwj): Validated for Vivado 2016.4                       */
+/*    12/19/2017(atangzwj): Validated for Vivado 2016.4                       */
+/*    01/09/2018(atangzwj): Validated for Vivado 2017.4                       */
 /*                                                                            */
 /******************************************************************************/
 
-#include "xparameters.h"
 #include "xil_cache.h"
+#include "xparameters.h"
 
 extern void setup();
 extern void loop();

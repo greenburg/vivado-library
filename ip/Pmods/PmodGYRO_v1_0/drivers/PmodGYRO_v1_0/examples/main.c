@@ -17,16 +17,17 @@
 /*    06/15/2016(MikelS):   Created                                           */
 /*    10/02/2017(atangzwj): Validated for Vivado 2015.4                       */
 /*    10/27/2017(artvvb):   Validated for Vivado 2016.4                       */
+/*    02/17/2018(atangzwj): Validated for Vivado 2017.4                       */
 /*                                                                            */
 /******************************************************************************/
 
 /************ Include Files ************/
 
 #include "PmodGYRO.h"
+#include "sleep.h"
 #include "xil_cache.h"
 #include "xil_printf.h"
 
-#include "sleep.h"
 
 /************ Function Prototypes ************/
 
@@ -58,7 +59,7 @@ void DemoInitialize() {
    GYRO_begin(&myDevice, XPAR_PMODGYRO_0_AXI_LITE_SPI_BASEADDR,
          XPAR_PMODGYRO_0_AXI_LITE_GPIO_BASEADDR);
 
-   //Set Threshold Registers
+   // Set Threshold Registers
    GYRO_setThsXH(&myDevice, 0x0F);
    GYRO_setThsYH(&myDevice, 0x0F);
    GYRO_setThsZH(&myDevice, 0x0F);
@@ -88,8 +89,8 @@ void DemoRun() {
          if (trig == 1) {
             trig = 0;
          } else {
-            xil_printf("\x1B[2J"); // clear screen
-            xil_printf("\x1B[H");  // reset cursor to 0,0
+            xil_printf("\x1B[2J"); // Clear screen
+            xil_printf("\x1B[H");  // Reset cursor to 0,0
          }
          xil_printf("Data is ready\n\r\n\r");
 

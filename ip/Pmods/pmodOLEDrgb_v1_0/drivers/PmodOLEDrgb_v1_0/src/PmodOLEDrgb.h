@@ -19,6 +19,7 @@
 /*    04/19/2015(TommyK):    Adapted for use with Microblaze/Zynq .c designs  */
 /*    08/25/2017(artvvb):    added OLEDrgb_sleep                              */
 /*    11/11/2017(atangzwj):  Validated for Vivado 2016.4                      */
+/*    02/17/2018(atangzwj):  Validated for Vivado 2017.4                      */
 /*                                                                            */
 /******************************************************************************/
 
@@ -38,8 +39,8 @@
 #define OLEDRGB_WIDTH  96
 #define OLEDRGB_HEIGHT 64
 
-#define OLEDRGB_CHARBYTES      8    // Number of bytes in a glyph
-#define	OLEDRGB_USERCHAR_MAX   0x20 // Number of character defs in user font
+#define OLEDRGB_CHARBYTES    8    // Number of bytes in a glyph
+#define	OLEDRGB_USERCHAR_MAX 0x20 // Number of character defs in user font
                                     // table
 #define OLEDRGB_CHARBYTES_USER (OLEDRGB_USERCHAR_MAX*OLEDRGB_CHARBYTES)
                                // Number of bytes in user font table
@@ -136,7 +137,8 @@
  * If the hardware system is not built correctly, this function may never
  * return to the caller.
  *
- * @param   baseaddr_p is the base address of the PMODOLEDRGB instance to be worked on.
+ * @param   baseaddr_p is the base address of the PMODOLEDRGB instance to be
+ *          worked on.
  *
  * @return
  *
@@ -144,10 +146,10 @@
  *    - XST_FAILURE   if any self-test code failed
  *
  * @note    Caching must be turned off for this function to work.
- * @note    Self test may fail if data memory and device are not on the same bus.
+ * @note    Self test may fail if data memory and device are not on the same bus
  *
  */
-XStatus PMODOLEDRGB_Reg_SelfTest(void * baseaddr_p);
+XStatus PMODOLEDRGB_Reg_SelfTest(void *baseaddr_p);
 
 
 /************ Type Definitions ************/
@@ -156,8 +158,8 @@ typedef struct {
    u32 GPIO_addr;
    XSpi OLEDSpi;
 
-   u8* pbOledrgbFontCur;
-   u8* pbOledrgbFontUser;
+   u8 *pbOledrgbFontCur;
+   u8 *pbOledrgbFontUser;
    u8 rgbOledrgbFontUser[OLEDRGB_CHARBYTES_USER];
    int dxcoOledrgbFontCur;
    int dycoOledrgbFontCur;
@@ -172,46 +174,46 @@ typedef struct {
 
 /************ Function Prototypes ************/
 
-void OLEDrgb_begin(PmodOLEDrgb* InstancePtr, u32 GPIO_Address, u32 SPI_Address);
-void OLEDrgb_end(PmodOLEDrgb* InstancePtr);
+void OLEDrgb_begin(PmodOLEDrgb *InstancePtr, u32 GPIO_Address, u32 SPI_Address);
+void OLEDrgb_end(PmodOLEDrgb *InstancePtr);
 
-void OLEDrgb_DrawPixel(PmodOLEDrgb* InstancePtr, u8 c, u8 r,
+void OLEDrgb_DrawPixel(PmodOLEDrgb *InstancePtr, u8 c, u8 r,
       uint16_t pixelColor);
-void OLEDrgb_DrawLine(PmodOLEDrgb* InstancePtr, u8 c1, u8 r1, u8 c2, u8 r2,
+void OLEDrgb_DrawLine(PmodOLEDrgb *InstancePtr, u8 c1, u8 r1, u8 c2, u8 r2,
       uint16_t lineColor);
-void OLEDrgb_DrawRectangle(PmodOLEDrgb* InstancePtr, u8 c1, u8 r1, u8 c2, u8 r2,
+void OLEDrgb_DrawRectangle(PmodOLEDrgb *InstancePtr, u8 c1, u8 r1, u8 c2, u8 r2,
       uint16_t lineColor, u8 bFill, uint16_t fillColor);
-void OLEDrgb_Clear(PmodOLEDrgb* InstancePtr);
-void OLEDrgb_DrawBitmap(PmodOLEDrgb* InstancePtr, u8 c1, u8 r1, u8 c2, u8 r2,
+void OLEDrgb_Clear(PmodOLEDrgb *InstancePtr);
+void OLEDrgb_DrawBitmap(PmodOLEDrgb *InstancePtr, u8 c1, u8 r1, u8 c2, u8 r2,
       u8 *pBmp);
 
-void OLEDrgb_SetCursor(PmodOLEDrgb* InstancePtr, int xch, int ych);
-void OLEDrgb_GetCursor(PmodOLEDrgb* InstancePtr, int *pxch, int* pych);
-int OLEDrgb_DefUserChar(PmodOLEDrgb* InstancePtr, char ch, u8 *pbDef);
-void OLEDrgb_DrawGlyph(PmodOLEDrgb* InstancePtr, char ch);
-void OLEDrgb_PutChar(PmodOLEDrgb* InstancePtr, char ch);
-void OLEDrgb_PutString(PmodOLEDrgb* InstancePtr, char * sz);
-void OLEDrgb_SetFontColor(PmodOLEDrgb* InstancePtr, uint16_t fontColor);
-void OLEDrgb_SetFontBkColor(PmodOLEDrgb* InstancePtr, uint16_t fontBkColor);
-void OLEDrgb_SetCurrentFontTable(PmodOLEDrgb* InstancePtr, u8 *pbFont);
-void OLEDrgb_SetCurrentUserFontTable(PmodOLEDrgb* InstancePtr, u8 *pbUserFont);
-void OLEDrgb_AdvanceCursor(PmodOLEDrgb* InstancePtr);
-void OLEDrgb_SetScrolling(PmodOLEDrgb* InstancePtr, u8 scrollH, u8 scrollV,
+void OLEDrgb_SetCursor(PmodOLEDrgb *InstancePtr, int xch, int ych);
+void OLEDrgb_GetCursor(PmodOLEDrgb *InstancePtr, int *pxch, int *pych);
+int OLEDrgb_DefUserChar(PmodOLEDrgb *InstancePtr, char ch, u8 *pbDef);
+void OLEDrgb_DrawGlyph(PmodOLEDrgb *InstancePtr, char ch);
+void OLEDrgb_PutChar(PmodOLEDrgb *InstancePtr, char ch);
+void OLEDrgb_PutString(PmodOLEDrgb *InstancePtr, char *sz);
+void OLEDrgb_SetFontColor(PmodOLEDrgb *InstancePtr, uint16_t fontColor);
+void OLEDrgb_SetFontBkColor(PmodOLEDrgb *InstancePtr, uint16_t fontBkColor);
+void OLEDrgb_SetCurrentFontTable(PmodOLEDrgb *InstancePtr, u8 *pbFont);
+void OLEDrgb_SetCurrentUserFontTable(PmodOLEDrgb *InstancePtr, u8 *pbUserFont);
+void OLEDrgb_AdvanceCursor(PmodOLEDrgb *InstancePtr);
+void OLEDrgb_SetScrolling(PmodOLEDrgb *InstancePtr, u8 scrollH, u8 scrollV,
       u8 rowAddr, u8 rowNum, u8 timeInterval);
-void OLEDrgb_EnableScrolling(PmodOLEDrgb* InstancePtr, u8 fEnable);
-void OLEDrgb_EnablePmod(PmodOLEDrgb* InstancePtr, u8 fEnable);
-void OLEDrgb_EnableBackLight(PmodOLEDrgb* InstancePtr, u8 fEnable);
-void OLEDrgb_Copy(PmodOLEDrgb* InstancePtr, u8 c1, u8 r1, u8 c2, u8 r2, u8 c3,
+void OLEDrgb_EnableScrolling(PmodOLEDrgb *InstancePtr, u8 fEnable);
+void OLEDrgb_EnablePmod(PmodOLEDrgb *InstancePtr, u8 fEnable);
+void OLEDrgb_EnableBackLight(PmodOLEDrgb *InstancePtr, u8 fEnable);
+void OLEDrgb_Copy(PmodOLEDrgb *InstancePtr, u8 c1, u8 r1, u8 c2, u8 r2, u8 c3,
       u8 r3);
-void OLEDrgb_Dim(PmodOLEDrgb* InstancePtr, u8 c1, u8 r1, u8 c2, u8 r2);
-void OLEDrgb_HostInit(PmodOLEDrgb* InstancePtr);
-void OLEDrgb_HostTerm(PmodOLEDrgb* InstancePtr);
-void OLEDrgb_DevInit(PmodOLEDrgb* InstancePtr);
-void OLEDrgb_DevTerm(PmodOLEDrgb* InstancePtr);
+void OLEDrgb_Dim(PmodOLEDrgb *InstancePtr, u8 c1, u8 r1, u8 c2, u8 r2);
+void OLEDrgb_HostInit(PmodOLEDrgb *InstancePtr);
+void OLEDrgb_HostTerm(PmodOLEDrgb *InstancePtr);
+void OLEDrgb_DevInit(PmodOLEDrgb *InstancePtr);
+void OLEDrgb_DevTerm(PmodOLEDrgb *InstancePtr);
 
 int OLEDrgb_SPIInit(XSpi *SpiInstancePtr);
-void OLEDrgb_WriteSPICommand(PmodOLEDrgb* InstancePtr, u8 cmd);
-void OLEDrgb_WriteSPI(PmodOLEDrgb* InstancePtr, u8 *pCmd, int nCmd, u8 *pData,
+void OLEDrgb_WriteSPICommand(PmodOLEDrgb *InstancePtr, u8 cmd);
+void OLEDrgb_WriteSPI(PmodOLEDrgb *InstancePtr, u8 *pCmd, int nCmd, u8 *pData,
       int nData);
 uint16_t OLEDrgb_BuildHSV(u8 hue, u8 sat, u8 val);
 uint16_t OLEDrgb_BuildRGB(u8 R, u8 G, u8 B);

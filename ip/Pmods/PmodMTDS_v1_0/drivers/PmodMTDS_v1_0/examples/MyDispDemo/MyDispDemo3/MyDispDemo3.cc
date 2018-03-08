@@ -27,6 +27,7 @@
 /*    10/06/2016(GeneA):    Created                                           */
 /*    02/14/2017(SamB):     Removed Serial references to port to Xilinx SDK   */
 /*    12/11/2017(atangzwj): Validated for Vivado 2016.4                       */
+/*    01/09/2018(atangzwj): Validated for Vivado 2017.4                       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -104,7 +105,7 @@ void UpdateProgressWheel();
 void setup() {
    bool fStat;
 
-   msPwCur = 0;//millis();
+   msPwCur = millis();
 
    /* Initialize the user interface library. It is quite possible that the
    ** display board hasn't completed its power on/reset initialization at this

@@ -13,9 +13,10 @@
 /******************************************************************************/
 /* Revision History:                                                          */
 /*                                                                            */
-/*    01/30/2017(ArtVVB):   created                                           */
-/*	  02/21/2017(ArtVVB):   validated                                         */
+/*    01/30/2017(ArtVVB):   Created                                           */
+/*	  02/21/2017(ArtVVB):   Validated                                         */
 /*    11/08/2017(atangzwj): Validated for Vivado 2016.4                       */
+/*    02/17/2018(atangzwj): Validated for Vivado 2017.4                       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -43,7 +44,7 @@ XTmrCtr_Config HYGRO_TimerConfig =
 static void StatusHandler(PmodHYGRO *InstancePtr);
 
 /* ------------------------------------------------------------ */
-/*** void HYGRO_begin(PmodHYGRO* InstancePtr, u32 IIC_Address, u8 Chip_Address,
+/*** void HYGRO_begin(PmodHYGRO *InstancePtr, u32 IIC_Address, u8 Chip_Address,
 **         u32 Timer_Address, UINTPTR Timer_DeviceId, u32 Timer_SysClockFreqHz)
 **
 **   Parameters:
@@ -55,15 +56,15 @@ static void StatusHandler(PmodHYGRO *InstancePtr);
 **      Timer_SysClockFreqHz: The clock frequency of the AXI bus
 **
 **   Return Value:
-**      none
+**      None
 **
 **   Errors:
-**      none
+**      None
 **
 **   Description:
 **      Initialize the PmodHYGRO.
 */
-void HYGRO_begin(PmodHYGRO* InstancePtr, u32 IIC_Address, u8 Chip_Address,
+void HYGRO_begin(PmodHYGRO *InstancePtr, u32 IIC_Address, u8 Chip_Address,
       u32 Timer_Address, UINTPTR Timer_DeviceId, u32 Timer_SysClockFreqHz) {
    u16 config = HYGRO_CONFIG_DEFAULT & ~(HYGRO_CONFIG_MODE);
    u8 bytes[2] = {(config >> 8) & 0xff, config & 0xff};
@@ -83,45 +84,25 @@ void HYGRO_begin(PmodHYGRO* InstancePtr, u32 IIC_Address, u8 Chip_Address,
    HYGRO_DelayMillis(InstancePtr, 15);
 }
 
-
 /* ------------------------------------------------------------ */
-/*** HYGRO_end(void)
-**
-**   Parameters:
-**      InstancePtr - PmodHYGRO object to stop
-**
-**   Return Value:
-**      none
-**
-**   Errors:
-**      none
-**
-**   Description:
-**      Stops the device
-*/
-void HYGRO_end(PmodHYGRO* InstancePtr){
-   //XIic_Stop(&InstancePtr->HYGROIic);
-}
-
-/* ------------------------------------------------------------ */
-/*** void HYGRO_TimerInit(XTmrCtr* TimerInstancePtr,
-**         XTmrCtr_Config* TimerConfigPtr)
+/*** void HYGRO_TimerInit(XTmrCtr *TimerInstancePtr,
+**         XTmrCtr_Config *TimerConfigPtr)
 **
 **   Parameters:
 **      TimerInstancePtr: An AXI Timer object to initialize
 **      TimerConfigPtr: A Timer configuration object containing information about the Timer to be initialized
 **
 **   Return Value:
-**      none
+**      None
 **
 **   Errors:
-**      none
+**      None
 **
 **   Description:
 **      Initialize the PmodHYGRO's AXI Timer IP core.
 */
-void HYGRO_TimerInit(XTmrCtr* TimerInstancePtr,
-      XTmrCtr_Config* TimerConfigPtr) {
+void HYGRO_TimerInit(XTmrCtr *TimerInstancePtr,
+      XTmrCtr_Config *TimerConfigPtr) {
    XTmrCtr_CfgInitialize(TimerInstancePtr, TimerConfigPtr,
          TimerConfigPtr->BaseAddress);
    XTmrCtr_InitHw(TimerInstancePtr);
@@ -130,14 +111,14 @@ void HYGRO_TimerInit(XTmrCtr* TimerInstancePtr,
 }
 
 /* ------------------------------------------------------------ */
-/*** void HYGRO_DelayMillis(PmodHYGRO* InstancePtr, u32 millis)
+/*** void HYGRO_DelayMillis(PmodHYGRO *InstancePtr, u32 millis)
 **
 **   Parameters:
 **      InstancePt - PmodHYGRO object containing AXI Timer for measuring delay
 **      millis     - number of milliseconds to delay
 **
 **   Return Value:
-**      none
+**      None
 **
 **   Errors:
 **      no error check on millis bounds, large delays (greater than approx 50
@@ -146,7 +127,7 @@ void HYGRO_TimerInit(XTmrCtr* TimerInstancePtr,
 **   Description:
 **      delays the program for millis milliseconds.
 */
-void HYGRO_DelayMillis(PmodHYGRO* InstancePtr, u32 millis) {
+void HYGRO_DelayMillis(PmodHYGRO *InstancePtr, u32 millis) {
 	XTmrCtr* TimerInstancePtr = &InstancePtr->HYGROTimer;
 	u32 done_after_ticks = millis * (InstancePtr->clockFreqHz / 1000);
 	XTmrCtr_Reset(TimerInstancePtr, 0);
@@ -162,10 +143,10 @@ void HYGRO_DelayMillis(PmodHYGRO* InstancePtr, u32 millis) {
 **      IicInstancePtr: the IIC object to initialize
 **
 **   Return Value:
-**      none
+**      None
 **
 **   Errors:
-**      none
+**      None
 **
 **   Description:
 **      Initializes the PmodHYGRO IIC.
@@ -194,7 +175,7 @@ int HYGRO_IICInit(XIic *IicInstancePtr){
 }
 
 /* ------------------------------------------------------------ */
-/*** void HYGRO_ReadIIC(PmodHYGRO* InstancePtr, u8 reg, u8 *Data, int nData,
+/*** void HYGRO_ReadIIC(PmodHYGRO *InstancePtr, u8 reg, u8 *Data, int nData,
 **         u32 conversion_delay_ms)
 **
 **   Parameters:
@@ -206,15 +187,15 @@ int HYGRO_IICInit(XIic *IicInstancePtr){
 **                            to finish converting data - if 0, no wait.
 **
 **   Return Value:
-**      none
+**      None
 **
 **   Errors:
-**      none
+**      None
 **
 **   Description:
 **      Reads nData data bytes from register reg
 */
-void HYGRO_ReadIIC(PmodHYGRO* InstancePtr, u8 reg, u8 *Data, int nData,
+void HYGRO_ReadIIC(PmodHYGRO *InstancePtr, u8 reg, u8 *Data, int nData,
       u32 conversion_delay_ms) {
    int Status;
    Status = XIic_Start(&InstancePtr->HYGROIic);
@@ -240,7 +221,7 @@ void HYGRO_ReadIIC(PmodHYGRO* InstancePtr, u8 reg, u8 *Data, int nData,
 }
 
 /* ------------------------------------------------------------ */
-/*** void HYGRO_WriteIIC(PmodHYGRO* InstancePtr, u8 reg, u8 *Data, int nData)
+/*** void HYGRO_WriteIIC(PmodHYGRO *InstancePtr, u8 reg, u8 *Data, int nData)
 **
 **   Parameters:
 **      InstancePtr - PmodHYGRO object to initialize
@@ -249,15 +230,15 @@ void HYGRO_ReadIIC(PmodHYGRO* InstancePtr, u8 reg, u8 *Data, int nData,
 **      nData       - Number of data values to send
 **
 **   Return Value:
-**      none
+**      None
 **
 **   Errors:
-**      none
+**      None
 **
 **   Description:
 **      Writes nData data bytes to register reg
 */
-void HYGRO_WriteIIC(PmodHYGRO* InstancePtr, u8 reg, u8 *Data, int nData) {
+void HYGRO_WriteIIC(PmodHYGRO *InstancePtr, u8 reg, u8 *Data, int nData) {
    u8 out[10];
    u8 i;
    int Status;

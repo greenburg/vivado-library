@@ -14,6 +14,7 @@
 /* Revision History:                                                          */
 /*                                                                            */
 /*    10/02/2017(artvvb):   Created                                           */
+/*    02/17/2018(atangzwj): Validated for Vivado 2017.4                       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -22,11 +23,11 @@
 
 /****************** Include Files ********************/
 
-#include "xil_types.h"
-#include "xstatus.h"
-#include "xiic_l.h"
 #include "xiic.h"
+#include "xiic_l.h"
+#include "xil_types.h"
 #include "xparameters.h"
+#include "xstatus.h"
 
 /****************** Register Definitions ********************/
 
@@ -40,23 +41,23 @@
 /****************** Type Definitions ********************/
 
 typedef struct CMPS2_DataPacket {
-	u16 x, y, z;
+   u16 x, y, z;
 } CMPS2_DataPacket;
 
 typedef struct PmodCMPS2 {
-	XIic CMPS2Iic;
-	u8 chipAddr;
-	u8 currentRegister;
-	u8 recvbytes;
-	u8* recv;
+   XIic CMPS2Iic;
+   u8 chipAddr;
+   u8 currentRegister;
+   u8 recvbytes;
+   u8 *recv;
 } PmodCMPS2;
 
 /****************** Function Definitions ********************/
 
-void CMPS2_begin(PmodCMPS2* InstancePtr, u32 IIC_Address, u8 Chip_Address);
+void CMPS2_begin(PmodCMPS2 *InstancePtr, u32 IIC_Address, u8 Chip_Address);
 int CMPS2_IICInit(XIic *IicInstancePtr);
-void CMPS2_ReadIIC(PmodCMPS2* InstancePtr, u8 reg, u8 *Data, int nData);
-void CMPS2_WriteIIC(PmodCMPS2* InstancePtr, u8 reg, u8 *Data, int nData);
+void CMPS2_ReadIIC(PmodCMPS2 *InstancePtr, u8 reg, u8 *Data, int nData);
+void CMPS2_WriteIIC(PmodCMPS2 *InstancePtr, u8 reg, u8 *Data, int nData);
 
 CMPS2_DataPacket CMPS2_GetData(PmodCMPS2 *InstancePtr);
 void CMPS2_SetSensor(PmodCMPS2 *InstancePtr);

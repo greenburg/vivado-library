@@ -24,9 +24,10 @@
 /******************************************************************************/
 /* Revision History:                                                          */
 /*                                                                            */
-/*    01/30/2017(ArtVVB):   created                                           */
-/*    02/21/2017(ArtVVB):   validated                                         */
+/*    01/30/2017(ArtVVB):   Created                                           */
+/*    02/21/2017(ArtVVB):   Validated                                         */
 /*    11/08/2017(atangzwj): Validated for Vivado 2016.4                       */
+/*    02/17/2018(atangzwj): Validated for Vivado 2017.4                       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -49,7 +50,6 @@ void DemoRun();
 void DemoCleanup();
 void EnableCaches();
 void DisableCaches();
-void DemoSleep(int millis);
 
 int main() {
    DemoInitialize();
@@ -84,7 +84,7 @@ void DemoRun() {
       temp_degf = HYGRO_tempC2F(temp_degc);
       hum_perrh = HYGRO_getHumidity(&myDevice);
       xil_printf(
-         "Temperature: %d.%d deg F  Humidity: %d.%d RH\n\r",
+         "Temperature: %d.%02d deg F  Humidity: %d.%02d RH\n\r",
          (int) temp_degf,
          ((int) (temp_degf * 100)) % 100,
          (int) hum_perrh,
@@ -94,12 +94,8 @@ void DemoRun() {
       // instead, converting float to a pair of ints to display %.2f.
 
       // 1 sample per second maximum, as per 9.2.1 in HDC1080 reference manual
-      DemoSleep(1000);
+      sleep(1);
    }
-}
-
-void DemoSleep(int millis) {
-	usleep(1000 * millis); // Delay for param microseconds
 }
 
 void EnableCaches() {

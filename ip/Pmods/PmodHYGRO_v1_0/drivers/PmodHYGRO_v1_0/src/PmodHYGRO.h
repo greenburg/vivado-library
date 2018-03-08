@@ -14,9 +14,10 @@
 /******************************************************************************/
 /* Revision History:                                                          */
 /*                                                                            */
-/*    01/30/2017(ArtVVB):   created                                           */
-/*    02/21/2017(ArtVVB):   validated                                         */
+/*    01/30/2017(ArtVVB):   Created                                           */
+/*    02/21/2017(ArtVVB):   Validated                                         */
 /*    11/08/2017(atangzwj): Validated for Vivado 2016.4                       */
+/*    02/17/2018(atangzwj): Validated for Vivado 2017.4                       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -60,18 +61,17 @@ typedef struct PmodHYGRO {
    u8 chipAddr;
    u8 currentRegister;
    u8 recvbytes;
-   u8* recv;
+   u8 *recv;
 } PmodHYGRO;
 
-void HYGRO_begin(PmodHYGRO* InstancePtr, u32 IIC_Address, u8 Chip_Address,
+void HYGRO_begin(PmodHYGRO *InstancePtr, u32 IIC_Address, u8 Chip_Address,
       u32 TMR_Address, UINTPTR TMR_DeviceId, u32 TMR_SysClockFreqHz);
-void HYGRO_end(PmodHYGRO* InstancePtr);
-void HYGRO_TimerInit(XTmrCtr* TMRInstancePtr, XTmrCtr_Config* TMRConfigPtr);
+void HYGRO_TimerInit(XTmrCtr *TMRInstancePtr, XTmrCtr_Config *TMRConfigPtr);
 int HYGRO_IICInit(XIic *IicInstancePtr);
-void HYGRO_ReadIIC(PmodHYGRO* InstancePtr, u8 reg, u8 *Data, int nData,
+void HYGRO_ReadIIC(PmodHYGRO *InstancePtr, u8 reg, u8 *Data, int nData,
       u32 conversion_delay_ms);
-void HYGRO_WriteIIC(PmodHYGRO* InstancePtr, u8 reg, u8 *Data, int nData);
-void HYGRO_DelayMillis(PmodHYGRO* InstancePtr, u32 millis);
+void HYGRO_WriteIIC(PmodHYGRO *InstancePtr, u8 reg, u8 *Data, int nData);
+void HYGRO_DelayMillis(PmodHYGRO *InstancePtr, u32 millis);
 
 float HYGRO_getTemperature(PmodHYGRO *InstancePtr);
 float HYGRO_getHumidity(PmodHYGRO *InstancePtr);
