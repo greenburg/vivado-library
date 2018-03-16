@@ -646,7 +646,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>c1fe3232</spirit:value>
+            <spirit:value>0509382e</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -1477,8 +1477,8 @@
         <xilinx:taxonomy>/UserIP</xilinx:taxonomy>
       </xilinx:taxonomies>
       <xilinx:displayName>PmodDPG1_v1_0</xilinx:displayName>
-      <xilinx:coreRevision>13</xilinx:coreRevision>
-      <xilinx:coreCreationDateTime>2018-03-16T21:30:28Z</xilinx:coreCreationDateTime>
+      <xilinx:coreRevision>15</xilinx:coreRevision>
+      <xilinx:coreCreationDateTime>2018-03-16T22:04:25Z</xilinx:coreCreationDateTime>
       <xilinx:tags>
         <xilinx:tag xilinx:name="digilentinc.com:IP:PmodDPG1:1.0_ARCHIVE_LOCATION">c:/Digilent-vivLib/ip/Pmods/PmodDPG1_v1_0</xilinx:tag>
       </xilinx:tags>
@@ -1512,7 +1512,7 @@
       <xilinx:xilinxVersion>2017.4</xilinx:xilinxVersion>
       <xilinx:checksum xilinx:scope="busInterfaces" xilinx:value="caf24730"/>
       <xilinx:checksum xilinx:scope="memoryMaps" xilinx:value="30f53302"/>
-      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="757f62d6"/>
+      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="9b2dff3f"/>
       <xilinx:checksum xilinx:scope="ports" xilinx:value="d269a9b4"/>
       <xilinx:checksum xilinx:scope="parameters" xilinx:value="d88c418d"/>
     </xilinx:packagingInfo>
