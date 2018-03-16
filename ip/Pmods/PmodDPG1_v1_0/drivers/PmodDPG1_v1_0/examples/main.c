@@ -8,8 +8,9 @@
 /******************************************************************************/
 /* File Description:                                                          */
 /*                                                                            */
-/* This demo continuously the PmodDPG1 for pressure measurements and prints   */
-/* the data in 6 different units (kPa, atm, psi, inH2O, cmH2O, and mmHg).     */
+/* This demo continuously polls the PmodDPG1 for pressure measurements and    */
+/* prints the data in 6 different units (kPa, atm, psi, inH2O, cmH2O, and     */
+/* mmHg).                                                                     */
 /*                                                                            */
 /******************************************************************************/
 /* Revision History:                                                          */
@@ -137,11 +138,11 @@ void DemoCleanup() {
 
 void EnableCaches() {
 #ifdef __MICROBLAZE__
-#ifdef XPAR_MICROBLAZE_USE_DCACHE
-   Xil_DCacheEnable();
-#endif
 #ifdef XPAR_MICROBLAZE_USE_ICACHE
    Xil_ICacheEnable();
+#endif
+#ifdef XPAR_MICROBLAZE_USE_DCACHE
+   Xil_DCacheEnable();
 #endif
 #endif
 }
