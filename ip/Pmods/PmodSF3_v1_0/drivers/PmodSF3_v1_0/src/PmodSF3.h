@@ -1,23 +1,24 @@
-/*************************************************************************/
-/*                                                                       */
-/*     PmodSF3.h --     PmodSF3 Driver Header                         	 */
-/*                                                                       */
-/*************************************************************************/
-/*     Author: Andrew Holzer                                             */
-/*     Copyright 2017, Digilent Inc.                                     */
-/*************************************************************************/
-/*  Module Description:                                                  */
-/*                                                                       */
-/*            This file contains driver prototypes, types, and macros    */
-/*            for the Pmod SF3 driver source.							 */
-/*                                                                       */
-/*************************************************************************/
-/*  Revision History:                                                    */
-/*                                                                       */
-/*            ??/??/????(AHolzer): created                               */
-/*            07/26/2017(ArtVVB): Refactored and Validated               */
-/*                                                                       */
-/*************************************************************************/
+/******************************************************************************/
+/*                                                                            */
+/* PmodSF3.h -- PmodSF3 Driver Header                                         */
+/*                                                                            */
+/******************************************************************************/
+/* Author: Andrew Holzer                                                      */
+/* Copyright 2017, Digilent Inc.                                              */
+/******************************************************************************/
+/* Module Description:                                                        */
+/*                                                                            */
+/* This file contains driver prototypes, types, and macros for the PmodSF3    */
+/* driver source.	                                                          */
+/*                                                                            */
+/******************************************************************************/
+/* Revision History:                                                          */
+/*                                                                            */
+/*    ??/??/????(AHolzer):  Created                                           */
+/*    07/26/2017(ArtVVB):   Refactored and Validated                          */
+/*    03/16/2018(atangzwj): Validated for Vivado 2017.4                       */
+/*                                                                            */
+/******************************************************************************/
 
 #ifndef PMODSF3_H_
 #define PMODSF3_H_
@@ -27,8 +28,9 @@ extern "C" {
 #endif
 
 /***************************** Include Files *********************************/
-#include "xspi.h"
+
 #include "intc.h"
+#include "xspi.h"
 #include "xstatus.h"
 
 #define SF3_MANUFACTURER_ID 0x20
@@ -48,18 +50,19 @@ extern "C" {
 #define SF3_COMMAND_WRITE_STATUSREG 0x01 // Status write command
 
 /*
- * These definitions specify the EXTRA bytes in each of the command transactions.
- * This count includes the Command byte, address bytes and any don't care bytes needed.
+ * These definitions specify the EXTRA bytes in each of the command
+ * transactions. This count includes the Command byte, address bytes and any
+ * don't care bytes needed.
  */
-#define SF3_WRITE_EXTRA_BYTES 		4
-#define SF3_READ_MIN_EXTRA_BYTES 	4
-#define SF3_READ_MAX_EXTRA_BYTES 	9
-#define SF3_WRITE_ENABLE_BYTES 		1
-#define SF3_SECTOR_ERASE_BYTES		4
-#define SF3_BULK_ERASE_BYTES		1
-#define SF3_STATUS_READ_BYTES		2
-#define SF3_STATUS_WRITE_BYTES		2
-#define SF3_ID_READ_BYTES			20
+#define SF3_WRITE_EXTRA_BYTES 	 4
+#define SF3_READ_MIN_EXTRA_BYTES 4
+#define SF3_READ_MAX_EXTRA_BYTES 9
+#define SF3_WRITE_ENABLE_BYTES 	 1
+#define SF3_SECTOR_ERASE_BYTES	 4
+#define SF3_BULK_ERASE_BYTES	 1
+#define SF3_STATUS_READ_BYTES	 2
+#define SF3_STATUS_WRITE_BYTES	 2
+#define SF3_ID_READ_BYTES		 20
 
 // Flash not busy mask in the status register of the flash device
 #define SF3_FLASH_SR_IS_READY_MASK 0x01
@@ -94,18 +97,21 @@ extern "C" {
 #define SF3_QUAD_IO_READ_DUMMY_BYTES 5
 
 typedef struct PmodSF3 {
-	XSpi SF3Spi;
-	INTC sIntc;
-	u8 Status;
+   XSpi SF3Spi;
+   INTC sIntc;
+   u8 Status;
 } PmodSF3;
 
 /************************** Function Prototypes ******************************/
-XStatus SF3_begin(PmodSF3* InstancePtr, INTC* IntcPtr, const ivt_t ivt[], u32 SPI_Address);
+XStatus SF3_begin(PmodSF3 *InstancePtr, INTC *IntcPtr, const ivt_t ivt[],
+      u32 SPI_Address);
 XStatus SF3_SpiInit(XSpi *SpiPtr);
 XStatus SF3_FlashWriteEnable(PmodSF3 *InstancePtr);
-XStatus SF3_FlashWrite(PmodSF3 *InstancePtr, u32 Addr, u32 ByteCount, u8 WriteCmd, u8 **BufferPtr);
-XStatus SF3_FlashRead(PmodSF3 *InstancePtr, u32 Addr, u32 ByteCount, u8 ReadCmd, u8 **BufferPtr);
-XStatus SF3_BulkErase(PmodSF3* InstancePtr);
+XStatus SF3_FlashWrite(PmodSF3 *InstancePtr, u32 Addr, u32 ByteCount,
+      u8 WriteCmd, u8 **BufferPtr);
+XStatus SF3_FlashRead(PmodSF3 *InstancePtr, u32 Addr, u32 ByteCount, u8 ReadCmd,
+      u8 **BufferPtr);
+XStatus SF3_BulkErase(PmodSF3 *InstancePtr);
 XStatus SF3_SectorErase(PmodSF3 *InstancePtr, u32 Addr);
 XStatus SF3_GetStatus(PmodSF3 *InstancePtr);
 XStatus SF3_WaitForFlashReady(PmodSF3 *InstancePtr);

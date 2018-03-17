@@ -690,7 +690,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>e68e17f5</spirit:value>
+            <spirit:value>46d57558</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -1604,8 +1604,8 @@
         <xilinx:taxonomy>/UserIP</xilinx:taxonomy>
       </xilinx:taxonomies>
       <xilinx:displayName>PmodSF3_v1_0</xilinx:displayName>
-      <xilinx:coreRevision>9</xilinx:coreRevision>
-      <xilinx:coreCreationDateTime>2018-03-15T16:37:30Z</xilinx:coreCreationDateTime>
+      <xilinx:coreRevision>11</xilinx:coreRevision>
+      <xilinx:coreCreationDateTime>2018-03-17T00:20:37Z</xilinx:coreCreationDateTime>
       <xilinx:tags>
         <xilinx:tag xilinx:name="natinst.com:user:PmodSF3:1.0_ARCHIVE_LOCATION">C:/Users/aholzer.NI/Documents/PmodSF3</xilinx:tag>
         <xilinx:tag xilinx:name="digilentinc.com:user:PmodSF3:1.0_ARCHIVE_LOCATION">C:/Users/aholzer.NI/Documents/PmodSF3</xilinx:tag>
@@ -1642,7 +1642,7 @@
       <xilinx:xilinxVersion>2017.4</xilinx:xilinxVersion>
       <xilinx:checksum xilinx:scope="busInterfaces" xilinx:value="b48cffb4"/>
       <xilinx:checksum xilinx:scope="memoryMaps" xilinx:value="e1e3e334"/>
-      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="60103cb5"/>
+      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="718bfbe8"/>
       <xilinx:checksum xilinx:scope="ports" xilinx:value="6b99e6ef"/>
       <xilinx:checksum xilinx:scope="parameters" xilinx:value="4ed3cabd"/>
     </xilinx:packagingInfo>
