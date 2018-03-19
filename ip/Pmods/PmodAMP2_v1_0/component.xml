@@ -1230,7 +1230,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>e8b3790f</spirit:value>
+            <spirit:value>9d49772a</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -1264,7 +1264,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>a9f58604</spirit:value>
+            <spirit:value>25c02628</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -1292,7 +1292,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>ec79c0fb</spirit:value>
+            <spirit:value>68e0e709</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -2843,8 +2843,8 @@
         <xilinx:taxonomy>/UserIP</xilinx:taxonomy>
       </xilinx:taxonomies>
       <xilinx:displayName>PmodAMP2_v1_0</xilinx:displayName>
-      <xilinx:coreRevision>8</xilinx:coreRevision>
-      <xilinx:coreCreationDateTime>2018-02-10T23:37:38Z</xilinx:coreCreationDateTime>
+      <xilinx:coreRevision>9</xilinx:coreRevision>
+      <xilinx:coreCreationDateTime>2018-03-19T17:06:36Z</xilinx:coreCreationDateTime>
       <xilinx:tags>
         <xilinx:tag xilinx:name="natinst.com:user:PmodAMP2:1.0_ARCHIVE_LOCATION">C:/Users/arbrown/Documents/PmodAMP2_v1_0</xilinx:tag>
         <xilinx:tag xilinx:name="digilentinc.com:user:PmodAMP2:1.0_ARCHIVE_LOCATION">C:/Users/arbrown/Documents/PmodAMP2_v1_0</xilinx:tag>
@@ -2927,7 +2927,7 @@
       <xilinx:xilinxVersion>2017.4</xilinx:xilinxVersion>
       <xilinx:checksum xilinx:scope="busInterfaces" xilinx:value="db2cc352"/>
       <xilinx:checksum xilinx:scope="memoryMaps" xilinx:value="df904619"/>
-      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="75963b42"/>
+      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="1884db64"/>
       <xilinx:checksum xilinx:scope="ports" xilinx:value="015c556b"/>
       <xilinx:checksum xilinx:scope="parameters" xilinx:value="9c8d3c0f"/>
     </xilinx:packagingInfo>
