@@ -884,11 +884,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Sat Feb 24 21:10:09 UTC 2018</spirit:value>
+            <spirit:value>Tue Apr 24 18:02:40 UTC 2018</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>7:f09c96ad</spirit:value>
+            <spirit:value>7:498bc491</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -2157,6 +2157,12 @@
   </spirit:model>
   <spirit:choices>
     <spirit:choice>
+      <spirit:name>choice_list_59c0601b</spirit:name>
+      <spirit:enumeration>Custom</spirit:enumeration>
+      <spirit:enumeration>ja</spirit:enumeration>
+      <spirit:enumeration>jb</spirit:enumeration>
+    </spirit:choice>
+    <spirit:choice>
       <spirit:name>choice_list_ca687e60</spirit:name>
       <spirit:enumeration>GPIO</spirit:enumeration>
       <spirit:enumeration>UART</spirit:enumeration>
@@ -2164,14 +2170,6 @@
       <spirit:enumeration>I2C</spirit:enumeration>
       <spirit:enumeration>None</spirit:enumeration>
       <spirit:enumeration>Disabled</spirit:enumeration>
-    </spirit:choice>
-    <spirit:choice>
-      <spirit:name>choice_list_cea62b07</spirit:name>
-      <spirit:enumeration>Custom</spirit:enumeration>
-      <spirit:enumeration>ja</spirit:enumeration>
-      <spirit:enumeration>jb</spirit:enumeration>
-      <spirit:enumeration>jc</spirit:enumeration>
-      <spirit:enumeration>jd</spirit:enumeration>
     </spirit:choice>
   </spirit:choices>
   <spirit:fileSets>
@@ -2204,7 +2202,7 @@
     <spirit:parameter>
       <spirit:name>PMOD</spirit:name>
       <spirit:displayName>Pmod</spirit:displayName>
-      <spirit:value spirit:resolve="user" spirit:id="PARAM_VALUE.PMOD" spirit:choiceRef="choice_list_cea62b07">Custom</spirit:value>
+      <spirit:value spirit:resolve="user" spirit:id="PARAM_VALUE.PMOD" spirit:choiceRef="choice_list_59c0601b">Custom</spirit:value>
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>USE_BOARD_FLOW</spirit:name>
@@ -2214,12 +2212,12 @@
   <spirit:vendorExtensions>
     <xilinx:coreExtensions>
       <xilinx:displayName>Pmod Bridge</xilinx:displayName>
-      <xilinx:coreRevision>9</xilinx:coreRevision>
+      <xilinx:coreRevision>10</xilinx:coreRevision>
       <xilinx:tags>
         <xilinx:tag xilinx:name="natinst.com:user:pmod_concat:1.0_ARCHIVE_LOCATION">C:/Tommywork/PMODOLEDRGB/pmodconcat</xilinx:tag>
         <xilinx:tag xilinx:name="digilentinc.com:user:pmod_concat:1.0_ARCHIVE_LOCATION">C:/Tommywork/PMODOLEDRGB/pmodconcat</xilinx:tag>
         <xilinx:tag xilinx:name="digilentinc.com:ip:pmod_concat:1.0_ARCHIVE_LOCATION">C:/Tommywork/Github/vivado-library/ip/Pmods/Pmod_Bridge_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="digilentinc.com:ip:pmod_bridge:1.0_ARCHIVE_LOCATION">c:/Digilent-vivLib/ip/Pmods/Pmod_Bridge_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="digilentinc.com:ip:pmod_bridge:1.0_ARCHIVE_LOCATION">c:/Users/arthur/Documents/GitHub/vivado-library/ip/Pmods/Pmod_Bridge_v1_0</xilinx:tag>
       </xilinx:tags>
       <xilinx:configElementInfos>
         <xilinx:configElementInfo xilinx:referenceId="PARAM_VALUE.Bottom_Row_Interface" xilinx:valueSource="user"/>

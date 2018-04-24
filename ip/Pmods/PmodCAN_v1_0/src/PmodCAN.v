@@ -70,7 +70,10 @@ module PmodCAN
     Pmod_out_pin9_t,
     ext_spi_clk,
     s_axi_aclk,
-    s_axi_aresetn);
+    s_axi_aresetn,
+    SPI_interrupt,
+    GPIO_interrupt
+    );
   input [8:0]AXI_LITE_GPIO_araddr;
   output AXI_LITE_GPIO_arready;
   input AXI_LITE_GPIO_arvalid;
@@ -132,6 +135,8 @@ module PmodCAN
   input ext_spi_clk;
   input s_axi_aclk;
   input s_axi_aresetn;
+  output SPI_interrupt;
+  output GPIO_interrupt;
 
   wire [6:0]AXI_LITE_1_ARADDR;
   wire AXI_LITE_1_ARREADY;
@@ -293,7 +298,9 @@ module PmodCAN
         .s_axi_wdata(S_AXI_1_WDATA),
         .s_axi_wready(S_AXI_1_WREADY),
         .s_axi_wstrb(S_AXI_1_WSTRB),
-        .s_axi_wvalid(S_AXI_1_WVALID));
+        .s_axi_wvalid(S_AXI_1_WVALID),
+        .ip2intc_irpt(GPIO_interrupt)
+        );
   PmodCAN_axi_quad_spi_0_0 axi_quad_spi_0
        (.ext_spi_clk(ext_spi_clk_1),
         .io0_i(axi_quad_spi_0_SPI_0_IO0_I),
@@ -326,7 +333,9 @@ module PmodCAN
         .sck_t(axi_quad_spi_0_SPI_0_SCK_T),
         .ss_i(axi_quad_spi_0_SPI_0_SS_I),
         .ss_o(axi_quad_spi_0_SPI_0_SS_O),
-        .ss_t(axi_quad_spi_0_SPI_0_SS_T));
+        .ss_t(axi_quad_spi_0_SPI_0_SS_T),
+        .ip2intc_irpt(SPI_interrupt)
+        );
   PmodCAN_pmod_bridge_0_0 pmod_bridge_0
        (.in0_I(axi_quad_spi_0_SPI_0_SS_I),
         .in0_O(axi_quad_spi_0_SPI_0_SS_O),
