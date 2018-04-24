@@ -149,19 +149,19 @@ int AD5_SPIInit(XSpi *SpiInstancePtr) {
  **             Data is stored into data1, data2 and data3.
  */
 void AD5_readData(PmodAD5* InstancePtr) {
-   u8 byte[3];
-   byte[0]= 0x58; //first byte is sent to the communication register which sets communication to
+   u8 bytes[4];
+   bytes[0]= 0x58; //first byte is sent to the communication register which sets communication to
    //reading the next 3 bytes from the Data register
 
    InstancePtr->data1 = 0;
    InstancePtr->data2 = 0;
    InstancePtr->data3 = 0;
-   XSpi_Transfer(&InstancePtr->AD5Spi, byte, byte, 4);
+   XSpi_Transfer(&InstancePtr->AD5Spi, bytes, bytes, 4);
 
 
-     InstancePtr->data1 = byte[1];
-     InstancePtr->data2 = byte[2];
-     InstancePtr->data3 = byte[3];
+     InstancePtr->data1 = bytes[1];
+     InstancePtr->data2 = bytes[2];
+     InstancePtr->data3 = bytes[3];
 
 }
 /* ------------------------------------------------------------ */
@@ -186,17 +186,17 @@ void AD5_readData(PmodAD5* InstancePtr) {
  */
 void AD5_WriteConfig(PmodAD5* InstancePtr)
 {
-    u8 recv[3];
-    recv[0] = 0x10; //first byte is sent to the communication register which sets communication to
+    u8 bytes[4];
+    bytes[0] = 0x10; //first byte is sent to the communication register which sets communication to
      //writing the next 3 bytes to the Configuration register
 
     //gain is set to 1 and in differential mode
-    recv[1] = 0x00;
-    recv[2] = 0x01;
-    recv[3] = 0x10;
+    bytes[1] = 0x00;
+    bytes[2] = 0x01;
+    bytes[3] = 0x10;
 
 
-        XSpi_Transfer(&InstancePtr->AD5Spi, recv, recv, 4);
+        XSpi_Transfer(&InstancePtr->AD5Spi, bytes, bytes, 4);
 
   }
 
@@ -221,9 +221,9 @@ void AD5_WriteConfig(PmodAD5* InstancePtr)
 
 float AD5_DataToVoltage(PmodAD5* InstancePtr)  {
   float voltage = 0;
-  char mGain = 0;
+//  char mGain = 0;
   float mVref = 2.5;
-  char mPolarity = 0;
+//  char mPolarity = 0;
   int PGAGain = 1;
   unsigned long rawdata=0;
 
