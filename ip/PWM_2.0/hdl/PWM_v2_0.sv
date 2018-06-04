@@ -17,6 +17,12 @@
 	(
 		// Users to add ports here
         output wire [NUM_PWM-1 : 0] pwm,
+        (* X_INTERFACE_INFO = "xilinx.com:interface:gpio:1.0 PWM_GPIO TRI_T" *)
+        output wire [NUM_PWM-1:0] pwm_gpio_t, // Tristate output enable signal (optional)
+        (* X_INTERFACE_INFO = "xilinx.com:interface:gpio:1.0 PWM_GPIO TRI_O" *)
+        output wire [NUM_PWM-1:0] pwm_gpio_o, // Tristate output signal (optional)
+        (* X_INTERFACE_INFO = "xilinx.com:interface:gpio:1.0 PWM_GPIO TRI_I" *)
+        input wire [NUM_PWM-1:0] pwm_gpio_i, // Tristate input signal (optional)
 		// User ports ends
 		// Do not modify the ports beyond this line
 
@@ -83,6 +89,11 @@
 		.S_AXI_RREADY(pwm_axi_rready)
 	);
     
+    wire [NUM_PWM-1:0] pwm_int;
+    assign pwm = pwm_int;
+    assign pwm_gpio_o = pwm_int;
+    assign pwm_gpio_t = 'b0;
+    
     reg [C_PWM_AXI_DATA_WIDTH-1:0]duty_reg_latch [0:NUM_PWM-1];
     reg [C_PWM_AXI_DATA_WIDTH-1:0] count=0;
     reg [C_PWM_AXI_DATA_WIDTH-1:0] max=4096;
@@ -124,7 +135,7 @@
             end
         end
         
-        assign pwm[i] = ((duty_reg_latch[i] > count) && (enable==1'b1)) ? POLARITY : !POLARITY;
+        assign pwm_int[i] = ((duty_reg_latch[i] > count) && (enable==1'b1)) ? POLARITY : !POLARITY;
     end
     endgenerate
     

@@ -8,6 +8,8 @@ proc init_gui { IPINST } {
   set POLARITY [ipgui::add_param $IPINST -name "POLARITY" -parent ${Page_0} -widget comboBox]
   set_property tooltip {The polarity of the output pulse. Setting this to Low will cause larger duty cycle values to result in smaller pulses} ${POLARITY}
 
+  set USE_GPIO [ipgui::add_param $IPINST -name "USE_GPIO"]
+  set_property tooltip {Enable Xilinx GPIO Interface} ${USE_GPIO}
 
 }
 
@@ -26,6 +28,15 @@ proc update_PARAM_VALUE.POLARITY { PARAM_VALUE.POLARITY } {
 
 proc validate_PARAM_VALUE.POLARITY { PARAM_VALUE.POLARITY } {
 	# Procedure called to validate POLARITY
+	return true
+}
+
+proc update_PARAM_VALUE.USE_GPIO { PARAM_VALUE.USE_GPIO } {
+	# Procedure called to update USE_GPIO when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.USE_GPIO { PARAM_VALUE.USE_GPIO } {
+	# Procedure called to validate USE_GPIO
 	return true
 }
 
