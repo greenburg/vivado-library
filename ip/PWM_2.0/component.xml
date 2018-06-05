@@ -234,6 +234,7 @@
       <spirit:busType spirit:vendor="xilinx.com" spirit:library="interface" spirit:name="gpio" spirit:version="1.0"/>
       <spirit:abstractionType spirit:vendor="xilinx.com" spirit:library="interface" spirit:name="gpio_rtl" spirit:version="1.0"/>
       <spirit:master/>
+      <spirit:connectionRequired>true</spirit:connectionRequired>
       <spirit:portMaps>
         <spirit:portMap>
           <spirit:logicalPort>
@@ -260,6 +261,16 @@
           </spirit:physicalPort>
         </spirit:portMap>
       </spirit:portMaps>
+      <spirit:parameters>
+        <spirit:parameter>
+          <spirit:name>BUSIF.BOARD_INTERFACE</spirit:name>
+          <spirit:value spirit:id="BUSIFPARAM_VALUE.PWM_GPIO.BUSIF.BOARD_INTERFACE">Custom</spirit:value>
+        </spirit:parameter>
+        <spirit:parameter>
+          <spirit:name>BOARD.ASSOCIATED_PARAM</spirit:name>
+          <spirit:value spirit:id="BUSIFPARAM_VALUE.PWM_GPIO.BOARD.ASSOCIATED_PARAM">PWM_BOARD_IF</spirit:value>
+        </spirit:parameter>
+      </spirit:parameters>
       <spirit:vendorExtensions>
         <xilinx:busInterfaceInfo>
           <xilinx:enablement>
@@ -372,21 +383,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>9b677fe2</spirit:value>
-          </spirit:parameter>
-        </spirit:parameters>
-      </spirit:view>
-      <spirit:view>
-        <spirit:name>bd_tcl</spirit:name>
-        <spirit:displayName>Block Diagram</spirit:displayName>
-        <spirit:envIdentifier>:vivado.xilinx.com:block.diagram</spirit:envIdentifier>
-        <spirit:fileSetRef>
-          <spirit:localName>bd_tcl_view_fileset</spirit:localName>
-        </spirit:fileSetRef>
-        <spirit:parameters>
-          <spirit:parameter>
-            <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>16328387</spirit:value>
+            <spirit:value>082533d4</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -801,9 +798,13 @@
       <spirit:enumeration>32</spirit:enumeration>
     </spirit:choice>
     <spirit:choice>
-      <spirit:name>choice_pairs_02f9e3fe</spirit:name>
-      <spirit:enumeration spirit:text="High">&quot;1&quot;</spirit:enumeration>
-      <spirit:enumeration spirit:text="Low">&quot;0&quot;</spirit:enumeration>
+      <spirit:name>choice_list_ac75ef1e</spirit:name>
+      <spirit:enumeration>Custom</spirit:enumeration>
+    </spirit:choice>
+    <spirit:choice>
+      <spirit:name>choice_list_b71134be</spirit:name>
+      <spirit:enumeration>&quot;0&quot;</spirit:enumeration>
+      <spirit:enumeration>&quot;1&quot;</spirit:enumeration>
     </spirit:choice>
     <spirit:choice>
       <spirit:name>choice_pairs_ce1226b1</spirit:name>
@@ -872,15 +873,8 @@
       <spirit:file>
         <spirit:name>xgui/PWM_v2_0.tcl</spirit:name>
         <spirit:fileType>tclSource</spirit:fileType>
-        <spirit:userFileType>CHECKSUM_9b677fe2</spirit:userFileType>
+        <spirit:userFileType>CHECKSUM_91c3d847</spirit:userFileType>
         <spirit:userFileType>XGUI_VERSION_2</spirit:userFileType>
-      </spirit:file>
-    </spirit:fileSet>
-    <spirit:fileSet>
-      <spirit:name>bd_tcl_view_fileset</spirit:name>
-      <spirit:file>
-        <spirit:name>bd/bd.tcl</spirit:name>
-        <spirit:fileType>tclSource</spirit:fileType>
       </spirit:file>
     </spirit:fileSet>
   </spirit:fileSets>
@@ -948,12 +942,17 @@
     <spirit:parameter>
       <spirit:name>POLARITY</spirit:name>
       <spirit:displayName>Pulse Polarity</spirit:displayName>
-      <spirit:value spirit:format="bitString" spirit:resolve="user" spirit:id="PARAM_VALUE.POLARITY" spirit:choiceRef="choice_pairs_02f9e3fe" spirit:bitStringLength="1">&quot;1&quot;</spirit:value>
+      <spirit:value spirit:format="bitString" spirit:resolve="user" spirit:id="PARAM_VALUE.POLARITY" spirit:choiceRef="choice_list_b71134be" spirit:bitStringLength="1">&quot;1&quot;</spirit:value>
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>USE_GPIO</spirit:name>
       <spirit:displayName>Use Gpio Interface</spirit:displayName>
       <spirit:value spirit:format="bool" spirit:resolve="user" spirit:id="PARAM_VALUE.USE_GPIO">false</spirit:value>
+    </spirit:parameter>
+    <spirit:parameter>
+      <spirit:name>PWM_BOARD_IF</spirit:name>
+      <spirit:displayName>PWM Board Interface</spirit:displayName>
+      <spirit:value spirit:resolve="user" spirit:id="PARAM_VALUE.PWM_BOARD_IF" spirit:choiceRef="choice_list_ac75ef1e">Custom</spirit:value>
     </spirit:parameter>
   </spirit:parameters>
   <spirit:vendorExtensions>
@@ -980,12 +979,12 @@
         <xilinx:taxonomy>AXI_Peripheral</xilinx:taxonomy>
       </xilinx:taxonomies>
       <xilinx:displayName>PWM_v2.0</xilinx:displayName>
-      <xilinx:coreRevision>7</xilinx:coreRevision>
+      <xilinx:coreRevision>69</xilinx:coreRevision>
       <xilinx:upgrades>
         <xilinx:canUpgradeFrom>natinst.com:user:PWM:1.0</xilinx:canUpgradeFrom>
         <xilinx:canUpgradeFrom>digilentinc.com:IP:PWM:1.0</xilinx:canUpgradeFrom>
       </xilinx:upgrades>
-      <xilinx:coreCreationDateTime>2018-06-04T20:13:22Z</xilinx:coreCreationDateTime>
+      <xilinx:coreCreationDateTime>2018-06-05T22:35:29Z</xilinx:coreCreationDateTime>
       <xilinx:tags>
         <xilinx:tag xilinx:name="natinst.com:user:PWM:1.0_ARCHIVE_LOCATION">C:/Tommywork/Vivado/15_4/PWM_1.0</xilinx:tag>
         <xilinx:tag xilinx:name="digilentinc.com:user:PWM:1.0_ARCHIVE_LOCATION">C:/Tommywork/Vivado/15_4/PWM_1.0</xilinx:tag>
@@ -995,12 +994,12 @@
     </xilinx:coreExtensions>
     <xilinx:packagingInfo>
       <xilinx:xilinxVersion>2017.4</xilinx:xilinxVersion>
-      <xilinx:checksum xilinx:scope="busInterfaces" xilinx:value="f541bd7c"/>
+      <xilinx:checksum xilinx:scope="busInterfaces" xilinx:value="a9542141"/>
       <xilinx:checksum xilinx:scope="memoryMaps" xilinx:value="505458f9"/>
-      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="42de1c87"/>
+      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="64ebcdd3"/>
       <xilinx:checksum xilinx:scope="ports" xilinx:value="306b4b05"/>
       <xilinx:checksum xilinx:scope="hdlParameters" xilinx:value="1e87c6fc"/>
-      <xilinx:checksum xilinx:scope="parameters" xilinx:value="0036339e"/>
+      <xilinx:checksum xilinx:scope="parameters" xilinx:value="676d7821"/>
     </xilinx:packagingInfo>
   </spirit:vendorExtensions>
 </spirit:component>
