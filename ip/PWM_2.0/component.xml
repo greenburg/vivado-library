@@ -229,68 +229,6 @@
         </spirit:parameter>
       </spirit:parameters>
     </spirit:busInterface>
-    <spirit:busInterface>
-      <spirit:name>PWM_GPIO</spirit:name>
-      <spirit:busType spirit:vendor="xilinx.com" spirit:library="interface" spirit:name="gpio" spirit:version="1.0"/>
-      <spirit:abstractionType spirit:vendor="xilinx.com" spirit:library="interface" spirit:name="gpio_rtl" spirit:version="1.0"/>
-      <spirit:master/>
-      <spirit:portMaps>
-        <spirit:portMap>
-          <spirit:logicalPort>
-            <spirit:name>TRI_T</spirit:name>
-          </spirit:logicalPort>
-          <spirit:physicalPort>
-            <spirit:name>pwm_gpio_t</spirit:name>
-          </spirit:physicalPort>
-        </spirit:portMap>
-        <spirit:portMap>
-          <spirit:logicalPort>
-            <spirit:name>TRI_O</spirit:name>
-          </spirit:logicalPort>
-          <spirit:physicalPort>
-            <spirit:name>pwm_gpio_o</spirit:name>
-          </spirit:physicalPort>
-        </spirit:portMap>
-        <spirit:portMap>
-          <spirit:logicalPort>
-            <spirit:name>TRI_I</spirit:name>
-          </spirit:logicalPort>
-          <spirit:physicalPort>
-            <spirit:name>pwm_gpio_i</spirit:name>
-          </spirit:physicalPort>
-        </spirit:portMap>
-      </spirit:portMaps>
-      <spirit:vendorExtensions>
-        <xilinx:busInterfaceInfo>
-          <xilinx:enablement>
-            <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="BUSIF_ENABLEMENT.PWM_GPIO" xilinx:dependency="spirit:decode(id(&apos;PARAM_VALUE.USE_GPIO&apos;))">false</xilinx:isEnabled>
-          </xilinx:enablement>
-        </xilinx:busInterfaceInfo>
-      </spirit:vendorExtensions>
-    </spirit:busInterface>
-    <spirit:busInterface>
-      <spirit:name>pwm</spirit:name>
-      <spirit:busType spirit:vendor="xilinx.com" spirit:library="signal" spirit:name="data" spirit:version="1.0"/>
-      <spirit:abstractionType spirit:vendor="xilinx.com" spirit:library="signal" spirit:name="data_rtl" spirit:version="1.0"/>
-      <spirit:master/>
-      <spirit:portMaps>
-        <spirit:portMap>
-          <spirit:logicalPort>
-            <spirit:name>DATA</spirit:name>
-          </spirit:logicalPort>
-          <spirit:physicalPort>
-            <spirit:name>pwm</spirit:name>
-          </spirit:physicalPort>
-        </spirit:portMap>
-      </spirit:portMaps>
-      <spirit:vendorExtensions>
-        <xilinx:busInterfaceInfo>
-          <xilinx:enablement>
-            <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="BUSIF_ENABLEMENT.pwm" xilinx:dependency="not (spirit:decode(id(&apos;PARAM_VALUE.USE_GPIO&apos;)))">true</xilinx:isEnabled>
-          </xilinx:enablement>
-        </xilinx:busInterfaceInfo>
-      </spirit:vendorExtensions>
-    </spirit:busInterface>
   </spirit:busInterfaces>
   <spirit:memoryMaps>
     <spirit:memoryMap>
@@ -328,7 +266,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>a81f490a</spirit:value>
+            <spirit:value>a0c219cc</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -344,7 +282,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>a81f490a</spirit:value>
+            <spirit:value>a0c219cc</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -372,7 +310,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>9b677fe2</spirit:value>
+            <spirit:value>869a1324</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -396,57 +334,6 @@
         <spirit:name>pwm</spirit:name>
         <spirit:wire>
           <spirit:direction>out</spirit:direction>
-          <spirit:vector>
-            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.NUM_PWM&apos;)) - 1)">0</spirit:left>
-            <spirit:right spirit:format="long">0</spirit:right>
-          </spirit:vector>
-          <spirit:wireTypeDefs>
-            <spirit:wireTypeDef>
-              <spirit:typeName>wire</spirit:typeName>
-              <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
-              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
-            </spirit:wireTypeDef>
-          </spirit:wireTypeDefs>
-        </spirit:wire>
-      </spirit:port>
-      <spirit:port>
-        <spirit:name>pwm_gpio_t</spirit:name>
-        <spirit:wire>
-          <spirit:direction>out</spirit:direction>
-          <spirit:vector>
-            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.NUM_PWM&apos;)) - 1)">0</spirit:left>
-            <spirit:right spirit:format="long">0</spirit:right>
-          </spirit:vector>
-          <spirit:wireTypeDefs>
-            <spirit:wireTypeDef>
-              <spirit:typeName>wire</spirit:typeName>
-              <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
-              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
-            </spirit:wireTypeDef>
-          </spirit:wireTypeDefs>
-        </spirit:wire>
-      </spirit:port>
-      <spirit:port>
-        <spirit:name>pwm_gpio_o</spirit:name>
-        <spirit:wire>
-          <spirit:direction>out</spirit:direction>
-          <spirit:vector>
-            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.NUM_PWM&apos;)) - 1)">0</spirit:left>
-            <spirit:right spirit:format="long">0</spirit:right>
-          </spirit:vector>
-          <spirit:wireTypeDefs>
-            <spirit:wireTypeDef>
-              <spirit:typeName>wire</spirit:typeName>
-              <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
-              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
-            </spirit:wireTypeDef>
-          </spirit:wireTypeDefs>
-        </spirit:wire>
-      </spirit:port>
-      <spirit:port>
-        <spirit:name>pwm_gpio_i</spirit:name>
-        <spirit:wire>
-          <spirit:direction>in</spirit:direction>
           <spirit:vector>
             <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.NUM_PWM&apos;)) - 1)">0</spirit:left>
             <spirit:right spirit:format="long">0</spirit:right>
@@ -821,7 +708,7 @@
       <spirit:file>
         <spirit:name>hdl/PWM_v2_0.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
-        <spirit:userFileType>CHECKSUM_039cdc0c</spirit:userFileType>
+        <spirit:userFileType>CHECKSUM_d0b765ae</spirit:userFileType>
       </spirit:file>
     </spirit:fileSet>
     <spirit:fileSet>
@@ -872,7 +759,7 @@
       <spirit:file>
         <spirit:name>xgui/PWM_v2_0.tcl</spirit:name>
         <spirit:fileType>tclSource</spirit:fileType>
-        <spirit:userFileType>CHECKSUM_9b677fe2</spirit:userFileType>
+        <spirit:userFileType>CHECKSUM_30df93a9</spirit:userFileType>
         <spirit:userFileType>XGUI_VERSION_2</spirit:userFileType>
       </spirit:file>
     </spirit:fileSet>
@@ -950,11 +837,6 @@
       <spirit:displayName>Pulse Polarity</spirit:displayName>
       <spirit:value spirit:format="bitString" spirit:resolve="user" spirit:id="PARAM_VALUE.POLARITY" spirit:choiceRef="choice_pairs_02f9e3fe" spirit:bitStringLength="1">&quot;1&quot;</spirit:value>
     </spirit:parameter>
-    <spirit:parameter>
-      <spirit:name>USE_GPIO</spirit:name>
-      <spirit:displayName>Use Gpio Interface</spirit:displayName>
-      <spirit:value spirit:format="bool" spirit:resolve="user" spirit:id="PARAM_VALUE.USE_GPIO">false</spirit:value>
-    </spirit:parameter>
   </spirit:parameters>
   <spirit:vendorExtensions>
     <xilinx:coreExtensions>
@@ -980,27 +862,27 @@
         <xilinx:taxonomy>AXI_Peripheral</xilinx:taxonomy>
       </xilinx:taxonomies>
       <xilinx:displayName>PWM_v2.0</xilinx:displayName>
-      <xilinx:coreRevision>7</xilinx:coreRevision>
+      <xilinx:coreRevision>6</xilinx:coreRevision>
       <xilinx:upgrades>
         <xilinx:canUpgradeFrom>natinst.com:user:PWM:1.0</xilinx:canUpgradeFrom>
         <xilinx:canUpgradeFrom>digilentinc.com:IP:PWM:1.0</xilinx:canUpgradeFrom>
       </xilinx:upgrades>
-      <xilinx:coreCreationDateTime>2018-06-04T20:13:22Z</xilinx:coreCreationDateTime>
+      <xilinx:coreCreationDateTime>2017-05-31T19:07:07Z</xilinx:coreCreationDateTime>
       <xilinx:tags>
         <xilinx:tag xilinx:name="natinst.com:user:PWM:1.0_ARCHIVE_LOCATION">C:/Tommywork/Vivado/15_4/PWM_1.0</xilinx:tag>
         <xilinx:tag xilinx:name="digilentinc.com:user:PWM:1.0_ARCHIVE_LOCATION">C:/Tommywork/Vivado/15_4/PWM_1.0</xilinx:tag>
         <xilinx:tag xilinx:name="digilentinc.com:IP:PWM:1.0_ARCHIVE_LOCATION">/home/samb/sam_work/vivado/16_2/Arty_rgb_ctrl/repo/vivado-library/ip/PWM_1.0</xilinx:tag>
-        <xilinx:tag xilinx:name="digilentinc.com:IP:PWM:2.0_ARCHIVE_LOCATION">c:/Users/arthur/Documents/GitHub/vivado-library/ip/PWM_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="digilentinc.com:IP:PWM:2.0_ARCHIVE_LOCATION">c:/sam_work/git/digilent/vivado-library/ip/PWM_2.0</xilinx:tag>
       </xilinx:tags>
     </xilinx:coreExtensions>
     <xilinx:packagingInfo>
-      <xilinx:xilinxVersion>2017.4</xilinx:xilinxVersion>
-      <xilinx:checksum xilinx:scope="busInterfaces" xilinx:value="f541bd7c"/>
-      <xilinx:checksum xilinx:scope="memoryMaps" xilinx:value="505458f9"/>
-      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="42de1c87"/>
-      <xilinx:checksum xilinx:scope="ports" xilinx:value="306b4b05"/>
-      <xilinx:checksum xilinx:scope="hdlParameters" xilinx:value="1e87c6fc"/>
-      <xilinx:checksum xilinx:scope="parameters" xilinx:value="0036339e"/>
+      <xilinx:xilinxVersion>2017.1</xilinx:xilinxVersion>
+      <xilinx:checksum xilinx:scope="busInterfaces" xilinx:value="adde76c7"/>
+      <xilinx:checksum xilinx:scope="memoryMaps" xilinx:value="4ad14e03"/>
+      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="cf25b1e1"/>
+      <xilinx:checksum xilinx:scope="ports" xilinx:value="719515a8"/>
+      <xilinx:checksum xilinx:scope="hdlParameters" xilinx:value="cc171503"/>
+      <xilinx:checksum xilinx:scope="parameters" xilinx:value="8d8bd505"/>
     </xilinx:packagingInfo>
   </spirit:vendorExtensions>
 </spirit:component>
