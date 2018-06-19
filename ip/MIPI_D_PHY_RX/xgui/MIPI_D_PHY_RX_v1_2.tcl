@@ -1,10 +1,15 @@
+
+# Loading additional proc with user specified bodies to compute parameter values.
+source [file join [file dirname [file dirname [info script]]] gui/MIPI_D_PHY_RX_v1_2.gtcl]
+
 # Definitional proc to organize widgets for parameters.
 proc init_gui { IPINST } {
   ipgui::add_param $IPINST -name "Component_Name"
   #Adding Page
   set Control [ipgui::add_page $IPINST -name "Control"]
   ipgui::add_param $IPINST -name "kGenerateAXIL" -parent ${Control}
-  ipgui::add_param $IPINST -name "kLPFromLane0" -parent ${Control}
+  set kLPFromLane0 [ipgui::add_param $IPINST -name "kLPFromLane0" -parent ${Control}]
+  set_property tooltip {Check if only Lane 0 has low-power signals and should be shared between all data lanes.} ${kLPFromLane0}
   set kDebug [ipgui::add_param $IPINST -name "kDebug" -parent ${Control}]
   set_property tooltip {Instantiate ILAs to probe pre-defined signals} ${kDebug}
   #Adding Group
@@ -23,6 +28,42 @@ proc init_gui { IPINST } {
   ipgui::add_param $IPINST -name "kAddDelayData1_ps" -parent ${Page_0}
 
 
+}
+
+proc update_PARAM_VALUE.kAddDelayData1_ps { PARAM_VALUE.kAddDelayData1_ps PARAM_VALUE.kNoOfDataLanes } {
+	# Procedure called to update kAddDelayData1_ps when any of the dependent parameters in the arguments change
+	
+	set kAddDelayData1_ps ${PARAM_VALUE.kAddDelayData1_ps}
+	set kNoOfDataLanes ${PARAM_VALUE.kNoOfDataLanes}
+	set values(kNoOfDataLanes) [get_property value $kNoOfDataLanes]
+	if { [gen_USERPARAMETER_kAddDelayData1_ps_ENABLEMENT $values(kNoOfDataLanes)] } {
+		set_property enabled true $kAddDelayData1_ps
+	} else {
+		set_property enabled false $kAddDelayData1_ps
+	}
+}
+
+proc validate_PARAM_VALUE.kAddDelayData1_ps { PARAM_VALUE.kAddDelayData1_ps } {
+	# Procedure called to validate kAddDelayData1_ps
+	return true
+}
+
+proc update_PARAM_VALUE.kLPFromLane0 { PARAM_VALUE.kLPFromLane0 PARAM_VALUE.kNoOfDataLanes } {
+	# Procedure called to update kLPFromLane0 when any of the dependent parameters in the arguments change
+	
+	set kLPFromLane0 ${PARAM_VALUE.kLPFromLane0}
+	set kNoOfDataLanes ${PARAM_VALUE.kNoOfDataLanes}
+	set values(kNoOfDataLanes) [get_property value $kNoOfDataLanes]
+	if { [gen_USERPARAMETER_kLPFromLane0_ENABLEMENT $values(kNoOfDataLanes)] } {
+		set_property enabled true $kLPFromLane0
+	} else {
+		set_property enabled false $kLPFromLane0
+	}
+}
+
+proc validate_PARAM_VALUE.kLPFromLane0 { PARAM_VALUE.kLPFromLane0 } {
+	# Procedure called to validate kLPFromLane0
+	return true
 }
 
 proc update_PARAM_VALUE.C_S_AXI_LITE_FREQ_HZ { PARAM_VALUE.C_S_AXI_LITE_FREQ_HZ } {
@@ -52,15 +93,6 @@ proc validate_PARAM_VALUE.kAddDelayData0_ps { PARAM_VALUE.kAddDelayData0_ps } {
 	return true
 }
 
-proc update_PARAM_VALUE.kAddDelayData1_ps { PARAM_VALUE.kAddDelayData1_ps } {
-	# Procedure called to update kAddDelayData1_ps when any of the dependent parameters in the arguments change
-}
-
-proc validate_PARAM_VALUE.kAddDelayData1_ps { PARAM_VALUE.kAddDelayData1_ps } {
-	# Procedure called to validate kAddDelayData1_ps
-	return true
-}
-
 proc update_PARAM_VALUE.kDebug { PARAM_VALUE.kDebug } {
 	# Procedure called to update kDebug when any of the dependent parameters in the arguments change
 }
@@ -85,15 +117,6 @@ proc update_PARAM_VALUE.kGenerateMMCM { PARAM_VALUE.kGenerateMMCM } {
 
 proc validate_PARAM_VALUE.kGenerateMMCM { PARAM_VALUE.kGenerateMMCM } {
 	# Procedure called to validate kGenerateMMCM
-	return true
-}
-
-proc update_PARAM_VALUE.kLPFromLane0 { PARAM_VALUE.kLPFromLane0 } {
-	# Procedure called to update kLPFromLane0 when any of the dependent parameters in the arguments change
-}
-
-proc validate_PARAM_VALUE.kLPFromLane0 { PARAM_VALUE.kLPFromLane0 } {
-	# Procedure called to validate kLPFromLane0
 	return true
 }
 
