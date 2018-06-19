@@ -162,6 +162,15 @@ architecture Behavioral of LLP is
    signal mBufDataCnt : std_logic_vector(31 downto 0);
 begin
 
+-- Data Flow
+--  -> sAxis
+--  FIFO -> mFIFO_*
+--      ECC -> mECC_*
+--      Header stripping, byte counting -> mPkt_*
+--      Packet register -> mReg_*
+--          CRC processing -> mCRC_Out
+--          Video formatter -> mFmt_*
+--              Line Buffer -> mAxis_*
 assert (kMaxLaneCount = 4) report "LLP module only supports a maximum of four lanes" severity failure;
 RAW10_DT: if (kTargetDT = "RAW10") generate
    kTargetDTInt <= kDT_RAW10;
@@ -274,7 +283,7 @@ mWC <= mECC_HeaderOut(23 downto 8);
 mVC <= mECC_HeaderOut(7 downto 6);
 mDT <= mECC_HeaderOut(5 downto 0);
 
--- Short packet processing, this just has a header and possibly dummy data that needs flushing
+-- Short packet processing, assert Tuser for Start-of-Frame
 FrameStart: process(MAxisClk)
 begin
    if Rising_Edge(MAxisClk) then
@@ -318,7 +327,11 @@ begin
             if (mDT = kTargetDTInt) then -- supported long packet data types
                mKeep <= '1';
                mDataType <= mDT;
+            else --unsupported data type or short packet
+               mKeep <= '0';
             end if;
+         elsif (mECC_Error = '1') then --uncorrectable header error
+            mKeep <= '0';
          elsif (mPkt_Tlast = '1' and mPkt_Tvalid = '1' and mPkt_Tready = '1') then -- when the packet ends according to word count
             mKeep <= '0';
          end if;
@@ -355,9 +368,12 @@ end process;
 mPkt_Tvalid <= mFIFO_Tvalid and mKeep;
 mPkt_Tready <= mReg_Tready;
 mPkt_Tdata <= mFIFO_Tdata;
-process(mWordCount, mFIFO_Tkeep)
+process(mWordCount, mFIFO_Tkeep, mFIFO_Tlast)
 begin
-   if mWordCount = 1 then
+   if mFIFO_Tlast = '1' then -- if data count incorrect and input ends sooner, end packet too 
+      mPkt_Tlast <= '1';
+      mPkt_Tkeep <= mFIFO_Tkeep;
+   elsif mWordCount = 1 then
       mPkt_Tlast <= '1';
       mPkt_Tkeep <= "0001";
    elsif mWordCount = 2 then
@@ -370,7 +386,7 @@ begin
       mPkt_Tlast <= '1';
       mPkt_Tkeep <= "1111";
    else
-      mPkt_Tlast <= '0';
+      mPkt_Tlast <= '0'; 
       mPkt_Tkeep <= mFIFO_Tkeep;
    end if;
 end process;
@@ -458,6 +474,7 @@ begin
       if (mRst = '1') then
          cnt := 0;
          mFmt_Tvalid <= '0';
+         mFmt_Tuser <= "0";
       elsif (mFmt_Tready = '1') then
          mFmt_Tvalid <= mReg_Tvalid;
          if (mFmt_Tvalid = '1') then --first pixels transmitted

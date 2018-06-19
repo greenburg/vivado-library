@@ -330,8 +330,7 @@ end generate UseOwnLP;
 ShareLPFromOtherLane: if kNoLP generate
     dLP(0) <= dLP0_in;
     dLP(1) <= dLP1_in;
-    aLPOut(0) <= '0';
-    aLPOut(1) <= '0';
+    aLPOut <= aLPIn;
 end generate ShareLPFromOtherLane;
 
 -- We are in Bridge (or HS) state when we sampled 0 at least 2 times on both LP1 on and LP0

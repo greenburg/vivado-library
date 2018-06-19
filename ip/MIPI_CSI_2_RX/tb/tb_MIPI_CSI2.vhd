@@ -39,6 +39,7 @@ architecture Behavioral of tb_MIPI_CSI2 is
    component MIPI_CSI2_Rx is
       Generic (
          kTargetDT : string := "RAW10";
+         kDebug : boolean := true; 
          --PPI
          kLaneCount : natural range 1 to 4 := 2; --[1,2,4]
          --Video Format
@@ -108,6 +109,8 @@ architecture Behavioral of tb_MIPI_CSI2 is
    --LSByte first
    constant fs_err : mem := (x"00", x"01", x"C0", x"1A", x"EF", x"BE"); --frame start with two ECC errors and extra bytes (if no EoT processing is done in PHY)
    constant fs : mem := (x"00", x"01", x"00", x"1A"); --frame start with no ECC errors
+   constant long_err : mem := (x"2B", x"FF", x"FF", x"00", x"00", x"00", x"00", x"00", x"E4", x"E4", x"E4", x"E4");  --uncorrectable error
+   constant length_err : mem := (x"2B", x"FF", x"FF", x"2D", x"00", x"00", x"00", x"00", x"00", x"00", x"00", x"00");  --correct header, incorrect length
    constant longRAW10_err : mem := (x"2B", x"0A", x"80", x"2E", x"00", x"00", x"00", x"00", x"E4", x"01", x"01", x"01", x"01", x"E4", x"E9", x"FB", x"EF", x"BE", x"AD", x"DE");  --active line RAW8, error in third byte 00, extra bytes
    constant fe : mem := (x"01", x"01", x"00", x"0D"); --frame end with one ECC error (error in last byte 1D)
 begin
@@ -175,8 +178,11 @@ begin
    end loop;
    wait until aDEnable = "11";
    SendPacket(fs_err);
+   SendPacket(long_err);
+   SendPacket(length_err);
    SendPacket(fs);
    SendPacket(longRAW10_err);
+   SendPacket(long_err);
    SendPacket(fe);
    wait;
 end process;
@@ -185,6 +191,8 @@ end process;
 ReadProc: process
 begin
    mAxisTready <= '1';
+   wait until Rising_Edge(MAxisClk) and mAxisTready = '1' and mAxisTvalid = '1';
+   assert (unsigned(mAxisTdata)=to_unsigned(0,C_M_AXIS_TDATA_WIDTH)) report "Expected throw-away data has unexpected value" severity failure;
    for i in 0 to 8 - 1 loop
       if (i mod C_M_MAX_SAMPLES_PER_CLOCK = 0) then
          wait until Rising_Edge(MAxisClk) and mAxisTready = '1' and mAxisTvalid = '1';
@@ -208,6 +216,7 @@ end process;
 DUT: MIPI_CSI2_Rx
    Generic map(
       kTargetDT => kTargetDT,
+      kDebug => false,       
       --PPI
       kLaneCount => kLaneCount, --[1,2,4]
       --Video Format

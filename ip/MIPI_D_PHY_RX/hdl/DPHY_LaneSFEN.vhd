@@ -69,7 +69,9 @@ entity DPHY_LaneSFEN is
       dLP1_in : in std_logic_vector(7 downto 0);
       dLP0_out : out std_logic_vector(7 downto 0);
       dLP1_out : out std_logic_vector(7 downto 0);
-   
+      cLP_in : in STD_LOGIC_VECTOR (1 downto 0);
+      cLP_out : out STD_LOGIC_VECTOR (1 downto 0);
+      
       aLP : in STD_LOGIC_VECTOR (1 downto 0);
       aHS : in STD_LOGIC;
       RefClk : in STD_LOGIC;
@@ -124,7 +126,7 @@ signal state, nstate : state_type := stInitCountDown;
 alias CtlClk : std_logic is RefClk;
 alias kCtlClkFreqHz : natural is kRefClkFreqHz;
 
-signal aLP_int, cLP, cLPGlitch, dLP : std_logic_vector(1 downto 0);
+signal aLP_int, cLP, cLPGlitch: std_logic_vector(1 downto 0);
 constant kTInit      : natural := natural(ceil(100.0 * real(kCtlClkFreqHz) / 1_000_000.0)); --100us
 constant kTHSSettle  : natural := natural(ceil(85.0 * real(kCtlClkFreqHz) / 1_000_000_000.0)); --85ns
 constant kTMinRx : natural := natural(ceil(20.0 * real(kCtlClkFreqHz) / 1_000_000_000.0)); --20ns
@@ -183,6 +185,7 @@ SyncAsyncForceRxMode: entity work.SyncAsync
       OutClk => CtlClk,
       oOut => cForceRxmode);
 
+UseOwnLP: if not kNoLP generate
 -- Sync LP with CtlClk
 -- T_LPX_min = 50ns = 4*UI_max
 -- Synchronizing the LP bits separately is OK, because entering HS is done by
@@ -207,17 +210,15 @@ GenSyncLP: for i in 0 to 1 generate
          SampleClk => CtlClk,
          sIn => cLPGlitch(i),
          sOut => cLP(i),
-         sRst => '0');
-   SyncAsyncx_D: entity work.SyncAsync
-      generic map (
-         kResetTo => '0',
-         kStages => 2) --use double FF synchronizer
-      port map (
-         aReset => '0',
-         aIn => aLP_int(i),
-         OutClk => DivClk,
-         oOut => dLP(i));         
+         sRst => '0');         
 end generate GenSyncLP;
+end generate UseOwnLP;
+
+cLP_out <= cLP;
+
+ShareLPFromOtherLane: if kNoLP generate
+    cLP <= cLP_in;
+end generate ShareLPFromOtherLane;
       
 -- Time delay counter running on CtlClk, because it has a known, fixed frequency
 -- We use it to keep track of timing parameters in time units rather than UIs.

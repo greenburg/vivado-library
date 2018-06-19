@@ -39,20 +39,23 @@ end tb_MIPI_DPHY_Receiver;
 architecture Behavioral of tb_MIPI_DPHY_Receiver is
 
 component MIPI_DPHY_Receiver is
-	generic (
+   generic (
 		-- Users to add parameters here
-        kNoOfDataLanes : natural range 1 to 2:= 2;
-        kGenerateMMCM : boolean := false;
-        kAddDelayClk_ps : integer := 0;
-        kAddDelayData0_ps : integer := 0;
-        kAddDelayData1_ps : integer := 0;        
-		-- User parameters ends
-		-- Do not modify the parameters beyond this line
-
-
+	  kVersionMajor : natural := 0; -- TCL-propagated from VLNV
+      kVersionMinor : natural := 0; -- TCL-propagated from VLNV
+      kNoOfDataLanes : natural range 1 to 2:= 2;
+      kGenerateMMCM : boolean := false;
+      kGenerateAXIL : boolean := false;
+      kAddDelayClk_ps : integer := 0;
+      kAddDelayData0_ps : integer := 0;
+      kAddDelayData1_ps : integer := 0;
+      kRefClkFreqHz : integer := 200_000_000; -- TCL-propagated
+      kDebug : boolean := true;
+      kLPFromLane0 : boolean := true;
 		-- Parameters of Axi Slave Bus Interface S_AXI_LITE
 		C_S_AXI_LITE_DATA_WIDTH	: integer	:= 32;
-		C_S_AXI_LITE_ADDR_WIDTH	: integer	:= 4
+		C_S_AXI_LITE_ADDR_WIDTH	: integer	:= 4;
+		C_S_AXI_LITE_FREQ_HZ : integer      := 100_000_000 -- TCL-propagated
 	);
 	port (
       dphy_clk_hs_p : in std_logic;
@@ -448,6 +451,7 @@ end process DataStimulus1;
 DUT: MIPI_DPHY_Receiver
 	generic map (
         kNoOfDataLanes => kNoOfDataLanes,
+        kDebug => false,
         kGenerateMMCM => false,
         kAddDelayClk_ps => 0,
         kAddDelayData0_ps => 0,

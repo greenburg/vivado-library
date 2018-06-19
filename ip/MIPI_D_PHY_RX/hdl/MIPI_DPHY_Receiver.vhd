@@ -53,7 +53,7 @@ use work.DebugLib.all;
 entity MIPI_DPHY_Receiver is
 	generic (
 		-- Users to add parameters here
-	  kVersionMajor : natural := 0; -- TCL-propagated from VLNV
+      kVersionMajor : natural := 0; -- TCL-propagated from VLNV
       kVersionMinor : natural := 0; -- TCL-propagated from VLNV
       kNoOfDataLanes : natural range 1 to 2:= 2;
       kGenerateMMCM : boolean := false;
@@ -208,7 +208,7 @@ signal dLP0_in, dLP1_in, dLP0_out, dLP1_out : dLP_int_t;
 signal HS_Clock   : std_logic;
 signal HS_Data    : dataLaneHSType;
 signal LP_Clock   : std_logic_vector(1 downto 0);
-signal LP_Data    : dataLaneLPType;
+signal aLPBuf, cLP_in, cLP_out    : dataLaneLPType;
 
 signal dDataWord : dataLaneWordType;
 signal dDataAligned : dataLaneHSType;
@@ -471,7 +471,7 @@ DataLaneGen: for i in kNoOfDataLanes-1 downto 0 generate
          LP_p => dphy_data_lp_p(i),
          
          aHS => HS_Data(i),
-         aLP => LP_Data(i) 
+         aLP => aLPBuf(i) 
       );
    aLaneSFENEnable(i) <= SFEN_Lanes(i).aEnable and rSoftEnable and rDlyLckd;
       
@@ -488,7 +488,10 @@ DataLaneGen: for i in kNoOfDataLanes-1 downto 0 generate
          dLP0_out => dLP0_out(i),
          dLP1_out => dLP1_out(i),
          
-         aLP => LP_Data(i),
+         cLP_in => cLP_in(i),
+         cLP_out => cLP_out(i),
+         
+         aLP => aLPBuf(i),
          aHS => HS_Data(i),
          RefClk => RefClk,
          
@@ -513,9 +516,11 @@ DataLaneGen: for i in kNoOfDataLanes-1 downto 0 generate
          
          debug => debugSFEN(i)
       );
+
 ShareLPFromOtherLane: if kLPFromLane0 and i /= 0 generate
     dLP0_in(i) <= dLP0_out(0);
     dLP1_in(i) <= dLP0_out(0);
+    cLP_in(i) <= cLP_out(0);
 end generate ShareLPFromOtherLane;
 
       --D0RxClkEsc <=
