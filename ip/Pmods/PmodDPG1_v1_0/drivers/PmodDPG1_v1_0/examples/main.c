@@ -8,8 +8,9 @@
 /******************************************************************************/
 /* File Description:                                                          */
 /*                                                                            */
-/* This demo continuously the PmodDPG1 for pressure measurements and prints   */
-/* the data in 6 different units (kPa, atm, psi, inH2O, cmH2O, and mmHg).     */
+/* This demo continuously polls the PmodDPG1 for pressure measurements and    */
+/* prints the data in 6 different units (kPa, atm, psi, inH2O, cmH2O, and     */
+/* mmHg).                                                                     */
 /*                                                                            */
 /******************************************************************************/
 /* Revision History:                                                          */
@@ -17,6 +18,7 @@
 /*    08/19/2016(jpeyron):  Created                                           */
 /*    09/29/2017(atangzwj): Validated for Vivado 2015.4                       */
 /*    10/20/2017(atangzwj): Validated for Vivado 2016.4                       */
+/*    03/16/2018(atangzwj): Validated for Vivado 2017.4                       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -81,44 +83,44 @@ void DemoRun() {
       double pressureValue;
       DPG1_readData(&myDevice);
 
-      // read raw data from PmodDPG1 and print it
+      // Read raw data from PmodDPG1 and print it
       rawData = (int) myDevice.data;
-      xil_printf("Raw data: %d \n\r", rawData); // format text for display
+      xil_printf("Raw data: %d \n\r", rawData); // Format text for display
 
-      int whole; // used to get the whole number for the float
-      int not_whole;// used to get the non whole number for the float
+      int whole; // Used to get the whole number for the float
+      int not_whole;// Used to get the non whole number for the float
 
-      // convert raw data into units of kPa and print it
+      // Convert raw data into units of kPa and print it
       pressureValue = DPG1_GetPressure(KPA, &myDevice);
-      whole = pressureValue; // get whole number part of the physical value
-      not_whole = (pressureValue - whole) * 1000000; // get fractional part
-      xil_printf("kPa: %d.%06d \n\r", whole, not_whole); // format and print
+      whole = pressureValue; // Get whole number part of the physical value
+      not_whole = (pressureValue - whole) * 1000000; // Get fractional part
+      xil_printf("kPa: %d.%06d \n\r", whole, not_whole); // Format and print
 
-      // convert raw data into units of atm and print it
+      // Convert raw data into units of atm and print it
       pressureValue = DPG1_GetPressure(ATM, &myDevice);
       whole = pressureValue;
       not_whole = (pressureValue - whole) * 1000000;
       xil_printf("atm: %d.%06d \n\r", whole, not_whole);
 
-      // convert raw data into units of and print it
+      // Convert raw data into units of and print it
       pressureValue = DPG1_GetPressure(PSI, &myDevice);
       whole = pressureValue;
       not_whole = (pressureValue - whole) * 1000000;
       xil_printf("psi: %d.%06d \n\r", whole, not_whole);
 
-      // convert raw data into units of and print it
+      // Convert raw data into units of and print it
       pressureValue = DPG1_GetPressure(INH2O,&myDevice);
       whole = pressureValue;
       not_whole = (pressureValue - whole) * 1000000;
       xil_printf("inH20: %d.%06d \n\r", whole, not_whole);
 
-      // convert raw data into units of and print it
+      // Convert raw data into units of and print it
       pressureValue = DPG1_GetPressure(CMH2O,&myDevice);
       whole = pressureValue;
       not_whole = (pressureValue - whole) * 1000000;
       xil_printf("cmH20: %d.%06d \n\r", whole, not_whole);
 
-      // convert raw data into units of and print it
+      // Convert raw data into units of and print it
       pressureValue = DPG1_GetPressure(MMHG, &myDevice);
       whole = pressureValue;
       not_whole = (pressureValue - whole) * 1000000;
@@ -137,11 +139,11 @@ void DemoCleanup() {
 
 void EnableCaches() {
 #ifdef __MICROBLAZE__
-#ifdef XPAR_MICROBLAZE_USE_DCACHE
-   Xil_DCacheEnable();
-#endif
 #ifdef XPAR_MICROBLAZE_USE_ICACHE
    Xil_ICacheEnable();
+#endif
+#ifdef XPAR_MICROBLAZE_USE_DCACHE
+   Xil_DCacheEnable();
 #endif
 #endif
 }

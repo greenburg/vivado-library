@@ -16,6 +16,7 @@
 /*    08/10/2016(jpeyron):  Created                                           */
 /*    09/29/2017(atangzwj): Validated for Vivado 2015.4                       */
 /*    10/20/2017(atangzwj): Validated for Vivado 2016.4                       */
+/*    03/16/2018(atangzwj): Validated for Vivado 2017.4                       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -42,59 +43,59 @@ XSpi_Config DPG1Config =
 };
 
 /* ------------------------------------------------------------ */
-/***    void DPG1_begin(PmodDPG1* InstancePtr, u32 SPI_Address)
+/*** void DPG1_begin(PmodDPG1 *InstancePtr, u32 SPI_Address)
  **
- **      Parameters:
- **              InstancePtr: A PmodDPG1 object to start
- **              SPI_Address: The Base address of the PmodDPG1 SPI
+ **  Parameters:
+ **     InstancePtr: A PmodDPG1 object to start
+ **     SPI_Address: The Base address of the PmodDPG1 SPI
  **
- **      Return Value:
- **              none
+ **  Return Value:
+ **     None
  **
- **      Errors:
- **              none
+ **  Errors:
+ **     None
  **
- **      Description:
- **              Initialize the PmodDPG1.
+ **  Description:
+ **     Initialize the PmodDPG1.
  */
-void DPG1_begin(PmodDPG1* InstancePtr, u32 SPI_Address) {
+void DPG1_begin(PmodDPG1 *InstancePtr, u32 SPI_Address) {
    DPG1Config.BaseAddress = SPI_Address;
    DPG1_SPIInit(&InstancePtr->DPG1Spi);
 }
 
 /* ------------------------------------------------------------ */
-/***    DPG1_end(void)
+/*** DPG1_end(void)
  **
- **      Parameters:
- **              InstancePtr - PmodDPG1 object to stop
+ **  Parameters:
+ **     InstancePtr: PmodDPG1 object to stop
  **
- **      Return Value:
- **              none
+ **  Return Value:
+ **     None
  **
- **      Errors:
- **              none
+ **  Errors:
+ **     None
  **
- **      Description:
- **              Stops the device
+ **  Description:
+ **     Stops the device
  */
-void DPG1_end(PmodDPG1* InstancePtr) {
+void DPG1_end(PmodDPG1 *InstancePtr) {
    XSpi_Stop(&InstancePtr->DPG1Spi);
 }
 
 /* ------------------------------------------------------------ */
-/***    DPG1_SPIInit
+/*** DPG1_SPIInit
  **
- **     Parameters:
- **             none
+ **  Parameters:
+ **     None
  **
- **     Return Value:
- **             none
+ **  Return Value:
+ **     None
  **
- **     Errors:
- **             none
+ **  Errors:
+ **     None
  **
- **     Description:
- **             Initializes the PmodDPG1 SPI.
+ **  Description:
+ **     Initializes the PmodDPG1 SPI.
  */
 int DPG1_SPIInit(XSpi *SpiInstancePtr) {
    int Status;
@@ -131,58 +132,58 @@ int DPG1_SPIInit(XSpi *SpiInstancePtr) {
 }
 
 /* ------------------------------------------------------------ */
-/***    DPG1_ReadSpi
+/*** DPG1_ReadSpi
  **
- **     Synopsis:
- **             DPG1_ReadSpi(&DPG1obj);
+ **  Synopsis:
+ **     DPG1_ReadSpi(&DPG1obj);
  **
- **     Parameters:
- **             PmodDPG1 *InstancePtr - the PmodDPG1 object to communicate with
+ **  Parameters:
+ **     InstancePtr: the PmodDPG1 object to communicate with
  **
- **     Return Value:
- **             none
+ **  Return Value:
+ **     None
  **
- **     Errors:
- **             none
+ **  Errors:
+ **     None
  **
- **     Description:
- **             Reads data in through SPI. It will read the first byte from the
- **             starting register, then the next from the following register.
- **             Data is stored into data.
+ **  Description:
+ **     Reads data in through SPI. It will read the first byte from the starting
+ **     register, then the next from the following register. Data is stored into
+ **     data.
  */
-void DPG1_readData(PmodDPG1* InstancePtr) {
+void DPG1_readData(PmodDPG1 *InstancePtr) {
    u8 byte[4];
    InstancePtr->data = 0;
    XSpi_Transfer(&InstancePtr->DPG1Spi, byte, byte, 4);
 
-   // convert the byte array to an int
+   // Convert the byte array to an int
    InstancePtr->data |= byte[0];
    InstancePtr->data = InstancePtr->data << 8;
    InstancePtr->data |= byte[1];
 }
 
 /* ------------------------------------------------------------ */
-/***    DPG1_GetPressure
+/*** DPG1_GetPressure
  **
- **     Synopsis:
- **             myDPG1_GetPressure();
+ **  Synopsis:
+ **     myDPG1_GetPressure();
  **
- **     Parameters:
- **             int pType (0 by default, meaning kPa) - pressure unit of return
+ **  Parameters:
+ **     int pType (0 by default, meaning kPa) - pressure unit of return
  **
- **     Return Values:
- **             double - the pressure data after it's been calculated
+ **  Return Values:
+ **     double - the pressure data after it's been calculated
  **
- **     Errors:
- **             none
+ **  Errors:
+ **     None
  **
- **     Description:
- **             This function takes the data from the Pmod, and calculates its
- **             pressure in a variety of pressure units. By default, it will
- **             return pressure in units of kPa.
+ **  Description:
+ **     This function takes the data from the Pmod, and calculates its pressure
+ **     in a variety of pressure units. By default, it will return pressure in
+ **     units of kPa.
  */
-double DPG1_GetPressure(int pType, PmodDPG1* InstancePtr) {
-   // calculate kPa from raw data
+double DPG1_GetPressure(int pType, PmodDPG1 *InstancePtr) {
+   // Calculate kPa from raw data
    double kPa = (InstancePtr->data / 4096.0 - 0.08) / 0.09;
 
    switch (pType) {

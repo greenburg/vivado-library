@@ -16,6 +16,7 @@
 /*    08/10/2016(jpeyron):  Created                                           */
 /*    09/29/2017(atangzwj): Validated for Vivado 2015.4                       */
 /*    10/20/2017(atangzwj): Validated for Vivado 2016.4                       */
+/*    03/16/2018(atangzwj): Validated for Vivado 2017.4                       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -25,9 +26,9 @@
 /************ Include Files ************/
 
 #include "xil_types.h"
-#include "xstatus.h"
 #include "xspi_l.h"
 #include "xspi.h"
+#include "xstatus.h"
 
 
 /************ Macro Definitions ************/
@@ -51,10 +52,10 @@ typedef struct PmodDPG1 {
 
 /************ Function Prototypes ************/
 
-void   DPG1_begin(PmodDPG1* InstancePtr, u32 SPI_Address);
-void   DPG1_end(PmodDPG1* InstancePtr);
+void   DPG1_begin(PmodDPG1 *InstancePtr, u32 SPI_Address);
+void   DPG1_end(PmodDPG1 *InstancePtr);
 int    DPG1_SPIInit(XSpi *SpiInstancePtr);
-void   DPG1_readData(PmodDPG1* InstancePtr);
-double DPG1_GetPressure(int pType, PmodDPG1* InstancePtr);
+void   DPG1_readData(PmodDPG1 *InstancePtr);
+double DPG1_GetPressure(int pType, PmodDPG1 *InstancePtr);
 
 #endif // PMODDPG1_H

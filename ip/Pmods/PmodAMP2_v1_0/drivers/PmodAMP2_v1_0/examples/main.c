@@ -27,6 +27,7 @@
 /*    04/26/2017(ArtVVB):   2016.4 Maintenance                                */
 /*    10/30/2017(ArtVVB):   2016.4 Maintenance                                */
 /*    02/10/2018(atangzwj): Validated for Vivado 2017.4                       */
+/*    03/19/2018(atangzwj): MicroBlaze interrupt macro change                 */
 /*                                                                            */
 /******************************************************************************/
 
@@ -41,8 +42,8 @@
 
    #define INTC                  XIntc
    #define INTC_HANDLER          XIntc_InterruptHandler
-   #define INTC_DEVICE_ID        XPAR_AXI_INTC_0_DEVICE_ID
-   #define INTC_TMR_INTERRUPT_ID XPAR_AXI_INTC_0_PMODAMP2_0_TIMER_INTERRUPT_INTR
+   #define INTC_DEVICE_ID        XPAR_INTC_0_DEVICE_ID
+   #define INTC_TMR_INTERRUPT_ID XPAR_INTC_0_PMODAMP2_0_VEC_ID
 #else
    #include "xscugic.h"
    #include "xil_exception.h"
@@ -126,7 +127,7 @@ void DemoInterruptHandler(PmodAMP2 *InstancePtr) {
    if (XTmrCtr_IsExpired(&InstancePtr->timer, 0)) {
       XTmrCtr_Stop(&InstancePtr->timer, 0);
 
-      //draw a triangle wave
+      // Draw a triangle wave
       if (rise == 0) {
          if (duty + delta <= AMP2_PWM_PERIOD) {
             duty = duty + delta;
