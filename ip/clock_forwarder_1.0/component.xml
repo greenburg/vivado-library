@@ -182,6 +182,7 @@
   <spirit:vendorExtensions>
     <xilinx:coreExtensions>
       <xilinx:supportedFamilies>
+        <xilinx:family xilinx:lifeCycle="Pre-Production">zynquplus</xilinx:family>
         <xilinx:family xilinx:lifeCycle="Pre-Production">zynq</xilinx:family>
         <xilinx:family xilinx:lifeCycle="Pre-Production">artix7</xilinx:family>
         <xilinx:family xilinx:lifeCycle="Pre-Production">kintex7</xilinx:family>
