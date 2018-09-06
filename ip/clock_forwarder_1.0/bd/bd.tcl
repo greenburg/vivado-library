@@ -1,11 +1,10 @@
 
-proc init { cellpath otherInfo } {                                                                   
-                                                                                                             
+proc init { cellpath otherInfo } {                                                                                           
 	set cell_handle [get_bd_cells $cellpath]                                                                 
 	set all_busif [get_bd_intf_pins $cellpath/*]		                                                     
 	set axi_standard_param_list [list ID_WIDTH AWUSER_WIDTH ARUSER_WIDTH WUSER_WIDTH RUSER_WIDTH BUSER_WIDTH]
 	set full_sbusif_list [list  ]
-			                                                                                                 
+	                                                                                                 
 	foreach busif $all_busif {                                                                               
 		if { [string equal -nocase [get_property MODE $busif] "slave"] == 1 } {                            
 			set busif_param_list [list]                                                                      
@@ -28,6 +27,16 @@ proc pre_propagate {cellpath otherInfo } {
 	set all_busif [get_bd_intf_pins $cellpath/*]		                                                     
 	set axi_standard_param_list [list ID_WIDTH AWUSER_WIDTH ARUSER_WIDTH WUSER_WIDTH RUSER_WIDTH BUSER_WIDTH]
 	                                                                                                         
+    bd::send_msg -of $cellpath -type INFO -msg_id 17 -text ":Pre-Propagate  ."
+	set ip_handle [get_ips [get_property CONFIG.Component_Name $cell_handle]]
+	set part_handle [get_parts [get_property PART $ip_handle]]
+	set family [get_property FAMILY $part_handle]
+	
+	if { $family != "" } {
+	   bd::send_msg -of $cellpath -type INFO -msg_id 17 -text ":IP customized for FPGA family $family."
+	   set_property CONFIG.kArch $family $cell_handle
+	}
+   
 	foreach busif $all_busif {	                                                                             
 		if { [string equal -nocase [get_property CONFIG.PROTOCOL $busif] "AXI4"] != 1 } {                  
 			continue                                                                                         
