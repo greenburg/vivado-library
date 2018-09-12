@@ -64,10 +64,10 @@ entity MIPI_DPHY_Receiver is
       kRefClkFreqHz : integer := 200_000_000; -- TCL-propagated
       kDebug : boolean := true;
       kLPFromLane0 : boolean := true;
-		-- Parameters of Axi Slave Bus Interface S_AXI_LITE
-		C_S_AXI_LITE_DATA_WIDTH	: integer	:= 32;
-		C_S_AXI_LITE_ADDR_WIDTH	: integer	:= 4;
-		C_S_AXI_LITE_FREQ_HZ : integer      := 100_000_000 -- TCL-propagated
+      -- Parameters of Axi Slave Bus Interface S_AXI_LITE
+      C_S_AXI_LITE_DATA_WIDTH	: integer	:= 32;
+      C_S_AXI_LITE_ADDR_WIDTH	: integer	:= 4;
+      C_S_AXI_LITE_FREQ_HZ : integer      := 100_000_000 -- TCL-propagated
 	);
 	port (
 		-- Users to add ports here
