@@ -3,7 +3,7 @@
   <spirit:vendor>digilentinc.com</spirit:vendor>
   <spirit:library>ip</spirit:library>
   <spirit:name>MIPI_D_PHY_RX</spirit:name>
-  <spirit:version>1.2</spirit:version>
+  <spirit:version>1.3</spirit:version>
   <spirit:busInterfaces>
     <spirit:busInterface>
       <spirit:name>S_AXI_LITE</spirit:name>
@@ -726,7 +726,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>30a65baf</spirit:value>
+            <spirit:value>c803790e</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -758,7 +758,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>1491148f</spirit:value>
+            <spirit:value>94085548</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -776,7 +776,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>03f72666</spirit:value>
+            <spirit:value>7d1b10a6</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -805,7 +805,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>e80f37b9</spirit:value>
+            <spirit:value>c527113a</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -970,6 +970,52 @@
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
         </spirit:wire>
+      </spirit:port>
+      <spirit:port>
+        <spirit:name>rDlyCtrlLockedIn</spirit:name>
+        <spirit:wire>
+          <spirit:direction>in</spirit:direction>
+          <spirit:wireTypeDefs>
+            <spirit:wireTypeDef>
+              <spirit:typeName>std_logic</spirit:typeName>
+              <spirit:viewNameRef>xilinx_anylanguagesynthesis</spirit:viewNameRef>
+              <spirit:viewNameRef>xilinx_anylanguagebehavioralsimulation</spirit:viewNameRef>
+            </spirit:wireTypeDef>
+          </spirit:wireTypeDefs>
+          <spirit:driver>
+            <spirit:defaultValue spirit:format="long">1</spirit:defaultValue>
+          </spirit:driver>
+        </spirit:wire>
+        <spirit:vendorExtensions>
+          <xilinx:portInfo>
+            <xilinx:enablement>
+              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.rDlyCtrlLockedIn" xilinx:dependency="not ($kSharedLogic)">false</xilinx:isEnabled>
+            </xilinx:enablement>
+          </xilinx:portInfo>
+        </spirit:vendorExtensions>
+      </spirit:port>
+      <spirit:port>
+        <spirit:name>rDlyCtrlLockedOut</spirit:name>
+        <spirit:wire>
+          <spirit:direction>out</spirit:direction>
+          <spirit:wireTypeDefs>
+            <spirit:wireTypeDef>
+              <spirit:typeName>std_logic</spirit:typeName>
+              <spirit:viewNameRef>xilinx_anylanguagesynthesis</spirit:viewNameRef>
+              <spirit:viewNameRef>xilinx_anylanguagebehavioralsimulation</spirit:viewNameRef>
+            </spirit:wireTypeDef>
+          </spirit:wireTypeDefs>
+          <spirit:driver>
+            <spirit:defaultValue spirit:format="long">0</spirit:defaultValue>
+          </spirit:driver>
+        </spirit:wire>
+        <spirit:vendorExtensions>
+          <xilinx:portInfo>
+            <xilinx:enablement>
+              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.rDlyCtrlLockedOut" xilinx:dependency="$kSharedLogic">true</xilinx:isEnabled>
+            </xilinx:enablement>
+          </xilinx:portInfo>
+        </spirit:vendorExtensions>
       </spirit:port>
       <spirit:port>
         <spirit:name>RxDDRClkHS</spirit:name>
@@ -1960,7 +2006,7 @@
       <spirit:modelParameter spirit:dataType="boolean">
         <spirit:name>kDebug</spirit:name>
         <spirit:displayName>Kdebug</spirit:displayName>
-        <spirit:value spirit:format="bool" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.kDebug">false</spirit:value>
+        <spirit:value spirit:format="bool" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.kDebug">true</spirit:value>
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="integer">
         <spirit:name>C_S_AXI_LITE_FREQ_HZ</spirit:name>
@@ -1970,7 +2016,12 @@
       <spirit:modelParameter spirit:dataType="boolean">
         <spirit:name>kLPFromLane0</spirit:name>
         <spirit:displayName>Klpfromlane0</spirit:displayName>
-        <spirit:value spirit:format="bool" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.kLPFromLane0">false</spirit:value>
+        <spirit:value spirit:format="bool" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.kLPFromLane0">true</spirit:value>
+      </spirit:modelParameter>
+      <spirit:modelParameter spirit:dataType="boolean">
+        <spirit:name>kSharedLogic</spirit:name>
+        <spirit:displayName>Ksharedlogic</spirit:displayName>
+        <spirit:value spirit:format="bool" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.kSharedLogic">true</spirit:value>
       </spirit:modelParameter>
     </spirit:modelParameters>
   </spirit:model>
@@ -2031,9 +2082,9 @@
     <spirit:fileSet>
       <spirit:name>xilinx_xpgui_view_fileset</spirit:name>
       <spirit:file>
-        <spirit:name>xgui/MIPI_D_PHY_RX_v1_2.tcl</spirit:name>
+        <spirit:name>xgui/MIPI_D_PHY_RX_v1_3.tcl</spirit:name>
         <spirit:fileType>tclSource</spirit:fileType>
-        <spirit:userFileType>CHECKSUM_30a65baf</spirit:userFileType>
+        <spirit:userFileType>CHECKSUM_c803790e</spirit:userFileType>
         <spirit:userFileType>XGUI_VERSION_2</spirit:userFileType>
       </spirit:file>
     </spirit:fileSet>
@@ -2049,14 +2100,10 @@
       <spirit:file>
         <spirit:name>hdl/MIPI_DPHY_Receiver.xdc</spirit:name>
         <spirit:userFileType>xdc</spirit:userFileType>
-        <spirit:userFileType>USED_IN_implementation</spirit:userFileType>
-        <spirit:userFileType>USED_IN_synthesis</spirit:userFileType>
       </spirit:file>
       <spirit:file>
         <spirit:name>hdl/MIPI_DPHY_Receiver_clocks.xdc</spirit:name>
         <spirit:userFileType>xdc</spirit:userFileType>
-        <spirit:userFileType>USED_IN_implementation</spirit:userFileType>
-        <spirit:userFileType>USED_IN_synthesis</spirit:userFileType>
         <spirit:define>
           <spirit:name>processing_order</spirit:name>
           <spirit:value>late</spirit:value>
@@ -2065,9 +2112,7 @@
       <spirit:file>
         <spirit:name>hdl/MIPI_DPHY_Receiver_ooc.xdc</spirit:name>
         <spirit:userFileType>xdc</spirit:userFileType>
-        <spirit:userFileType>USED_IN_implementation</spirit:userFileType>
         <spirit:userFileType>USED_IN_out_of_context</spirit:userFileType>
-        <spirit:userFileType>USED_IN_synthesis</spirit:userFileType>
       </spirit:file>
       <spirit:file>
         <spirit:name>hdl/SyncAsync.vhd</spirit:name>
@@ -2128,7 +2173,7 @@
       <spirit:file>
         <spirit:name>hdl/MIPI_DPHY_Receiver.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
-        <spirit:userFileType>CHECKSUM_73f6b150</spirit:userFileType>
+        <spirit:userFileType>CHECKSUM_fdc2d378</spirit:userFileType>
       </spirit:file>
     </spirit:fileSet>
     <spirit:fileSet>
@@ -2191,6 +2236,18 @@
         <spirit:name>hdl/MIPI_DPHY_Receiver.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
       </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/ila_sfen_rxclk/ila_sfen_rxclk.xci</spirit:name>
+        <spirit:userFileType>xci</spirit:userFileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/ila_sfen_refclk/ila_sfen_refclk.xci</spirit:name>
+        <spirit:userFileType>xci</spirit:userFileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/ila_scnn_refclk/ila_scnn_refclk.xci</spirit:name>
+        <spirit:userFileType>xci</spirit:userFileType>
+      </spirit:file>
     </spirit:fileSet>
     <spirit:fileSet>
       <spirit:name>xilinx_anylanguagebehavioralsimulation_xilinx_com_ip_ila_6_2__ref_view_fileset</spirit:name>
@@ -2207,10 +2264,14 @@
       <spirit:file>
         <spirit:name>tb/MIPI_DPHY_Receiver_behav.wcfg</spirit:name>
         <spirit:fileType>unknown</spirit:fileType>
+        <spirit:userFileType>USED_IN_simulation</spirit:userFileType>
+        <spirit:userFileType>USED_IN_testbench</spirit:userFileType>
       </spirit:file>
       <spirit:file>
         <spirit:name>tb/tb_MIPI_DPHY_Receiver.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
+        <spirit:userFileType>USED_IN_simulation</spirit:userFileType>
+        <spirit:userFileType>USED_IN_testbench</spirit:userFileType>
       </spirit:file>
     </spirit:fileSet>
     <spirit:fileSet>
@@ -2353,7 +2414,7 @@
     <spirit:parameter>
       <spirit:name>kDebug</spirit:name>
       <spirit:displayName>Debug Module</spirit:displayName>
-      <spirit:value spirit:format="bool" spirit:resolve="user" spirit:id="PARAM_VALUE.kDebug">false</spirit:value>
+      <spirit:value spirit:format="bool" spirit:resolve="user" spirit:id="PARAM_VALUE.kDebug">true</spirit:value>
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>C_S_AXI_LITE_FREQ_HZ</spirit:name>
@@ -2370,7 +2431,7 @@
     <spirit:parameter>
       <spirit:name>kLPFromLane0</spirit:name>
       <spirit:displayName>LP signals from Lane 0</spirit:displayName>
-      <spirit:value spirit:format="bool" spirit:resolve="user" spirit:id="PARAM_VALUE.kLPFromLane0">false</spirit:value>
+      <spirit:value spirit:format="bool" spirit:resolve="user" spirit:id="PARAM_VALUE.kLPFromLane0">true</spirit:value>
       <spirit:vendorExtensions>
         <xilinx:parameterInfo>
           <xilinx:enablement>
@@ -2378,6 +2439,11 @@
           </xilinx:enablement>
         </xilinx:parameterInfo>
       </spirit:vendorExtensions>
+    </spirit:parameter>
+    <spirit:parameter>
+      <spirit:name>kSharedLogic</spirit:name>
+      <spirit:displayName>Shared Logic included in IP</spirit:displayName>
+      <spirit:value spirit:format="bool" spirit:resolve="user" spirit:id="PARAM_VALUE.kSharedLogic">true</spirit:value>
     </spirit:parameter>
   </spirit:parameters>
   <spirit:vendorExtensions>
@@ -2392,27 +2458,29 @@
       <xilinx:displayName>MIPI_D_PHY_RX_v1.0</xilinx:displayName>
       <xilinx:vendorDisplayName>Digilent, Inc.</xilinx:vendorDisplayName>
       <xilinx:vendorURL>http://www.digilentinc.com</xilinx:vendorURL>
-      <xilinx:coreRevision>6</xilinx:coreRevision>
+      <xilinx:coreRevision>1</xilinx:coreRevision>
       <xilinx:upgrades>
         <xilinx:canUpgradeFrom>digilentinc.com:ip:MIPI_D_PHY_RX:1.0</xilinx:canUpgradeFrom>
+        <xilinx:canUpgradeFrom>digilentinc.com:ip:MIPI_D_PHY_RX:1.2</xilinx:canUpgradeFrom>
       </xilinx:upgrades>
-      <xilinx:coreCreationDateTime>2018-09-12T09:22:24Z</xilinx:coreCreationDateTime>
+      <xilinx:coreCreationDateTime>2018-12-05T16:00:28Z</xilinx:coreCreationDateTime>
       <xilinx:tags>
         <xilinx:tag xilinx:name="natinst.com:user:MIPI_D_PHY_RX:1.0_ARCHIVE_LOCATION">c:/git/pcam/common-repo/vivado-library/ip/MIPI_D_PHY_RX_1.0</xilinx:tag>
         <xilinx:tag xilinx:name="digilentinc.com:user:MIPI_D_PHY_RX:1.0_ARCHIVE_LOCATION">c:/git/pcam/common-repo/vivado-library/ip/MIPI_D_PHY_RX_1.0</xilinx:tag>
         <xilinx:tag xilinx:name="digilentinc.com:ip:MIPI_D_PHY_RX:1.0_ARCHIVE_LOCATION">c:/Users/rogyorge/Desktop/mi_pi_zybo_7/proto_cam/repo/vivado-library/ip/MIPI_D_PHY_RX</xilinx:tag>
         <xilinx:tag xilinx:name="digilentinc.com:ip:MIPI_D_PHY_RX:1.1_ARCHIVE_LOCATION">c:/Users/rogyorge/Desktop/mi_pi_zybo_7/proto_cam/repo/vivado-library/ip/MIPI_D_PHY_RX</xilinx:tag>
-        <xilinx:tag xilinx:name="digilentinc.com:ip:MIPI_D_PHY_RX:1.2_ARCHIVE_LOCATION">c:/git/Zybo-Z7-20-pcam-5c_orig/repo/vivado-library/ip/MIPI_D_PHY_RX</xilinx:tag>
+        <xilinx:tag xilinx:name="digilentinc.com:ip:MIPI_D_PHY_RX:1.2_ARCHIVE_LOCATION">c:/git/fmc_pcam/repo/vivado-library/ip/MIPI_D_PHY_RX</xilinx:tag>
+        <xilinx:tag xilinx:name="digilentinc.com:ip:MIPI_D_PHY_RX:1.3_ARCHIVE_LOCATION">c:/git/fmc_pcam/repo/vivado-library/ip/MIPI_D_PHY_RX</xilinx:tag>
       </xilinx:tags>
     </xilinx:coreExtensions>
     <xilinx:packagingInfo>
-      <xilinx:xilinxVersion>2017.4</xilinx:xilinxVersion>
+      <xilinx:xilinxVersion>2018.2</xilinx:xilinxVersion>
       <xilinx:checksum xilinx:scope="busInterfaces" xilinx:value="9231af9e"/>
       <xilinx:checksum xilinx:scope="memoryMaps" xilinx:value="a8980953"/>
-      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="d7a05477"/>
-      <xilinx:checksum xilinx:scope="ports" xilinx:value="565c45cc"/>
-      <xilinx:checksum xilinx:scope="hdlParameters" xilinx:value="3501a7f9"/>
-      <xilinx:checksum xilinx:scope="parameters" xilinx:value="918c225e"/>
+      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="d25c264a"/>
+      <xilinx:checksum xilinx:scope="ports" xilinx:value="2225505a"/>
+      <xilinx:checksum xilinx:scope="hdlParameters" xilinx:value="47d69848"/>
+      <xilinx:checksum xilinx:scope="parameters" xilinx:value="ccd8f029"/>
     </xilinx:packagingInfo>
   </spirit:vendorExtensions>
 </spirit:component>

@@ -64,6 +64,7 @@ entity MIPI_DPHY_Receiver is
       kRefClkFreqHz : integer := 200_000_000; -- TCL-propagated
       kDebug : boolean := true;
       kLPFromLane0 : boolean := true;
+      kSharedLogic : boolean := true;
       -- Parameters of Axi Slave Bus Interface S_AXI_LITE
       C_S_AXI_LITE_DATA_WIDTH	: integer	:= 32;
       C_S_AXI_LITE_ADDR_WIDTH	: integer	:= 4;
@@ -83,6 +84,8 @@ entity MIPI_DPHY_Receiver is
       
       RefClk : in std_logic; --200MHz
       aRst : in std_logic; --Only to be de-asserted when RefClk is valid
+      rDlyCtrlLockedIn : in std_logic; --if IDELAYCTRL instantiated externally, input its locked signal
+      rDlyCtrlLockedOut : out std_logic; --if IDELAYCTRL instantiated internally, output its locked signal
       
       --PHY-Protocol Interface (PPI)
       --Clock lane
@@ -187,7 +190,7 @@ begin
 end;
   
 constant kDlyRstDelay : natural := 32;
-constant kGenerateIDELAYCTRL : boolean := true;
+constant kGenerateIDELAYCTRL : boolean := kSharedLogic;
 
 constant kCtlClkFreqHz : natural := kRefClkFreqHz;
 
@@ -412,10 +415,12 @@ GenIDELAYCTRL: if (kGenerateIDELAYCTRL) generate
          REFCLK      => RefClk,
          RST         => rDlyRst);
 
+    rDlyCtrlLockedOut <= rDlyLckd;
+    
 end generate GenIDELAYCTRL;
 
 GenNoIDELAYCTRL: if (not kGenerateIDELAYCTRL) generate
-   rDlyLckd <= not rIntRst;
+   rDlyLckd <= not rIntRst and rDlyCtrlLockedIn;
 end generate GenNoIDELAYCTRL;
 
 -------------------------------------------------------------------------------
