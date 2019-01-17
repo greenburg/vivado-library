@@ -132,17 +132,12 @@ void AQS_Init(PmodAQS* InstancePtr)
 void AQS_GetData(PmodAQS* InstancePtr, u8 *Data)
 {
   u8 temp[3];
-  int x=0;
-
-
-
-	  if(x<6)
-	  {
+ 
 		  AQS_ReadIIC(InstancePtr, 0x00 , temp , 1); //Reading the status register(0x00)
 
 			if(temp[0]== 0x98|| temp[0] == 0x90) //is status is 0x98 or 0x90
 			{
-				 x++;
+				
 
 			temp[0]=  0x5B;
 			AQS_WriteIIC(InstancePtr, 0x02 , temp  , 0); //Writing the ALG_RESULT_DATA(0x02)
@@ -161,7 +156,7 @@ void AQS_GetData(PmodAQS* InstancePtr, u8 *Data)
 			Data[3] = temp[0];
 			Data[4] = temp[1];
 			}
-	  }
+	  
 }
 
 
