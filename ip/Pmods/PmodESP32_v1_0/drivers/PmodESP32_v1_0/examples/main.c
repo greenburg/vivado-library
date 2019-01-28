@@ -22,7 +22,7 @@
 #include "xuartlite.h"
 #include "xil_cache.h"
 #else
-#define HOST_UART_DEVICE_ID XPAR_PS7_UART_0_DEVICE_ID
+#define HOST_UART_DEVICE_ID XPAR_PS7_UART_1_DEVICE_ID
 #define HostUart XUartPs
 #define HostUart_Config XUartPs_Config
 #define HostUart_CfgInitialize XUartPs_CfgInitialize
