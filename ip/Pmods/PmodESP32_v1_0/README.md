@@ -1,4 +1,4 @@
-PmodGPS IP
+PmodESP32 IP
 ==============
 
 Using the IP in Vivado
