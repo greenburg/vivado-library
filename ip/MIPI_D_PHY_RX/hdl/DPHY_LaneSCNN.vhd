@@ -93,6 +93,9 @@ begin
 type state_type is (stInit, stStop, stHS_Prpr, stHS_Term, stHS_Clk, stHS_End, stULPS, stULPS_Exit, stULPS_Rqst); 
 signal state, nstate : state_type := stInit; 
 
+attribute fsm_encoding : string;
+attribute fsm_encoding of state : signal is "one_hot";
+
 signal cLP, cLPGlitch : std_logic_vector(1 downto 0);
 signal cIntRst : std_logic;
 
@@ -110,6 +113,9 @@ signal cClkSettleTout : std_logic;
 
 signal cDelayCnt : natural range 0 to MAX(kTInit,MAX(kTClkTermEn, kTClkSettle)) := 0;
 signal aClkLocked, cClkLocked, cHSRst, cDelayCntEn, aHSClkLocked, cHSClkLocked, cHSClkLocked_q, cHSClkLost : std_logic;
+
+
+
 signal cEnable : std_logic;
 begin
 
@@ -169,9 +175,9 @@ end generate GenSyncLP;
 DelayCounter: process(CtlClk)
 begin
    if Rising_Edge(CtlClk) then
-      if (state /= nstate) then
+      if (cDelayCntEn = '0') then
          cDelayCnt <= 0;
-      elsif cDelayCntEn = '1' then
+      elsif (cDelayCntEn = '1') then
          cDelayCnt <= cDelayCnt + 1;
       end if;
    end if;

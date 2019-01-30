@@ -758,7 +758,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>94085548</spirit:value>
+            <spirit:value>f87b78fb</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -776,7 +776,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>7d1b10a6</spirit:value>
+            <spirit:value>706dc871</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -791,7 +791,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>7f452960</spirit:value>
+            <spirit:value>07087a35</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -2458,12 +2458,12 @@
       <xilinx:displayName>MIPI_D_PHY_RX_v1.0</xilinx:displayName>
       <xilinx:vendorDisplayName>Digilent, Inc.</xilinx:vendorDisplayName>
       <xilinx:vendorURL>http://www.digilentinc.com</xilinx:vendorURL>
-      <xilinx:coreRevision>1</xilinx:coreRevision>
+      <xilinx:coreRevision>2</xilinx:coreRevision>
       <xilinx:upgrades>
         <xilinx:canUpgradeFrom>digilentinc.com:ip:MIPI_D_PHY_RX:1.0</xilinx:canUpgradeFrom>
         <xilinx:canUpgradeFrom>digilentinc.com:ip:MIPI_D_PHY_RX:1.2</xilinx:canUpgradeFrom>
       </xilinx:upgrades>
-      <xilinx:coreCreationDateTime>2018-12-05T16:00:28Z</xilinx:coreCreationDateTime>
+      <xilinx:coreCreationDateTime>2019-01-30T09:27:14Z</xilinx:coreCreationDateTime>
       <xilinx:tags>
         <xilinx:tag xilinx:name="natinst.com:user:MIPI_D_PHY_RX:1.0_ARCHIVE_LOCATION">c:/git/pcam/common-repo/vivado-library/ip/MIPI_D_PHY_RX_1.0</xilinx:tag>
         <xilinx:tag xilinx:name="digilentinc.com:user:MIPI_D_PHY_RX:1.0_ARCHIVE_LOCATION">c:/git/pcam/common-repo/vivado-library/ip/MIPI_D_PHY_RX_1.0</xilinx:tag>
@@ -2477,7 +2477,7 @@
       <xilinx:xilinxVersion>2018.2</xilinx:xilinxVersion>
       <xilinx:checksum xilinx:scope="busInterfaces" xilinx:value="9231af9e"/>
       <xilinx:checksum xilinx:scope="memoryMaps" xilinx:value="a8980953"/>
-      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="d25c264a"/>
+      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="6c6fa027"/>
       <xilinx:checksum xilinx:scope="ports" xilinx:value="2225505a"/>
       <xilinx:checksum xilinx:scope="hdlParameters" xilinx:value="47d69848"/>
       <xilinx:checksum xilinx:scope="parameters" xilinx:value="ccd8f029"/>

@@ -39,9 +39,9 @@ end tb_MIPI_DPHY_Receiver;
 architecture Behavioral of tb_MIPI_DPHY_Receiver is
 
 component MIPI_DPHY_Receiver is
-   generic (
+    generic (
 		-- Users to add parameters here
-	  kVersionMajor : natural := 0; -- TCL-propagated from VLNV
+      kVersionMajor : natural := 0; -- TCL-propagated from VLNV
       kVersionMinor : natural := 0; -- TCL-propagated from VLNV
       kNoOfDataLanes : natural range 1 to 2:= 2;
       kGenerateMMCM : boolean := false;
@@ -52,24 +52,28 @@ component MIPI_DPHY_Receiver is
       kRefClkFreqHz : integer := 200_000_000; -- TCL-propagated
       kDebug : boolean := true;
       kLPFromLane0 : boolean := true;
-		-- Parameters of Axi Slave Bus Interface S_AXI_LITE
-		C_S_AXI_LITE_DATA_WIDTH	: integer	:= 32;
-		C_S_AXI_LITE_ADDR_WIDTH	: integer	:= 4;
-		C_S_AXI_LITE_FREQ_HZ : integer      := 100_000_000 -- TCL-propagated
+      kSharedLogic : boolean := true;
+      -- Parameters of Axi Slave Bus Interface S_AXI_LITE
+      C_S_AXI_LITE_DATA_WIDTH	: integer	:= 32;
+      C_S_AXI_LITE_ADDR_WIDTH	: integer	:= 4;
+      C_S_AXI_LITE_FREQ_HZ : integer      := 100_000_000 -- TCL-propagated
 	);
 	port (
+		-- Users to add ports here
       dphy_clk_hs_p : in std_logic;
       dphy_clk_hs_n : in std_logic;
-      dphy_clk_lp_n : in std_logic;
       dphy_clk_lp_p : in std_logic;
+      dphy_clk_lp_n : in std_logic;      
       
-      dphy_data_hs_p : in std_logic_vector(0 to kNoOfDataLanes-1);
-      dphy_data_hs_n : in std_logic_vector(0 to kNoOfDataLanes-1);
-      dphy_data_lp_n : in std_logic_vector(0 to kNoOfDataLanes-1);
-      dphy_data_lp_p : in std_logic_vector(0 to kNoOfDataLanes-1);
+      dphy_data_hs_p : in std_logic_vector(kNoOfDataLanes-1 downto 0);
+      dphy_data_hs_n : in std_logic_vector(kNoOfDataLanes-1 downto 0);
+      dphy_data_lp_p : in std_logic_vector(kNoOfDataLanes-1 downto 0);
+      dphy_data_lp_n : in std_logic_vector(kNoOfDataLanes-1 downto 0);
       
       RefClk : in std_logic; --200MHz
-      aRst : in std_logic;
+      aRst : in std_logic; --Only to be de-asserted when RefClk is valid
+      rDlyCtrlLockedIn : in std_logic; --if IDELAYCTRL instantiated externally, input its locked signal
+      rDlyCtrlLockedOut : out std_logic; --if IDELAYCTRL instantiated internally, output its locked signal
       
       --PHY-Protocol Interface (PPI)
       --Clock lane
@@ -135,6 +139,9 @@ component MIPI_DPHY_Receiver is
       
       aD1ErrEsc : out std_logic; --Escape Entry Error
       aD1ErrControl : out std_logic; --Control Error
+  		-- User ports ends
+		-- Do not modify the ports beyond this line
+
 
 		-- Ports of Axi Slave Bus Interface S_AXI_LITE
 		s_axi_lite_aclk	: in std_logic;
@@ -452,6 +459,7 @@ DUT: MIPI_DPHY_Receiver
 	generic map (
         kNoOfDataLanes => kNoOfDataLanes,
         kDebug => false,
+        kSharedLogic => true,
         kGenerateMMCM => false,
         kAddDelayClk_ps => 0,
         kAddDelayData0_ps => 0,
@@ -470,6 +478,7 @@ DUT: MIPI_DPHY_Receiver
       
       RefClk => RefClk,
       aRst => aRst,
+      rDlyCtrlLockedIn => '0', --unused if kSharedLogic=true
       
       --PHY-Protocol Interface (PPI)
       --Clock lane
