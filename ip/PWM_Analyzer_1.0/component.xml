@@ -898,16 +898,40 @@
         <xilinx:taxonomy>AXI_Peripheral</xilinx:taxonomy>
       </xilinx:taxonomies>
       <xilinx:displayName>PWM_Analyzer_v1.0</xilinx:displayName>
-      <xilinx:coreRevision>15</xilinx:coreRevision>
-      <xilinx:coreCreationDateTime>2018-07-26T22:17:32Z</xilinx:coreCreationDateTime>
+      <xilinx:coreRevision>17</xilinx:coreRevision>
+      <xilinx:coreCreationDateTime>2019-06-19T19:52:38Z</xilinx:coreCreationDateTime>
       <xilinx:tags>
         <xilinx:tag xilinx:name="natinst.com:user:PWM_Analyzer:1.0_ARCHIVE_LOCATION">c:/Users/user/Desktop/Work/PWM_Analyzer/PWM_Analyzer_1.0</xilinx:tag>
         <xilinx:tag xilinx:name="digilentinc.com:user:PWM_Analyzer:1.0_ARCHIVE_LOCATION">c:/Users/user/Desktop/Work/PWM_Analyzer/PWM_Analyzer_1.0</xilinx:tag>
         <xilinx:tag xilinx:name="digilentinc.com:IP:PWM_Analyzer:1.0_ARCHIVE_LOCATION">d:/Github/Experimental/vivado-library/ip/PWM_Analyzer_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5667c6c0_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/PWM_Analyzer_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@48e7bd42_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/PWM_Analyzer_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7aa6b6ff_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/PWM_Analyzer_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@45f570d5_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/PWM_Analyzer_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@665f3556_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/PWM_Analyzer_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3be80d74_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/PWM_Analyzer_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6f0c157a_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/PWM_Analyzer_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7e95c007_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/PWM_Analyzer_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@218b033c_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/PWM_Analyzer_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@56105b93_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/PWM_Analyzer_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@71ec00ca_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/PWM_Analyzer_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1cdb2c50_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/PWM_Analyzer_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7e8912d5_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/PWM_Analyzer_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@31a65ac7_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/PWM_Analyzer_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6a4ddecc_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/PWM_Analyzer_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@43432b60_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/PWM_Analyzer_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@75a3a634_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/PWM_Analyzer_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@79a87941_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/PWM_Analyzer_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6864a1ae_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/PWM_Analyzer_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@505ba687_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/PWM_Analyzer_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2f24e576_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/PWM_Analyzer_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@633d97ef_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/PWM_Analyzer_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@324042a6_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/PWM_Analyzer_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3049c343_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/PWM_Analyzer_1.0</xilinx:tag>
       </xilinx:tags>
     </xilinx:coreExtensions>
     <xilinx:packagingInfo>
-      <xilinx:xilinxVersion>2018.2</xilinx:xilinxVersion>
+      <xilinx:xilinxVersion>2019.1</xilinx:xilinxVersion>
       <xilinx:checksum xilinx:scope="busInterfaces" xilinx:value="fea8d4e1"/>
       <xilinx:checksum xilinx:scope="memoryMaps" xilinx:value="ed1368d5"/>
       <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="7613eb07"/>

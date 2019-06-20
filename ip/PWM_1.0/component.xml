@@ -852,19 +852,43 @@
         <xilinx:taxonomy>AXI_Peripheral</xilinx:taxonomy>
       </xilinx:taxonomies>
       <xilinx:displayName>PWM_v1.0</xilinx:displayName>
-      <xilinx:coreRevision>8</xilinx:coreRevision>
+      <xilinx:coreRevision>10</xilinx:coreRevision>
       <xilinx:upgrades>
         <xilinx:canUpgradeFrom>natinst.com:user:PWM:1.0</xilinx:canUpgradeFrom>
       </xilinx:upgrades>
-      <xilinx:coreCreationDateTime>2018-07-26T22:17:04Z</xilinx:coreCreationDateTime>
+      <xilinx:coreCreationDateTime>2019-06-19T19:52:18Z</xilinx:coreCreationDateTime>
       <xilinx:tags>
         <xilinx:tag xilinx:name="natinst.com:user:PWM:1.0_ARCHIVE_LOCATION">C:/Tommywork/Vivado/15_4/PWM_1.0</xilinx:tag>
         <xilinx:tag xilinx:name="digilentinc.com:user:PWM:1.0_ARCHIVE_LOCATION">C:/Tommywork/Vivado/15_4/PWM_1.0</xilinx:tag>
         <xilinx:tag xilinx:name="digilentinc.com:IP:PWM:1.0_ARCHIVE_LOCATION">d:/Github/Experimental/vivado-library/ip/PWM_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7a25561c_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/PWM_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@473d237b_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/PWM_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@566f9772_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/PWM_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5c082c85_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/PWM_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7d04cafc_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/PWM_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@51bc6af2_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/PWM_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5e1502d5_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/PWM_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2b153712_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/PWM_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7367dcaf_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/PWM_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@33f4a565_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/PWM_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3a658360_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/PWM_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@81974f1_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/PWM_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4a51ca57_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/PWM_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@31e73c0e_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/PWM_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@89a299b_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/PWM_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6ac70405_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/PWM_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@21d8e732_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/PWM_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@519910bd_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/PWM_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@21f5a64f_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/PWM_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4b426624_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/PWM_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@b4f4eec_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/PWM_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3288bcf9_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/PWM_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6e664aa0_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/PWM_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@655b4c94_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/PWM_1.0</xilinx:tag>
       </xilinx:tags>
     </xilinx:coreExtensions>
     <xilinx:packagingInfo>
-      <xilinx:xilinxVersion>2018.2</xilinx:xilinxVersion>
+      <xilinx:xilinxVersion>2019.1</xilinx:xilinxVersion>
       <xilinx:checksum xilinx:scope="busInterfaces" xilinx:value="162197a4"/>
       <xilinx:checksum xilinx:scope="memoryMaps" xilinx:value="505458f9"/>
       <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="447add25"/>

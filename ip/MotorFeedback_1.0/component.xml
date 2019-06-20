@@ -919,16 +919,40 @@
         <xilinx:taxonomy>AXI_Peripheral</xilinx:taxonomy>
       </xilinx:taxonomies>
       <xilinx:displayName>MotorFeedback_v1.0</xilinx:displayName>
-      <xilinx:coreRevision>9</xilinx:coreRevision>
-      <xilinx:coreCreationDateTime>2018-07-26T22:17:47Z</xilinx:coreCreationDateTime>
+      <xilinx:coreRevision>11</xilinx:coreRevision>
+      <xilinx:coreCreationDateTime>2019-06-19T19:52:48Z</xilinx:coreCreationDateTime>
       <xilinx:tags>
         <xilinx:tag xilinx:name="natinst.com:user:MotorFeedback:1.0_ARCHIVE_LOCATION">c:/Users/user/Desktop/Work/MotorFeedback/MotorFeedback_1.0</xilinx:tag>
         <xilinx:tag xilinx:name="digilentinc.com:user:MotorFeedback:1.0_ARCHIVE_LOCATION">c:/Users/user/Desktop/Work/MotorFeedback/MotorFeedback_1.0</xilinx:tag>
         <xilinx:tag xilinx:name="digilentinc.com:IP:MotorFeedback:1.0_ARCHIVE_LOCATION">d:/Github/Experimental/vivado-library/ip/MotorFeedback_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2deb0358_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/MotorFeedback_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@631b408e_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/MotorFeedback_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6be73433_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/MotorFeedback_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6374aa7a_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/MotorFeedback_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@75ceed3d_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/MotorFeedback_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4879bb70_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/MotorFeedback_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@75209497_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/MotorFeedback_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2a459079_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/MotorFeedback_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@593c9bbb_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/MotorFeedback_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@393d9442_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/MotorFeedback_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@526c7d7f_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/MotorFeedback_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2fc2b0ee_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/MotorFeedback_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5e1e3b85_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/MotorFeedback_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@78e6eb3f_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/MotorFeedback_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7d05029c_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/MotorFeedback_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6c521ade_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/MotorFeedback_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5867e251_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/MotorFeedback_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4a9415b2_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/MotorFeedback_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@72f95ad_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/MotorFeedback_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@58b4203c_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/MotorFeedback_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@a886d88_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/MotorFeedback_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7170db7b_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/MotorFeedback_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3e21be8f_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/MotorFeedback_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@38b27202_ARCHIVE_LOCATION">d:/Github/vivado-library/ip/MotorFeedback_1.0</xilinx:tag>
       </xilinx:tags>
     </xilinx:coreExtensions>
     <xilinx:packagingInfo>
-      <xilinx:xilinxVersion>2018.2</xilinx:xilinxVersion>
+      <xilinx:xilinxVersion>2019.1</xilinx:xilinxVersion>
       <xilinx:checksum xilinx:scope="busInterfaces" xilinx:value="bc9fd4bc"/>
       <xilinx:checksum xilinx:scope="memoryMaps" xilinx:value="ed1368d5"/>
       <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="34831b07"/>

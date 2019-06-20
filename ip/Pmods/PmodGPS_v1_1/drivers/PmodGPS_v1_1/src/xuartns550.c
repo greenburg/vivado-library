@@ -12,10 +12,6 @@
 * The above copyright notice and this permission notice shall be included in
 * all copies or substantial portions of the Software.
 *
-* Use of the Software is limited solely to applications:
-* (a) running on a Xilinx device, or
-* (b) that interact with a Xilinx device through a bus or interconnect.
-*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
@@ -33,7 +29,7 @@
 /**
 *
 * @file xuartns550.c
-* @addtogroup uartns550_v3_3
+* @addtogroup uartns550_v3_5
 * @{
 *
 * This file contains the required functions for the 16450/16550 UART driver.
@@ -66,6 +62,8 @@
 *		      XUartNs550_StubHandler.
 * 3.3	nsk  04/13/15 Fixed Clock Divisor Enhancement.
 *		      (CR 857013)
+* 3.4   sk   11/10/15 Used UINTPTR instead of u32 for Baseaddress CR# 867425.
+*                     Changed the prototype of XUartNs550_CfgInitialize API.
 * </pre>
 *
 *****************************************************************************/
@@ -137,7 +135,7 @@ static void XUartNs550_StubHandler(void *CallBackRef, u32 Event,
 *****************************************************************************/
 int XUartNs550_CfgInitialize(XUartNs550 *InstancePtr,
 					XUartNs550_Config *Config,
-					u32 EffectiveAddr)
+					UINTPTR EffectiveAddr)
 {
 	int Status;
 	u32 BaudRate;
